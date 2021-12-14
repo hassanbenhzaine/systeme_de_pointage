@@ -2,7 +2,6 @@ package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Specialite;
 import com.youcode.systemepointage.shared.ConnectionFactory;
-import com.youcode.systemepointage.shared.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SpecialiteDAOImp implements DAO<Specialite> {
+public class SpecialiteDAOImp implements SpecialiteDAO {
     private final String tableName = "Specialite";
 
     @Override

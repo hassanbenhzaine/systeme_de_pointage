@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.shared.ConnectionFactory;
-import com.youcode.systemepointage.shared.DAO;
 import com.youcode.systemepointage.model.Utilisateur;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UtilisateurDAOImp implements DAO<Utilisateur> {
+public class UtilisateurDAOImp implements UtilisateurDAO {
     private final String tableName = "Utilisateur";
 
 
@@ -129,6 +128,34 @@ public class UtilisateurDAOImp implements DAO<Utilisateur> {
             e.printStackTrace();
         }
         return utilisateur;
+    }
+
+    @Override
+    public Optional<Utilisateur> findByEmailAndPassword(String email, String motDePasse) {
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Email\" = ? AND \"MotDePasse\" = ?";
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, motDePasse);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Utilisateur utilisateur = new Utilisateur();
+                    utilisateur.setEmail(resultSet.getString("Email"));
+                    utilisateur.setMotDePasse(resultSet.getString("MotDePasse"));
+                    utilisateur.setNom(resultSet.getString("Nom"));
+                    utilisateur.setPrenom(resultSet.getString("Prenom"));
+                    utilisateur.setTelephone(resultSet.getString("Telephone"));
+                    utilisateur.setId(resultSet.getInt("UtilisateurID"));
+
+                    return Optional.of(utilisateur);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }
 
