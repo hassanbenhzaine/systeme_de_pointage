@@ -11,10 +11,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Utilisateur implements Serializable {
     private int id;
-    private int telephone;
-    private String email;
-    private String motDePasse;
     private String nom;
     private String prenom;
+    private String email;
+    private String motDePasse;
+    private String telephone;
     private Adresse adresse;
+    private Role role;
 }
