@@ -11,8 +11,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Promotion implements Serializable {
+    private int id;
     private LocalDate debut;
     private LocalDate fin;
     private String nom;
+
 
 }

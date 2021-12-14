@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pointage implements Serializable {
+    private int id;
     private LocalDateTime arrivee;
     private LocalDateTime depart;
 }

@@ -10,5 +10,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Specialite implements Serializable {
-    private String name;
+    private int id;
+    private String nom;
 }

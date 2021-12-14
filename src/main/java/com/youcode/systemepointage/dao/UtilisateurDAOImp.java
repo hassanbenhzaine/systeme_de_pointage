@@ -1,11 +1,13 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.ConnectionFactory;
-import com.youcode.systemepointage.DAO;
+import com.youcode.systemepointage.shared.ConnectionFactory;
+import com.youcode.systemepointage.shared.DAO;
 import com.youcode.systemepointage.model.Utilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,19 +68,67 @@ public class UtilisateurDAOImp implements DAO<Utilisateur> {
 
     @Override
     public List<Utilisateur> findAll() {
-      // findall prepared statement
-        return null;
+        String sql = "SELECT * FROM " + tableName;
+        List<Utilisateur> chefFabriques = new ArrayList<>();
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Utilisateur utilisateur = new Utilisateur();
+                utilisateur.setEmail(resultSet.getString("Email"));
+                utilisateur.setMotDePasse(resultSet.getString("MotDePasse"));
+                utilisateur.setNom(resultSet.getString("Nom"));
+                utilisateur.setPrenom(resultSet.getString("Prenom"));
+                utilisateur.setTelephone(resultSet.getString("Telephone"));
+                utilisateur.setId(resultSet.getInt("UtilisateurID"));
+
+                chefFabriques.add(utilisateur);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return chefFabriques;
     }
 
     @Override
     public Utilisateur update(Utilisateur utilisateur) {
+        String sql = "UPDATE " + tableName + " SET Nom = ?, Prenom = ?, Email = ?, MotDePasse = ?, Telephone = ? WHERE id = ?";
 
-        return null;
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, utilisateur.getNom());
+            preparedStatement.setString(2, utilisateur.getPrenom());
+            preparedStatement.setString(3, utilisateur.getEmail());
+            preparedStatement.setString(4, utilisateur.getMotDePasse());
+            preparedStatement.setString(5, utilisateur.getTelephone());
+            preparedStatement.setInt(6, utilisateur.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return utilisateur;
     }
 
     @Override
     public Utilisateur delete(Utilisateur utilisateur) {
-        return null;
+        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, utilisateur.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return utilisateur;
     }
 }
 

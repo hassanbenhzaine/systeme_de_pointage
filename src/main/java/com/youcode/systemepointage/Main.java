@@ -12,21 +12,21 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
-        chefFabriqueService.add(
-                "hassan",
-                "benhzaine",
-                "cbenhzaine@gmail.com",
-                "123456789",
-                "123456789",
-                LocalDate.of(2000, 1, 1),
-                new Adresse(
-                        "address 1",
-                        "address 2",
-                        12030,
-                        "maroc",
-                        "rabat-salé",
-                        "rabat")
-        );
+//        ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
+//        chefFabriqueService.add(
+//                "hassan",
+//                "benhzaine",
+//                "cbenhzaine@gmail.com",
+//                "123456789",
+//                "123456789",
+//                LocalDate.of(2000, 1, 1),
+//                new Adresse(
+//                        "address 1",
+//                        "address 2",
+//                        12030,
+//                        "maroc",
+//                        "rabat-salé",
+//                        "rabat")
+//        );
     }
 }

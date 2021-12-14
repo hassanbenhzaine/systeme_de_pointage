@@ -1,6 +1,6 @@
 package com.youcode.systemepointage.service;
 
-import com.youcode.systemepointage.DAO;
+import com.youcode.systemepointage.shared.DAO;
 import com.youcode.systemepointage.dao.UtilisateurDAOImp;
 import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Utilisateur;

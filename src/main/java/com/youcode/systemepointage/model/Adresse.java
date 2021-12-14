@@ -10,6 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Adresse implements Serializable {
+    private int id;
     private String adresse1;
     private String adresse2;
     private int codePostal;

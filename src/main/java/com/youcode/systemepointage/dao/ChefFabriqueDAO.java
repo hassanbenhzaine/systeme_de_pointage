@@ -1,7 +1,7 @@
 //package com.youcode.systemepointage.dao;
 //
-//import com.youcode.systemepointage.ConnectionFactory;
-//import com.youcode.systemepointage.DAO;
+//import com.youcode.systemepointage.shared.ConnectionFactory;
+//import com.youcode.systemepointage.shared.DAO;
 //import com.youcode.systemepointage.model.ChefFabrique;
 //
 //import java.sql.Connection;

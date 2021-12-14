@@ -5,11 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class JournalEvenement implements Serializable {
-    private LocalDate debut;
-    private LocalDate fin;
+    private int id;
+    private LocalDateTime debut;
+    private LocalDateTime fin;
     private String nom;
+
+
+
 }

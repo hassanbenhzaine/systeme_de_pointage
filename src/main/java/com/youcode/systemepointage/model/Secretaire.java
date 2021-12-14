@@ -10,6 +10,6 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Secretaire implements Serializable {
+public class Secretaire extends Utilisateur implements Serializable {
     private LocalDate entreeFabrique;
 }
