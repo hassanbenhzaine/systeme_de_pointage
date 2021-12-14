@@ -18,4 +18,8 @@ public class Utilisateur implements Serializable {
     private String telephone;
     private Adresse adresse;
     private Role role;
+
+    public Utilisateur(int id) {
+        this.id = id;
+    }
 }

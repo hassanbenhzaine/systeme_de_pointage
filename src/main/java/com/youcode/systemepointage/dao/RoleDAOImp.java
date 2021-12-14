@@ -1,4 +1,4 @@
 package com.youcode.systemepointage.dao;
 
-public class RoleDAOImp {
+public class RoleDAOImp implements RoleDAO {
 }

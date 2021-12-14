@@ -1,4 +1,4 @@
 package com.youcode.systemepointage.dao;
 
-public class ClasseDAOImp {
+public class ClasseDAOImp implements ClasseDAO {
 }

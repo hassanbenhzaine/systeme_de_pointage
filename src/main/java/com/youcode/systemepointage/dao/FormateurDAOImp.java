@@ -1,4 +1,4 @@
 package com.youcode.systemepointage.dao;
 
-public class FormateurDAOImp {
+public class FormateurDAOImp implements FormateurDAO {
 }

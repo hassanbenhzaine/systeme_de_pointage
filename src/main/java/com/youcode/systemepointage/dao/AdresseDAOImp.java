@@ -1,4 +1,4 @@
 package com.youcode.systemepointage.dao;
 
-public class AdresseDAOImp {
+public class AdresseDAOImp implements AdresseDAO{
 }

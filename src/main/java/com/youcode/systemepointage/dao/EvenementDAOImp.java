@@ -1,4 +1,4 @@
 package com.youcode.systemepointage.dao;
 
-public class EvenementDAOImp {
+public class EvenementDAOImp implements EvenementDAO {
 }
