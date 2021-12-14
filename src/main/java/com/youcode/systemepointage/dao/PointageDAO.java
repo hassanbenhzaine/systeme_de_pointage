@@ -1,6 +1,7 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Pointage;
+import com.youcode.systemepointage.model.Utilisateur;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,4 +12,5 @@ public interface PointageDAO {
     List<Pointage> findAll();
     Pointage update(Pointage pointage);
     Pointage delete(Pointage pointage);
+    List<Pointage> findAllByUser(Utilisateur utilisateur);
 }

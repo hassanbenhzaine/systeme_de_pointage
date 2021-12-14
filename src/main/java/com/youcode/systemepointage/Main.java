@@ -12,8 +12,8 @@ import java.time.LocalDate;
 
 public class Main {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UtilisateurService a = new UtilisateurService();
-        a.seConnecter("cbenhzaine@gmail.com","123456789");
+    public static void main(String[] args){
+//        UtilisateurService a = new UtilisateurService();
+//        a.seConnecter("cbenhzaine@gmail.com","123456789");
     }
 }

@@ -13,8 +13,9 @@ public class UtilisateurService {
     private UtilisateurDAO utilisateurDAO;
 
     public void seConnecter(String email, String motDePasse) {
-        utilisateurDAO.findByEmailAndPassword(email, motDePasse)
+        Utilisateur utilisateur = utilisateurDAO.findByEmailAndPassword(email, motDePasse)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
     }
 
 
