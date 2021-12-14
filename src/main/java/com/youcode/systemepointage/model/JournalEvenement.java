@@ -13,7 +13,8 @@ public class JournalEvenement implements Serializable {
     private LocalDateTime debut;
     private LocalDateTime fin;
     private String nom;
-
+    private Secretaire secretaire;
+    private Evenement evenement;
 
 
 }
