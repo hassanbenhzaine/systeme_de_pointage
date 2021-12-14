@@ -14,4 +14,5 @@ public class Pointage implements Serializable {
     private int id;
     private LocalDateTime arrivee;
     private LocalDateTime depart;
+    private Utilisateur utilisateur;
 }
