@@ -51,7 +51,7 @@ public class AdresseDAOImp implements AdresseDAO{
     }
 
     @Override
-    public Adresse delete(Adresse adresse) {
-        return null;
+    public boolean delete(int id) {
+        return false;
     }
 }

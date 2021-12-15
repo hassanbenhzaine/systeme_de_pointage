@@ -1,4 +1,6 @@
 package com.youcode.systemepointage.dao;
 
-public interface FormateurDAO{
+import com.youcode.systemepointage.model.Formateur;
+
+public interface FormateurDAO extends GenericDAO<Formateur> {
 }

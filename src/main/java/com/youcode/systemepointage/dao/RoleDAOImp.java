@@ -45,7 +45,8 @@ public class RoleDAOImp implements RoleDAO {
     }
 
     @Override
-    public Role delete(Role role) {
-        return null;
+    public boolean delete(int id) {
+
+        return false;
     }
 }

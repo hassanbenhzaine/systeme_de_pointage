@@ -116,19 +116,20 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
     }
 
     @Override
-    public Utilisateur delete(Utilisateur utilisateur) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM " + tableName + " WHERE UtilisateurID = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, utilisateur.getId());
+            preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return utilisateur;
+        return false;
     }
 
     @Override

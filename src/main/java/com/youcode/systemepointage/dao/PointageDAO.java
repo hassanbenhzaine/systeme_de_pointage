@@ -4,13 +4,7 @@ import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface PointageDAO {
-    Pointage create(Pointage pointage);
-    Optional<Pointage> find(int id);
-    List<Pointage> findAll();
-    Pointage update(Pointage pointage);
-    Pointage delete(Pointage pointage);
+public interface PointageDAO extends GenericDAO<Pointage> {
     List<Pointage> findAllByUser(Utilisateur utilisateur);
 }

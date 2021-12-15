@@ -12,15 +12,22 @@ import java.util.List;
 public class PointageService {
     private PointageDAO pointageDAO;
 
-    public boolean pointer(Utilisateur utilisateur){
+    public void pointer(Utilisateur utilisateur){
         pointageDAO.find(utilisateur.getId()).ifPresent(pointage -> {
             pointage.setDateEtHeure(LocalDateTime.now());
             pointageDAO.create(pointage);
         });
-        return true;
     }
 
     public List<Pointage> pointagesParUtilisateur(Utilisateur utilisateur){
         return pointageDAO.findAllByUser(utilisateur);
+    }
+
+    public void supprimerPointage(Pointage pointage){
+        pointageDAO.delete(pointage);
+    }
+
+    public void modifierPointage(Pointage pointage){
+        pointageDAO.update(pointage);
     }
 }

@@ -1,4 +1,6 @@
 package com.youcode.systemepointage.dao;
 
-public interface AdministrateurDAO {
+import com.youcode.systemepointage.model.Administrateur;
+
+public interface AdministrateurDAO extends GenericDAO<Administrateur> {
 }

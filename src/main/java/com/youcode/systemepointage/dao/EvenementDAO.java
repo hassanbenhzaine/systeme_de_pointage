@@ -1,4 +1,6 @@
 package com.youcode.systemepointage.dao;
 
-public interface EvenementDAO {
+import com.youcode.systemepointage.model.Evenement;
+
+public interface EvenementDAO  extends GenericDAO<Evenement>{
 }

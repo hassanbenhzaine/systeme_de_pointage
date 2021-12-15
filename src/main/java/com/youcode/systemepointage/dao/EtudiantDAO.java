@@ -1,4 +1,6 @@
 package com.youcode.systemepointage.dao;
 
-public interface EtudiantDAO {
+import com.youcode.systemepointage.model.Etudiant;
+
+public interface EtudiantDAO extends GenericDAO<Etudiant> {
 }

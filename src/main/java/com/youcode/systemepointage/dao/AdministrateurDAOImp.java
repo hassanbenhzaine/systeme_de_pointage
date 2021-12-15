@@ -1,18 +1,37 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Administrateur;
-import com.youcode.systemepointage.model.Specialite;
-import com.youcode.systemepointage.shared.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class AdministrateurDAOImp implements AdministrateurDAO {
     private final String tableName = "Administrateur";
+
+    @Override
+    public Administrateur create(Administrateur administrateur) {
+        return null;
+    }
+
+    @Override
+    public Optional<Administrateur> find(int id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Administrateur> findAll() {
+        return null;
+    }
+
+    @Override
+    public Administrateur update(Administrateur administrateur) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
 
 //    @Override
 //    public Specialite create(Specialite specialite) {

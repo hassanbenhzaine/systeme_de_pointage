@@ -97,19 +97,20 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
     }
 
     @Override
-    public Specialite delete(Specialite specialite) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM " + tableName + " WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, specialite.getId());
+            preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return specialite;
+        return true;
     }
+
 }
 

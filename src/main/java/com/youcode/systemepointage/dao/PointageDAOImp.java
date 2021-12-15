@@ -1,14 +1,12 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Pointage;
-import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +70,8 @@ public class PointageDAOImp implements PointageDAO {
     }
 
     @Override
-    public Pointage delete(Pointage pointage) {
-        return null;
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override
