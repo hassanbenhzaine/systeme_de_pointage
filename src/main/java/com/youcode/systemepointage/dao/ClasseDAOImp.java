@@ -12,7 +12,7 @@ public class ClasseDAOImp implements ClasseDAO {
     }
 
     @Override
-    public Optional<Classe> find(int id) {
+    public Optional<Classe> find(Integer id) {
         return Optional.empty();
     }
 
@@ -27,7 +27,7 @@ public class ClasseDAOImp implements ClasseDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }

@@ -32,7 +32,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
     }
 
     @Override
-    public Optional<Specialite> find(int id) {
+    public Optional<Specialite> find(Integer id) {
         String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -97,7 +97,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         String sql = "DELETE FROM " + tableName + " WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();

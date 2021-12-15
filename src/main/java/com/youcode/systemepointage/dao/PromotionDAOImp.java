@@ -33,7 +33,7 @@ public class PromotionDAOImp implements PromotionDAO {
     }
 
     @Override
-    public Optional<Promotion> find(int id) {
+    public Optional<Promotion> find(Integer id) {
         return Optional.empty();
     }
 
@@ -48,7 +48,7 @@ public class PromotionDAOImp implements PromotionDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }

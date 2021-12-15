@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class JournalEvenement implements Serializable {
-    private int id;
+    private Integer id;
     private LocalDateTime debut;
     private LocalDateTime fin;
     private String nom;

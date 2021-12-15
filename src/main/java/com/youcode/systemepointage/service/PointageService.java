@@ -24,7 +24,7 @@ public class PointageService {
     }
 
     public void supprimerPointage(Pointage pointage){
-        pointageDAO.delete(pointage);
+        pointageDAO.delete(pointage.getId());
     }
 
     public void modifierPointage(Pointage pointage){

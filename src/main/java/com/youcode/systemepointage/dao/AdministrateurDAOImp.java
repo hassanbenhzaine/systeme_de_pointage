@@ -14,7 +14,7 @@ public class AdministrateurDAOImp implements AdministrateurDAO {
     }
 
     @Override
-    public Optional<Administrateur> find(int id) {
+    public Optional<Administrateur> find(Integer id) {
         return Optional.empty();
     }
 
@@ -29,7 +29,7 @@ public class AdministrateurDAOImp implements AdministrateurDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 

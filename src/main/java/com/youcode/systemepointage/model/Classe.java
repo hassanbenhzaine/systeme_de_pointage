@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Classe implements Serializable {
-    private int id;
+    private Integer id;
     private LocalTime debutJournee;
     private LocalTime finJournee;
     private String nom;

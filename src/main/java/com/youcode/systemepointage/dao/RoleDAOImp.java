@@ -5,6 +5,7 @@ import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class RoleDAOImp implements RoleDAO {
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, role.getNom().name());
+            preparedStatement.setString(1, role.getNom());
 
             preparedStatement.executeUpdate();
 
@@ -30,7 +31,7 @@ public class RoleDAOImp implements RoleDAO {
     }
 
     @Override
-    public Optional<Role> find(int id) {
+    public Optional<Role> find(Integer id) {
         return Optional.empty();
     }
 
@@ -45,8 +46,32 @@ public class RoleDAOImp implements RoleDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
 
         return false;
+    }
+
+    @Override
+    public Optional<Role> findByName(String name) {
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Nom\" = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, name);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Role role = new Role();
+                    role.setId(resultSet.getInt("RoleID"));
+                    role.setNom(resultSet.getString("Nom"));
+
+                    return Optional.of(role);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

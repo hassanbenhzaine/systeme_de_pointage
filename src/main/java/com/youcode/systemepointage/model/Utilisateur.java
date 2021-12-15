@@ -1,16 +1,18 @@
 package com.youcode.systemepointage.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Utilisateur implements Serializable {
-    private int id;
+    private Integer id;
     private String nom;
     private String prenom;
     private String email;
@@ -18,7 +20,7 @@ public class Utilisateur implements Serializable {
     private String telephone;
     private Role role;
 
-    public Utilisateur(int id) {
+    public Utilisateur(Integer id) {
         this.id = id;
     }
 

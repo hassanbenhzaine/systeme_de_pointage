@@ -12,7 +12,7 @@ public class JournalEvenementDAOImp implements JournalEvenementDAO {
     }
 
     @Override
-    public Optional<JournalEvenement> find(int id) {
+    public Optional<JournalEvenement> find(Integer id) {
         return Optional.empty();
     }
 
@@ -27,7 +27,7 @@ public class JournalEvenementDAOImp implements JournalEvenementDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }

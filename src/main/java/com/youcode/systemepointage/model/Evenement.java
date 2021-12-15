@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Evenement implements Serializable {
-    private int id;
+    private Integer id;
     private LocalDateTime debut;
     private LocalDateTime fin;
     private String nom;
     private String description;
-    private boolean proposer;
+    private Boolean proposer;
 
-    public Evenement(LocalDateTime debut, LocalDateTime fin, String nom, String description, boolean proposer) {
+    public Evenement(LocalDateTime debut, LocalDateTime fin, String nom, String description, Boolean proposer) {
         this.debut = debut;
         this.fin = fin;
         this.nom = nom;

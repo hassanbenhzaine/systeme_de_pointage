@@ -39,7 +39,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
     }
 
     @Override
-    public Optional<Utilisateur> find(int id) {
+    public Optional<Utilisateur> find(Integer id) {
         String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"UtilisateurID\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -116,7 +116,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         String sql = "DELETE FROM " + tableName + " WHERE UtilisateurID = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -162,7 +162,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public Utilisateur assignRole(Utilisateur utilisateur, Role role) {
-        String sql = "UPDATE "+ tableName +" SET \"Role\" = ? WHERE UtilisateurID = ?";
+        String sql = "UPDATE \"" + tableName + "\" SET \"RoleID\" = ? WHERE UtilisateurID = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

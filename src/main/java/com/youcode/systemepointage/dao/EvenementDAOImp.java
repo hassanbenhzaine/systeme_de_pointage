@@ -12,7 +12,7 @@ public class EvenementDAOImp implements EvenementDAO {
     }
 
     @Override
-    public Optional<Evenement> find(int id) {
+    public Optional<Evenement> find(Integer id) {
         return Optional.empty();
     }
 
@@ -27,7 +27,7 @@ public class EvenementDAOImp implements EvenementDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }

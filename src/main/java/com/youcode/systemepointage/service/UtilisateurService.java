@@ -1,9 +1,6 @@
 package com.youcode.systemepointage.service;
 
-import com.youcode.systemepointage.dao.AdresseDAO;
-import com.youcode.systemepointage.dao.AdresseDAOImp;
-import com.youcode.systemepointage.dao.UtilisateurDAO;
-import com.youcode.systemepointage.dao.UtilisateurDAOImp;
+import com.youcode.systemepointage.dao.*;
 import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
@@ -13,10 +10,12 @@ import lombok.AllArgsConstructor;
 public class UtilisateurService {
     private final UtilisateurDAO utilisateurDAO;
     private final AdresseDAO adresseDAO;
+    private final RoleDAO roleDAO;
 
     public UtilisateurService() {
         this.utilisateurDAO = new UtilisateurDAOImp();
         this.adresseDAO = new AdresseDAOImp();
+        this.roleDAO = new RoleDAOImp();
     }
 
     public void seConnecter(String email, String motDePasse) {
@@ -29,9 +28,14 @@ public class UtilisateurService {
                 new Utilisateur(nom, prenom, email, motDePasse, telephone, role)
         );
 
+        Role foundRole = roleDAO.findByName(
+                role.getNom())
+                .orElseThrow(() -> new RuntimeException("Role non trouvé")
+                );
+
         utilisateurDAO.assignRole(createdUtilisateur, role);
-        adresse.setUtilisateur(createdUtilisateur);
-        adresseDAO.create(adresse);
+//        adresse.setUtilisateur(createdUtilisateur);
+//        adresseDAO.create(adresse);
     }
 
 }

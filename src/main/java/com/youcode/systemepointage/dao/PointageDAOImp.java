@@ -35,7 +35,7 @@ public class PointageDAOImp implements PointageDAO {
     }
 
     @Override
-    public Optional<Pointage> find(int id) {
+    public Optional<Pointage> find(Integer id) {
         String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -70,7 +70,7 @@ public class PointageDAOImp implements PointageDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 

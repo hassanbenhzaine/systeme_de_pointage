@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Role {
-    private int id;
-    private Roles nom;
+    private Integer id;
+    private String nom;
 
-    public Role(Roles nom) {
+    public Role(String nom) {
         this.nom = nom;
     }
 

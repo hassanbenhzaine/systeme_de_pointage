@@ -15,7 +15,7 @@ public class ChefFabriqueDAOImpl implements ChefFabriqueDAO {
     }
 
     @Override
-    public Optional<ChefFabrique> find(int id) {
+    public Optional<ChefFabrique> find(Integer id) {
         return Optional.empty();
     }
 
@@ -30,7 +30,7 @@ public class ChefFabriqueDAOImpl implements ChefFabriqueDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }

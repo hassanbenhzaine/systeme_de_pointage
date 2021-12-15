@@ -36,7 +36,7 @@ public class AdresseDAOImp implements AdresseDAO{
     }
 
     @Override
-    public Optional<Adresse> find(int id) {
+    public Optional<Adresse> find(Integer id) {
         return Optional.empty();
     }
 
@@ -51,7 +51,7 @@ public class AdresseDAOImp implements AdresseDAO{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }

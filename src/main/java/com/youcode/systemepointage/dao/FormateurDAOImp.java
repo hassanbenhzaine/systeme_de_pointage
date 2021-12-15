@@ -12,7 +12,7 @@ public class FormateurDAOImp implements FormateurDAO {
     }
 
     @Override
-    public Optional<Formateur> find(int id) {
+    public Optional<Formateur> find(Integer id) {
         return Optional.empty();
     }
 
@@ -27,7 +27,7 @@ public class FormateurDAOImp implements FormateurDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return false;
     }
 }
