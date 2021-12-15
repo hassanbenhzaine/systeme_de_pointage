@@ -14,4 +14,5 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 public class ChefFabrique extends Utilisateur implements Serializable {
     private LocalDate entreeFabrique;
+
 }

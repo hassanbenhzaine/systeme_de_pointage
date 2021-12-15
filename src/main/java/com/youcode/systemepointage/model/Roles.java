@@ -1,6 +1,6 @@
 package com.youcode.systemepointage.model;
 
-public enum RoleEnum {
+public enum Roles {
     FORMATEUR,
     ADMINISTRATEUR,
     ETUDIANT,

@@ -16,10 +16,17 @@ public class Utilisateur implements Serializable {
     private String email;
     private String motDePasse;
     private String telephone;
-    private Adresse adresse;
     private Role role;
 
     public Utilisateur(int id) {
         this.id = id;
+    }
+
+    public Utilisateur(String nom, String prenom, String email, String motDePasse, String telephone) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.motDePasse = motDePasse;
+        this.telephone = telephone;
     }
 }

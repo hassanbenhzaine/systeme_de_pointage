@@ -16,5 +16,9 @@ public class Promotion implements Serializable {
     private LocalDate fin;
     private String nom;
 
-
+    public Promotion(LocalDate debut, LocalDate fin, String nom) {
+        this.debut = debut;
+        this.fin = fin;
+        this.nom = nom;
+    }
 }

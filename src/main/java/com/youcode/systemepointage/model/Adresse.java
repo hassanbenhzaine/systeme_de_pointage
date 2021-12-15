@@ -17,4 +17,14 @@ public class Adresse implements Serializable {
     private String pays;
     private String region;
     private String ville;
+    private Utilisateur utilisateur;
+
+    public Adresse(String adresse1, String adresse2, int codePostal, String pays, String region, String ville) {
+        this.adresse1 = adresse1;
+        this.adresse2 = adresse2;
+        this.codePostal = codePostal;
+        this.pays = pays;
+        this.region = region;
+        this.ville = ville;
+    }
 }

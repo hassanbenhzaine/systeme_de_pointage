@@ -16,5 +16,13 @@ public class Evenement implements Serializable {
     private LocalDateTime fin;
     private String nom;
     private String description;
-    private boolean proposed;
+    private boolean proposer;
+
+    public Evenement(LocalDateTime debut, LocalDateTime fin, String nom, String description, boolean proposer) {
+        this.debut = debut;
+        this.fin = fin;
+        this.nom = nom;
+        this.description = description;
+        this.proposer = proposer;
+    }
 }

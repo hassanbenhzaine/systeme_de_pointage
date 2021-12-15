@@ -15,4 +15,10 @@ public class Classe implements Serializable {
     private LocalTime debutJournee;
     private LocalTime finJournee;
     private String nom;
+
+    public Classe(LocalTime debutJournee, LocalTime finJournee, String nom) {
+        this.debutJournee = debutJournee;
+        this.finJournee = finJournee;
+        this.nom = nom;
+    }
 }

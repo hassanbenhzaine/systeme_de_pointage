@@ -12,4 +12,8 @@ import java.io.Serializable;
 public class Specialite implements Serializable {
     private int id;
     private String nom;
+
+    public Specialite(String nom) {
+        this.nom = nom;
+    }
 }

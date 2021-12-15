@@ -12,7 +12,8 @@ CREATE TABLE "Adresse"
 	"Pays" varchar(50),
 	"Region" varchar(50),
 	"Ville" varchar(50),
-	"AdresseID" integer NOT NULL
+	"AdresseID" integer NOT NULL,
+	"UtilisateurID" integer
 )
 ;
 
@@ -46,9 +47,10 @@ CREATE TABLE "Etudiant"
 CREATE TABLE "Evenement"
 (
 	"Debut" timestamp without time zone,
+	"Description" varchar(50),
 	"Fin" timestamp without time zone,
 	"Nom" varchar(50),
-	"Status" boolean,
+	"Proposed" boolean,
 	"EvenementID" integer NOT NULL
 )
 ;
@@ -73,8 +75,7 @@ CREATE TABLE "JournalEvenement"
 
 CREATE TABLE "Pointage"
 (
-	"DateArrivee" timestamp without time zone,
-	"DateDepart" timestamp without time zone,
+	"DateEtHeure" timestamp without time zone,
 	"PointageID" integer NOT NULL,
 	"UtilisateurID" integer
 )
@@ -118,7 +119,6 @@ CREATE TABLE "Utilisateur"
 	"Prenom" varchar(50),
 	"Telephone" varchar(50),
 	"UtilisateurID" integer NOT NULL,
-	"AdresseID" integer,
 	"RoleID" integer
 )
 ;
@@ -183,6 +183,10 @@ ALTER TABLE "Administrateur" ADD CONSTRAINT "FK_Administrateur_Utilisateur"
 	FOREIGN KEY ("AdministrateurID") REFERENCES "Utilisateur" ("UtilisateurID") ON DELETE No Action ON UPDATE No Action
 ;
 
+ALTER TABLE "Adresse" ADD CONSTRAINT "FK_Adresse_Utilisateur"
+	FOREIGN KEY ("UtilisateurID") REFERENCES "Utilisateur" ("UtilisateurID") ON DELETE No Action ON UPDATE No Action
+;
+
 ALTER TABLE "ChefFabrique" ADD CONSTRAINT "FK_ChefFabrique_Utilisateur"
 	FOREIGN KEY ("CheffabriqueID") REFERENCES "Utilisateur" ("UtilisateurID") ON DELETE No Action ON UPDATE No Action
 ;
@@ -233,10 +237,6 @@ ALTER TABLE "Pointage" ADD CONSTRAINT "FK_Pointage_Utilisateur"
 
 ALTER TABLE "Secretaire" ADD CONSTRAINT "FK_Secretaire_Utilisateur"
 	FOREIGN KEY ("SecretaireID") REFERENCES "Utilisateur" ("UtilisateurID") ON DELETE No Action ON UPDATE No Action
-;
-
-ALTER TABLE "Utilisateur" ADD CONSTRAINT "FK_Utilisateur_Adresse"
-	FOREIGN KEY ("AdresseID") REFERENCES "Adresse" ("AdresseID") ON DELETE No Action ON UPDATE No Action
 ;
 
 ALTER TABLE "Utilisateur" ADD CONSTRAINT "FK_Utilisateur_Role"

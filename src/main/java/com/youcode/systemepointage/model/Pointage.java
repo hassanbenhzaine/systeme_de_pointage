@@ -14,4 +14,13 @@ public class Pointage implements Serializable {
     private int id;
     private LocalDateTime dateEtHeure;
     private Utilisateur utilisateur;
+
+    public Pointage(LocalDateTime dateEtHeure, Utilisateur utilisateur) {
+        this.dateEtHeure = dateEtHeure;
+        this.utilisateur = utilisateur;
+    }
+
+    public Pointage(LocalDateTime dateEtHeure) {
+        this.dateEtHeure = dateEtHeure;
+    }
 }

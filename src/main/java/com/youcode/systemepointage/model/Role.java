@@ -7,5 +7,9 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Role {
     private int id;
-    private RoleEnum name;
+    private Roles name;
+
+    public Role(Roles name) {
+        this.name = name;
+    }
 }

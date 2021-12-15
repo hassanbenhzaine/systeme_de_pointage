@@ -16,5 +16,11 @@ public class JournalEvenement implements Serializable {
     private Secretaire secretaire;
     private Evenement evenement;
 
-
+    public JournalEvenement(LocalDateTime debut, LocalDateTime fin, String nom, Secretaire secretaire, Evenement evenement) {
+        this.debut = debut;
+        this.fin = fin;
+        this.nom = nom;
+        this.secretaire = secretaire;
+        this.evenement = evenement;
+    }
 }
