@@ -1,7 +1,8 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.shared.ConnectionFactory;
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
+import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -156,6 +157,23 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Utilisateur assignRole(Utilisateur utilisateur, Role role) {
+        String sql = "UPDATE "+ tableName +" SET \"Role\" = ? WHERE UtilisateurID = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, role.getId());
+            preparedStatement.setInt(2, utilisateur.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return utilisateur;
     }
 }
 

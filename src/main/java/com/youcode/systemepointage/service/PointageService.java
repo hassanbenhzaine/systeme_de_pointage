@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.PointageDAO;
-import com.youcode.systemepointage.dao.PointageDAOImp;
 import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
@@ -13,11 +12,12 @@ import java.util.List;
 public class PointageService {
     private PointageDAO pointageDAO;
 
-    public void pointer(Utilisateur utilisateur){
+    public boolean pointer(Utilisateur utilisateur){
         pointageDAO.find(utilisateur.getId()).ifPresent(pointage -> {
             pointage.setDateEtHeure(LocalDateTime.now());
             pointageDAO.create(pointage);
         });
+        return true;
     }
 
     public List<Pointage> pointagesParUtilisateur(Utilisateur utilisateur){

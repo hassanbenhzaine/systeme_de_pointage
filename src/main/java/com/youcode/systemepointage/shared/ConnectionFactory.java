@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     private final String USERNAME = "postgre";
     private final String PASSWORD = "root";
-    private final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/300";
+    private final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/pointage";
     private final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
     private static ConnectionFactory connectionFactory = null;
 

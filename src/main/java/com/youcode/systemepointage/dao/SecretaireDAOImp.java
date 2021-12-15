@@ -1,4 +1,4 @@
 package com.youcode.systemepointage.dao;
 
-public class SecretaireDAOImp {
+public class SecretaireDAOImp implements SecretaireDAO {
 }

@@ -92,7 +92,7 @@ CREATE TABLE "Promotion"
 
 CREATE TABLE "Role"
 (
-	"Name" varchar(50),
+	"Nom" varchar(50),
 	"RoleID" integer NOT NULL
 )
 ;

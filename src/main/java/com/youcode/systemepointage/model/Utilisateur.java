@@ -22,11 +22,12 @@ public class Utilisateur implements Serializable {
         this.id = id;
     }
 
-    public Utilisateur(String nom, String prenom, String email, String motDePasse, String telephone) {
+    public Utilisateur(String nom, String prenom, String email, String motDePasse, String telephone, Role role) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.motDePasse = motDePasse;
         this.telephone = telephone;
+        this.role = role;
     }
 }

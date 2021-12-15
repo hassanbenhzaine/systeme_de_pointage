@@ -13,8 +13,8 @@ public class AdresseDAOImp implements AdresseDAO{
     @Override
     public Adresse create(Adresse adresse) {
         String sql = "INSERT INTO \"" + tableName +
-                " (\"Adresse1\", \"Adresse2\", \"Pays\", \"Region\", \"Ville\", \"CodePostal\")"
-                + " VALUES (?, ?, ?, ?, ?, ?)";
+                " (\"Adresse1\", \"Adresse2\", \"Pays\", \"Region\", \"Ville\", \"CodePostal\", \"UtilisateurID\")"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -25,14 +25,9 @@ public class AdresseDAOImp implements AdresseDAO{
             preparedStatement.setString(4, adresse.getRegion());
             preparedStatement.setString(5, adresse.getVille());
             preparedStatement.setInt(6, adresse.getCodePostal());
+            preparedStatement.setInt(7, adresse.getUtilisateur().getId());
 
             preparedStatement.executeUpdate();
-
-            preparedStatement.getGeneratedKeys();
-
-            while (){
-
-            }
 
         } catch (Exception e) {
             e.printStackTrace();

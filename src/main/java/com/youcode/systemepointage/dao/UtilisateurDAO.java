@@ -1,5 +1,6 @@
 package com.youcode.systemepointage.dao;
 
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface UtilisateurDAO {
     Utilisateur update(Utilisateur utilisateur);
     Utilisateur delete(Utilisateur utilisateur);
     Optional<Utilisateur> findByEmailAndPassword(String email, String motDePasse);
-
+    Utilisateur assignRole(Utilisateur utilisateur, Role role);
 }
