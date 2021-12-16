@@ -6,8 +6,8 @@ import com.youcode.systemepointage.service.UtilisateurService;
 
 public class UtilisateurTest {
     public static void test(){
-        RoleService role = new RoleService();
-        Role adminRole = role.trouverRole("ADMIN");
+
+        Role adminRole = RoleService.getInstance().trouverRole("ADMIN");
 
         Adresse hassanaddress = Adresse.builder()
                 .adresse1("avenue de la liberté")
@@ -16,8 +16,8 @@ public class UtilisateurTest {
                 .pays("Rabat-sale-kenitra")
                 .build();
 
-        UtilisateurService utilisateurService = new UtilisateurService();
-        utilisateurService.seEnregistrer(
+
+        UtilisateurService.getInstance().seEnregistrer(
                 Utilisateur.builder()
                         .nom("hassan")
                         .prenom("benhzaine")

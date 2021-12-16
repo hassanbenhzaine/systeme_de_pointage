@@ -12,9 +12,17 @@ import java.util.List;
 @AllArgsConstructor
 public class PointageService {
     private final PointageDAO pointageDAO;
+    private static PointageService instance;
 
-    public PointageService() {
-        this.pointageDAO = new PointageDAOImp();
+    public static PointageService getInstance(){
+        if(instance == null){
+            instance = new PointageService();
+        }
+        return instance;
+    }
+
+    private PointageService() {
+        pointageDAO = new PointageDAOImp();
     }
 
     public void pointer(Utilisateur utilisateur){

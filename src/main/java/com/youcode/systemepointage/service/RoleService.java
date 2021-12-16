@@ -14,6 +14,9 @@ public class RoleService {
         return instance;
     }
 
+    private RoleService(){
+    }
+
     public void creerRole(String role) {
         roleDAO.create(Role.builder().nom(role).build());
     }

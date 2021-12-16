@@ -21,33 +21,27 @@ public class UtilisateurService {
         return instance;
     }
 
-    public UtilisateurService() {
+    private UtilisateurService() {
         utilisateurDAO = new UtilisateurDAOImp();
         roleService = RoleService.getInstance();
         adresseService = AdresseService.getInstance();
     }
 
-    public void seConnecter(String email, String motDePasse) {
-        utilisateurDAO.findByEmailAndPassword(email, motDePasse)
+    public void seConnecter(Utilisateur utilisateur) {
+        utilisateurDAO.findByEmailAndPassword(utilisateur.getEmail(), utilisateur.getMotDePasse())
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
     public void seEnregistrer(Utilisateur utilisateur, Adresse adresse, Role role) {
-        utilisateur.setRole(role);
-        Utilisateur createdUtilisateur = utilisateurDAO.create(utilisateur);
-
         Role foundRole = roleService.trouverRole(role.getNom());
-
-        createdUtilisateur.setRole(foundRole);
-        utilisateurDAO.update(createdUtilisateur);
-
+        utilisateur.setRole(foundRole);
+        Utilisateur createdUtilisateur = utilisateurDAO.create(utilisateur);
         adresse.setUtilisateur(createdUtilisateur);
-
         adresseService.ajouter(adresse);
     }
 
-    public Utilisateur trouverUtilisateur(String email) {
-        return utilisateurDAO.findByEmail(email)
+    public Utilisateur trouverUtilisateurParEmail(Utilisateur utilisateur) {
+        return utilisateurDAO.findByEmail(utilisateur.getEmail())
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
