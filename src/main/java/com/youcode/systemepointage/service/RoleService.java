@@ -1,14 +1,17 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.RoleDAO;
-import com.youcode.systemepointage.dao.RoleDAOImp;
 import com.youcode.systemepointage.model.Role;
 
 public class RoleService {
     private RoleDAO roleDAO;
+    private static RoleService instance = null;
 
-    public RoleService() {
-        this.roleDAO = new RoleDAOImp();
+    public static RoleService getInstance(){
+        if(instance==null){
+            instance = new RoleService();
+        }
+        return instance;
     }
 
     public void creerRole(String role) {

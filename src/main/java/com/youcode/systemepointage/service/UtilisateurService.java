@@ -1,6 +1,7 @@
 package com.youcode.systemepointage.service;
 
-import com.youcode.systemepointage.dao.*;
+import com.youcode.systemepointage.dao.UtilisateurDAO;
+import com.youcode.systemepointage.dao.UtilisateurDAOImp;
 import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
@@ -9,22 +10,21 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UtilisateurService {
     private final UtilisateurDAO utilisateurDAO;
-    private final AdresseDAO adresseDAO;
-    private final RoleDAO roleDAO;
-    private static final UtilisateurService utilisateurService= null;
+    private final RoleService roleService;
+    private final AdresseService adresseService;
+    private static UtilisateurService instance = null;
 
-    // singleton
-//    public static UtilisateurService getInstance(){
-//        if(utilisateurService==null){
-//            utilisateurService
-//        }
-//        return utilisateurService;
-//    }
+    public static UtilisateurService getInstance(){
+        if(instance==null){
+            instance = new UtilisateurService();
+        }
+        return instance;
+    }
 
     public UtilisateurService() {
-        this.utilisateurDAO = new UtilisateurDAOImp();
-        this.adresseDAO = new AdresseDAOImp();
-        this.roleDAO = new RoleDAOImp();
+        utilisateurDAO = new UtilisateurDAOImp();
+        roleService = RoleService.getInstance();
+        adresseService = AdresseService.getInstance();
     }
 
     public void seConnecter(String email, String motDePasse) {
@@ -36,16 +36,14 @@ public class UtilisateurService {
         utilisateur.setRole(role);
         Utilisateur createdUtilisateur = utilisateurDAO.create(utilisateur);
 
-        Role foundRole = roleDAO
-                .findByName(role.getNom())
-                .orElseThrow(() -> new RuntimeException("Role non trouvé")
-        );
+        Role foundRole = roleService.trouverRole(role.getNom());
 
         createdUtilisateur.setRole(foundRole);
         utilisateurDAO.update(createdUtilisateur);
 
         adresse.setUtilisateur(createdUtilisateur);
-        adresseDAO.create(adresse);
+
+        adresseService.ajouter(adresse);
     }
 
     public Utilisateur trouverUtilisateur(String email) {
