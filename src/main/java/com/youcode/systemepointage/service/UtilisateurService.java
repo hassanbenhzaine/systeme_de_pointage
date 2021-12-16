@@ -11,6 +11,15 @@ public class UtilisateurService {
     private final UtilisateurDAO utilisateurDAO;
     private final AdresseDAO adresseDAO;
     private final RoleDAO roleDAO;
+    private static final UtilisateurService utilisateurService= null;
+
+    // singleton
+//    public static UtilisateurService getInstance(){
+//        if(utilisateurService==null){
+//            utilisateurService
+//        }
+//        return utilisateurService;
+//    }
 
     public UtilisateurService() {
         this.utilisateurDAO = new UtilisateurDAOImp();

@@ -5,7 +5,7 @@
 -- Dumped from database version 13.4
 -- Dumped by pg_dump version 13.4
 
--- Started on 2021-12-16 10:36:16
+-- Started on 2021-12-16 15:33:46
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,27 +18,32 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+SET default_tablespace = '';
+
 SET default_table_access_method = heap;
 
 --
 -- TOC entry 200 (class 1259 OID 68422)
--- Name: Utilisateur; Type: TABLE; Schema: public; Owner: -
+-- Name: Utilisateur; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Utilisateur" (
     email character varying,
-    "motDePasse" character varying,
     nom character varying,
     prenom character varying,
     telephone character varying,
     id integer NOT NULL,
-    "roleId" integer
+    "roleId" integer,
+    statut boolean,
+    "motDePasse" character varying
 );
 
 
+ALTER TABLE public."Utilisateur" OWNER TO postgre;
+
 --
 -- TOC entry 206 (class 1259 OID 68486)
--- Name: Administrateur; Type: TABLE; Schema: public; Owner: -
+-- Name: Administrateur; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Administrateur" (
@@ -46,26 +51,30 @@ CREATE TABLE public."Administrateur" (
 INHERITS (public."Utilisateur");
 
 
+ALTER TABLE public."Administrateur" OWNER TO postgre;
+
 --
 -- TOC entry 207 (class 1259 OID 68492)
--- Name: Adresse; Type: TABLE; Schema: public; Owner: -
+-- Name: Adresse; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Adresse" (
     adresse1 character varying,
     adresse2 character varying,
-    "codePostal" character varying,
     pays character varying,
     region character varying,
     ville character varying,
     id integer NOT NULL,
-    "utilisateurId" integer
+    "utilisateurId" integer,
+    "codePostal" integer
 );
 
 
+ALTER TABLE public."Adresse" OWNER TO postgre;
+
 --
 -- TOC entry 220 (class 1259 OID 68594)
--- Name: Adresse_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Adresse_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Adresse" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -80,7 +89,7 @@ ALTER TABLE public."Adresse" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 --
 -- TOC entry 203 (class 1259 OID 68459)
--- Name: ChefFabrique; Type: TABLE; Schema: public; Owner: -
+-- Name: ChefFabrique; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."ChefFabrique" (
@@ -89,9 +98,11 @@ CREATE TABLE public."ChefFabrique" (
 INHERITS (public."Utilisateur");
 
 
+ALTER TABLE public."ChefFabrique" OWNER TO postgre;
+
 --
 -- TOC entry 211 (class 1259 OID 68538)
--- Name: Classe; Type: TABLE; Schema: public; Owner: -
+-- Name: Classe; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Classe" (
@@ -102,9 +113,11 @@ CREATE TABLE public."Classe" (
 );
 
 
+ALTER TABLE public."Classe" OWNER TO postgre;
+
 --
 -- TOC entry 219 (class 1259 OID 68592)
--- Name: Classe_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Classe_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Classe" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -119,7 +132,7 @@ ALTER TABLE public."Classe" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 --
 -- TOC entry 210 (class 1259 OID 68532)
--- Name: Etudiant; Type: TABLE; Schema: public; Owner: -
+-- Name: Etudiant; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Etudiant" (
@@ -129,9 +142,11 @@ CREATE TABLE public."Etudiant" (
 INHERITS (public."Utilisateur");
 
 
+ALTER TABLE public."Etudiant" OWNER TO postgre;
+
 --
 -- TOC entry 204 (class 1259 OID 68465)
--- Name: Evenement; Type: TABLE; Schema: public; Owner: -
+-- Name: Evenement; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Evenement" (
@@ -144,9 +159,11 @@ CREATE TABLE public."Evenement" (
 );
 
 
+ALTER TABLE public."Evenement" OWNER TO postgre;
+
 --
 -- TOC entry 218 (class 1259 OID 68590)
--- Name: Evenement_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Evenement_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Evenement" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -161,7 +178,7 @@ ALTER TABLE public."Evenement" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 
 --
 -- TOC entry 221 (class 1259 OID 68596)
--- Name: Formateur; Type: TABLE; Schema: public; Owner: -
+-- Name: Formateur; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Formateur" (
@@ -172,9 +189,11 @@ CREATE TABLE public."Formateur" (
 INHERITS (public."Utilisateur");
 
 
+ALTER TABLE public."Formateur" OWNER TO postgre;
+
 --
 -- TOC entry 205 (class 1259 OID 68473)
--- Name: JournalEvenement; Type: TABLE; Schema: public; Owner: -
+-- Name: JournalEvenement; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."JournalEvenement" (
@@ -186,9 +205,11 @@ CREATE TABLE public."JournalEvenement" (
 );
 
 
+ALTER TABLE public."JournalEvenement" OWNER TO postgre;
+
 --
 -- TOC entry 202 (class 1259 OID 68449)
--- Name: Pointage; Type: TABLE; Schema: public; Owner: -
+-- Name: Pointage; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Pointage" (
@@ -198,9 +219,11 @@ CREATE TABLE public."Pointage" (
 );
 
 
+ALTER TABLE public."Pointage" OWNER TO postgre;
+
 --
 -- TOC entry 217 (class 1259 OID 68588)
--- Name: Pointage_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Pointage_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Pointage" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -215,7 +238,7 @@ ALTER TABLE public."Pointage" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 --
 -- TOC entry 212 (class 1259 OID 68567)
--- Name: Promotion; Type: TABLE; Schema: public; Owner: -
+-- Name: Promotion; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Promotion" (
@@ -226,9 +249,11 @@ CREATE TABLE public."Promotion" (
 );
 
 
+ALTER TABLE public."Promotion" OWNER TO postgre;
+
 --
 -- TOC entry 216 (class 1259 OID 68586)
--- Name: Promotion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Promotion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Promotion" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -243,7 +268,7 @@ ALTER TABLE public."Promotion" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 
 --
 -- TOC entry 208 (class 1259 OID 68505)
--- Name: Role; Type: TABLE; Schema: public; Owner: -
+-- Name: Role; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Role" (
@@ -252,9 +277,11 @@ CREATE TABLE public."Role" (
 );
 
 
+ALTER TABLE public."Role" OWNER TO postgre;
+
 --
 -- TOC entry 215 (class 1259 OID 68584)
--- Name: Role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Role" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -269,7 +296,7 @@ ALTER TABLE public."Role" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 --
 -- TOC entry 201 (class 1259 OID 68441)
--- Name: Secretaire; Type: TABLE; Schema: public; Owner: -
+-- Name: Secretaire; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Secretaire" (
@@ -279,9 +306,11 @@ CREATE TABLE public."Secretaire" (
 INHERITS (public."Utilisateur");
 
 
+ALTER TABLE public."Secretaire" OWNER TO postgre;
+
 --
 -- TOC entry 209 (class 1259 OID 68524)
--- Name: Specialite; Type: TABLE; Schema: public; Owner: -
+-- Name: Specialite; Type: TABLE; Schema: public; Owner: postgre
 --
 
 CREATE TABLE public."Specialite" (
@@ -290,9 +319,11 @@ CREATE TABLE public."Specialite" (
 );
 
 
+ALTER TABLE public."Specialite" OWNER TO postgre;
+
 --
 -- TOC entry 214 (class 1259 OID 68582)
--- Name: Specialite_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Specialite_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Specialite" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -307,7 +338,7 @@ ALTER TABLE public."Specialite" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY
 
 --
 -- TOC entry 213 (class 1259 OID 68580)
--- Name: Utilisateur_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: Utilisateur_id_seq; Type: SEQUENCE; Schema: public; Owner: postgre
 --
 
 ALTER TABLE public."Utilisateur" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
@@ -322,7 +353,7 @@ ALTER TABLE public."Utilisateur" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTIT
 
 --
 -- TOC entry 2939 (class 2606 OID 69003)
--- Name: Administrateur Administrateur_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Administrateur Administrateur_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Administrateur"
@@ -331,7 +362,7 @@ ALTER TABLE ONLY public."Administrateur"
 
 --
 -- TOC entry 2941 (class 2606 OID 68499)
--- Name: Adresse Adresse_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Adresse Adresse_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Adresse"
@@ -340,7 +371,7 @@ ALTER TABLE ONLY public."Adresse"
 
 --
 -- TOC entry 2935 (class 2606 OID 69001)
--- Name: ChefFabrique ChefFabrique_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ChefFabrique ChefFabrique_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."ChefFabrique"
@@ -349,7 +380,7 @@ ALTER TABLE ONLY public."ChefFabrique"
 
 --
 -- TOC entry 2949 (class 2606 OID 68545)
--- Name: Classe Classe_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Classe Classe_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Classe"
@@ -358,7 +389,7 @@ ALTER TABLE ONLY public."Classe"
 
 --
 -- TOC entry 2947 (class 2606 OID 68999)
--- Name: Etudiant Etudiant_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Etudiant Etudiant_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Etudiant"
@@ -367,7 +398,7 @@ ALTER TABLE ONLY public."Etudiant"
 
 --
 -- TOC entry 2937 (class 2606 OID 68472)
--- Name: Evenement Evenement_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Evenement Evenement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Evenement"
@@ -376,7 +407,7 @@ ALTER TABLE ONLY public."Evenement"
 
 --
 -- TOC entry 2953 (class 2606 OID 68997)
--- Name: Formateur Formateur_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Formateur Formateur_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Formateur"
@@ -385,7 +416,7 @@ ALTER TABLE ONLY public."Formateur"
 
 --
 -- TOC entry 2933 (class 2606 OID 68453)
--- Name: Pointage Pointage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Pointage Pointage_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Pointage"
@@ -394,7 +425,7 @@ ALTER TABLE ONLY public."Pointage"
 
 --
 -- TOC entry 2951 (class 2606 OID 68574)
--- Name: Promotion Promotion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Promotion Promotion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Promotion"
@@ -403,7 +434,7 @@ ALTER TABLE ONLY public."Promotion"
 
 --
 -- TOC entry 2943 (class 2606 OID 68512)
--- Name: Role Role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Role Role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Role"
@@ -412,7 +443,7 @@ ALTER TABLE ONLY public."Role"
 
 --
 -- TOC entry 2931 (class 2606 OID 68448)
--- Name: Secretaire Secretaire_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Secretaire Secretaire_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Secretaire"
@@ -421,7 +452,7 @@ ALTER TABLE ONLY public."Secretaire"
 
 --
 -- TOC entry 2945 (class 2606 OID 68531)
--- Name: Specialite Specialite_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Specialite Specialite_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Specialite"
@@ -430,7 +461,7 @@ ALTER TABLE ONLY public."Specialite"
 
 --
 -- TOC entry 2929 (class 2606 OID 68429)
--- Name: Utilisateur Utilisateur_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: Utilisateur Utilisateur_pkey; Type: CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Utilisateur"
@@ -438,87 +469,87 @@ ALTER TABLE ONLY public."Utilisateur"
 
 
 --
--- TOC entry 2958 (class 2606 OID 68500)
--- Name: Adresse Adresse_utilisateurId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2958 (class 2606 OID 69009)
+-- Name: Adresse Adresse_utilisateurId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Adresse"
-    ADD CONSTRAINT "Adresse_utilisateurId_fkey" FOREIGN KEY ("utilisateurId") REFERENCES public."Utilisateur"(id);
+    ADD CONSTRAINT "Adresse_utilisateurId_fkey" FOREIGN KEY ("utilisateurId") REFERENCES public."Utilisateur"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
--- TOC entry 2959 (class 2606 OID 68557)
--- Name: Etudiant Etudiant_classeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public."Etudiant"
-    ADD CONSTRAINT "Etudiant_classeId_fkey" FOREIGN KEY ("classeId") REFERENCES public."Classe"(id) NOT VALID;
-
-
---
--- TOC entry 2960 (class 2606 OID 68575)
--- Name: Etudiant Etudiant_promotionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2960 (class 2606 OID 69019)
+-- Name: Etudiant Etudiant_classeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Etudiant"
-    ADD CONSTRAINT "Etudiant_promotionId_fkey" FOREIGN KEY ("promotionId") REFERENCES public."Promotion"(id) NOT VALID;
+    ADD CONSTRAINT "Etudiant_classeId_fkey" FOREIGN KEY ("classeId") REFERENCES public."Classe"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
--- TOC entry 2962 (class 2606 OID 68607)
--- Name: Formateur Formateur_classeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2959 (class 2606 OID 69014)
+-- Name: Etudiant Etudiant_promotionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
+--
+
+ALTER TABLE ONLY public."Etudiant"
+    ADD CONSTRAINT "Etudiant_promotionId_fkey" FOREIGN KEY ("promotionId") REFERENCES public."Promotion"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 2961 (class 2606 OID 69024)
+-- Name: Formateur Formateur_classeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Formateur"
-    ADD CONSTRAINT "Formateur_classeId_fkey" FOREIGN KEY ("classeId") REFERENCES public."Classe"(id);
+    ADD CONSTRAINT "Formateur_classeId_fkey" FOREIGN KEY ("classeId") REFERENCES public."Classe"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
--- TOC entry 2961 (class 2606 OID 68602)
--- Name: Formateur Formateur_specialiteId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2962 (class 2606 OID 69029)
+-- Name: Formateur Formateur_specialiteId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Formateur"
-    ADD CONSTRAINT "Formateur_specialiteId_fkey" FOREIGN KEY ("specialiteId") REFERENCES public."Specialite"(id);
+    ADD CONSTRAINT "Formateur_specialiteId_fkey" FOREIGN KEY ("specialiteId") REFERENCES public."Specialite"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
--- TOC entry 2957 (class 2606 OID 68481)
--- Name: JournalEvenement JournalEvenement_evenementId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public."JournalEvenement"
-    ADD CONSTRAINT "JournalEvenement_evenementId_fkey" FOREIGN KEY ("evenementId") REFERENCES public."Evenement"(id);
-
-
---
--- TOC entry 2956 (class 2606 OID 68476)
--- Name: JournalEvenement JournalEvenement_utilisateurId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2956 (class 2606 OID 69034)
+-- Name: JournalEvenement JournalEvenement_evenementId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."JournalEvenement"
-    ADD CONSTRAINT "JournalEvenement_utilisateurId_fkey" FOREIGN KEY ("utilisateurId") REFERENCES public."Utilisateur"(id);
+    ADD CONSTRAINT "JournalEvenement_evenementId_fkey" FOREIGN KEY ("evenementId") REFERENCES public."Evenement"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
--- TOC entry 2955 (class 2606 OID 68454)
--- Name: Pointage Pointage_utilisateurId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2957 (class 2606 OID 69039)
+-- Name: JournalEvenement JournalEvenement_utilisateurId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
+--
+
+ALTER TABLE ONLY public."JournalEvenement"
+    ADD CONSTRAINT "JournalEvenement_utilisateurId_fkey" FOREIGN KEY ("utilisateurId") REFERENCES public."Utilisateur"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 2955 (class 2606 OID 69044)
+-- Name: Pointage Pointage_utilisateurId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Pointage"
-    ADD CONSTRAINT "Pointage_utilisateurId_fkey" FOREIGN KEY ("utilisateurId") REFERENCES public."Utilisateur"(id);
+    ADD CONSTRAINT "Pointage_utilisateurId_fkey" FOREIGN KEY ("utilisateurId") REFERENCES public."Utilisateur"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
--- TOC entry 2954 (class 2606 OID 68562)
--- Name: Utilisateur Utilisateur_roleId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2954 (class 2606 OID 69049)
+-- Name: Utilisateur Utilisateur_roleId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgre
 --
 
 ALTER TABLE ONLY public."Utilisateur"
-    ADD CONSTRAINT "Utilisateur_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES public."Role"(id) NOT VALID;
+    ADD CONSTRAINT "Utilisateur_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES public."Role"(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
--- Completed on 2021-12-16 10:36:16
+-- Completed on 2021-12-16 15:33:46
 
 --
 -- PostgreSQL database dump complete
