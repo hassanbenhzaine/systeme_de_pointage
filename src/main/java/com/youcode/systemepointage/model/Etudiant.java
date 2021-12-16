@@ -1,14 +1,14 @@
 package com.youcode.systemepointage.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class Etudiant extends Utilisateur implements Serializable {
     private Promotion promotion;
 }

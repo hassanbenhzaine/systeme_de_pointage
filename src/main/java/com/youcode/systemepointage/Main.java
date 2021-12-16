@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args){
 //        RoleService role = new RoleService();
 
-        Role admin = new Role("ADMIN");
+        Role admin = Role.builder().nom("ADMIN").build();
 
         Adresse hassandr = Adresse.builder().adresse1("avenue de la liberté").adresse2("20").codePostal(12030).ville("Maroc").pays("Rabat-sale-kenitra").build();
 

@@ -47,9 +47,15 @@ public class PointageDAOImp implements PointageDAO {
                 if (resultSet.next()) {
                     Pointage pointage = new Pointage();
                     pointage.setId(resultSet.getInt("id"));
-                    pointage.setDateEtHeure(LocalDateTime.of(resultSet.getDate("dateEtHeure").toLocalDate(), resultSet.getTime("DateEtHeure").toLocalTime()));
-                    pointage.setUtilisateur(new Utilisateur(resultSet.getInt("utilisateurId")));
-
+                    pointage.setDateEtHeure(LocalDateTime.of(
+                            resultSet.getDate("dateEtHeure").toLocalDate(),
+                            resultSet.getTime("DateEtHeure").toLocalTime())
+                    );
+                    pointage.setUtilisateur(
+                            Utilisateur.builder()
+                                    .id(resultSet.getInt("utilisateurId"))
+                                    .build()
+                    );
                     return Optional.of(pointage);
                 }
             }
@@ -88,8 +94,15 @@ public class PointageDAOImp implements PointageDAO {
                 while (resultSet.next()) {
                     Pointage pointage = new Pointage();
                     pointage.setId(resultSet.getInt("id"));
-                    pointage.setDateEtHeure(LocalDateTime.of(resultSet.getDate("dateEtHeure").toLocalDate(), resultSet.getTime("DateEtHeure").toLocalTime()));
-                    pointage.setUtilisateur(new Utilisateur(resultSet.getInt("utilisateurId")));
+                    pointage.setDateEtHeure(LocalDateTime.of(
+                            resultSet.getDate("dateEtHeure").toLocalDate(),
+                            resultSet.getTime("DateEtHeure").toLocalTime())
+                    );
+                    pointage.setUtilisateur(
+                            Utilisateur.builder()
+                                    .id(resultSet.getInt("utilisateurId"))
+                                    .build()
+               );
 
                     pointages.add(pointage);
                 }

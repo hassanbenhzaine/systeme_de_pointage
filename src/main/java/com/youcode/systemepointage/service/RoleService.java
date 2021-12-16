@@ -12,7 +12,7 @@ public class RoleService {
     }
 
     public void creerRole(String role) {
-        roleDAO.create(new Role(role));
+        roleDAO.create(Role.builder().nom(role).build());
     }
 
 }

@@ -31,7 +31,7 @@ public class AdresseDAOImp implements AdresseDAO{
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next()) {
-                adresse.setId(rs.getInt(1));
+                adresse.setId(rs.getInt("id"));
             }
 
         } catch (Exception e) {
