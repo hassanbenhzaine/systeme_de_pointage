@@ -13,7 +13,7 @@ public class AdresseDAOImp implements AdresseDAO{
     @Override
     public Adresse create(Adresse adresse) {
         String sql = "INSERT INTO \"" + tableName +
-                " (\"Adresse1\", \"Adresse2\", \"Pays\", \"Region\", \"Ville\", \"CodePostal\", \"UtilisateurID\")"
+                " (\"adresse1\", \"adresse2\", \"pays\", \"region\", \"ville\", \"codePostal\", \"utilisateurId\")"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();

@@ -32,8 +32,9 @@ public class UtilisateurService {
                 role.getNom())
                 .orElseThrow(() -> new RuntimeException("Role non trouvé")
                 );
-
+        System.out.println(createdUtilisateur);
         utilisateurDAO.assignRole(createdUtilisateur, role);
+
 //        adresse.setUtilisateur(createdUtilisateur);
 //        adresseDAO.create(adresse);
     }

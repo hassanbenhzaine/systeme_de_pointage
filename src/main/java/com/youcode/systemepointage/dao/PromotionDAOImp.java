@@ -14,7 +14,7 @@ public class PromotionDAOImp implements PromotionDAO {
 
     @Override
     public Promotion create(Promotion promotion) {
-        String sql = "INSERT INTO \"" + tableName + " (\"Debut\", \"Fin\", \"Nom\")" +
+        String sql = "INSERT INTO \"" + tableName + " (\"debut\", \"fin\", \"nom\")" +
                 " VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();

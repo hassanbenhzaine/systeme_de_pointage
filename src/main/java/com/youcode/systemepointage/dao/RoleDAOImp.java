@@ -15,7 +15,7 @@ public class RoleDAOImp implements RoleDAO {
     @Override
     public Role create(Role role) {
         String sql = "INSERT INTO \"" + tableName +
-                "\" (\"Nom\") VALUES (?)";
+                "\" (\"nom\") VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -53,7 +53,7 @@ public class RoleDAOImp implements RoleDAO {
 
     @Override
     public Optional<Role> findByName(String name) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Nom\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"nom\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -63,8 +63,8 @@ public class RoleDAOImp implements RoleDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Role role = new Role();
-                    role.setId(resultSet.getInt("RoleID"));
-                    role.setNom(resultSet.getString("Nom"));
+                    role.setId(resultSet.getInt("id"));
+                    role.setNom(resultSet.getString("nom"));
 
                     return Optional.of(role);
                 }

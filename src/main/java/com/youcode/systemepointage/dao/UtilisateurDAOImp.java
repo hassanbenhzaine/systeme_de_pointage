@@ -18,7 +18,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
         String sql = "INSERT INTO \"" + tableName +
-                "\" (\"Email\", \"MotDePasse\", \"Nom\", \"Prenom\", \"Telephone\")" +
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\")" +
                 " VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -40,7 +40,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public Optional<Utilisateur> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"UtilisateurID\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -50,12 +50,12 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setEmail(resultSet.getString("Email"));
-                    utilisateur.setMotDePasse(resultSet.getString("MotDePasse"));
-                    utilisateur.setNom(resultSet.getString("Nom"));
-                    utilisateur.setPrenom(resultSet.getString("Prenom"));
-                    utilisateur.setTelephone(resultSet.getString("Telephone"));
-                    utilisateur.setId(resultSet.getInt("UtilisateurID"));
+                    utilisateur.setEmail(resultSet.getString("email"));
+                    utilisateur.setMotDePasse(resultSet.getString("motDePasse"));
+                    utilisateur.setNom(resultSet.getString("nom"));
+                    utilisateur.setPrenom(resultSet.getString("prenom"));
+                    utilisateur.setTelephone(resultSet.getString("telephone"));
+                    utilisateur.setId(resultSet.getInt("id"));
 
                     return Optional.of(utilisateur);
                 }
@@ -78,12 +78,12 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
             while (resultSet.next()) {
                 Utilisateur utilisateur = new Utilisateur();
-                utilisateur.setEmail(resultSet.getString("Email"));
-                utilisateur.setMotDePasse(resultSet.getString("MotDePasse"));
-                utilisateur.setNom(resultSet.getString("Nom"));
-                utilisateur.setPrenom(resultSet.getString("Prenom"));
-                utilisateur.setTelephone(resultSet.getString("Telephone"));
-                utilisateur.setId(resultSet.getInt("UtilisateurID"));
+                utilisateur.setEmail(resultSet.getString("email"));
+                utilisateur.setMotDePasse(resultSet.getString("motDePasse"));
+                utilisateur.setNom(resultSet.getString("nom"));
+                utilisateur.setPrenom(resultSet.getString("prenom"));
+                utilisateur.setTelephone(resultSet.getString("telephone"));
+                utilisateur.setId(resultSet.getInt("id"));
 
                 chefFabriques.add(utilisateur);
             }
@@ -96,7 +96,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public Utilisateur update(Utilisateur utilisateur) {
-        String sql = "UPDATE " + tableName + " SET Nom = ?, Prenom = ?, Email = ?, MotDePasse = ?, Telephone = ? WHERE UtilisateurID = ?";
+        String sql = "UPDATE " + tableName + " SET nom = ?, prenom = ?, email = ?, motDePasse = ?, telephone = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -117,7 +117,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE UtilisateurID = ?";
+        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -134,7 +134,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public Optional<Utilisateur> findByEmailAndPassword(String email, String motDePasse) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Email\" = ? AND \"MotDePasse\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"email\" = ? AND \"motDePasse\" = ?";
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -144,12 +144,12 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setEmail(resultSet.getString("Email"));
-                    utilisateur.setMotDePasse(resultSet.getString("MotDePasse"));
-                    utilisateur.setNom(resultSet.getString("Nom"));
-                    utilisateur.setPrenom(resultSet.getString("Prenom"));
-                    utilisateur.setTelephone(resultSet.getString("Telephone"));
-                    utilisateur.setId(resultSet.getInt("UtilisateurID"));
+                    utilisateur.setEmail(resultSet.getString("email"));
+                    utilisateur.setMotDePasse(resultSet.getString("motDePasse"));
+                    utilisateur.setNom(resultSet.getString("nom"));
+                    utilisateur.setPrenom(resultSet.getString("prenom"));
+                    utilisateur.setTelephone(resultSet.getString("telephone"));
+                    utilisateur.setId(resultSet.getInt("id"));
 
                     return Optional.of(utilisateur);
                 }
@@ -162,7 +162,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public Utilisateur assignRole(Utilisateur utilisateur, Role role) {
-        String sql = "UPDATE \"" + tableName + "\" SET \"RoleID\" = ? WHERE UtilisateurID = ?";
+        String sql = "UPDATE \"" + tableName + "\" SET \"roleId\" = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -171,6 +171,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             preparedStatement.setInt(2, utilisateur.getId());
 
             preparedStatement.executeUpdate();
+            utilisateur.setRole(role);
         } catch (Exception e) {
             e.printStackTrace();
         }

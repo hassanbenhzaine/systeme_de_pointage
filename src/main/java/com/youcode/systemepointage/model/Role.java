@@ -12,5 +12,4 @@ public class Role {
     public Role(String nom) {
         this.nom = nom;
     }
-
 }

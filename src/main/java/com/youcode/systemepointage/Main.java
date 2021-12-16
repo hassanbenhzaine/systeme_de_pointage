@@ -7,6 +7,10 @@ import com.youcode.systemepointage.service.UtilisateurService;
 public class Main {
 
     public static void main(String[] args){
+//        RoleService role = new RoleService();
+
+        Role admin = new Role("ADMIN");
+
         UtilisateurService utilisateurService = new UtilisateurService();
         utilisateurService.seEnregistrer("hassan",
                 "benhzaine",
@@ -15,8 +19,10 @@ public class Main {
                 "0607873886",
                 new Adresse("avenue de la liberté", "20", 12030, "Maroc",
                         "Rabat-sale-kenitra", "Rabat"),
-                new Role("Administrateur")
+                admin
         );
+
+
         
 
 

@@ -16,7 +16,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
     @Override
     public Specialite create(Specialite specialite) {
         String sql = "INSERT INTO \"" + tableName +
-                "\" (\"Specialite\") VALUES (?)";
+                "\" (\"nom\") VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -33,7 +33,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
 
     @Override
     public Optional<Specialite> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Id\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -43,7 +43,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
             try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Specialite specialite = new Specialite();
-                    specialite.setNom(resultSet.getString("Nom"));
+                    specialite.setNom(resultSet.getString("nom"));
                     specialite.setId(resultSet.getInt("UtilisateurID"));
 
                     return Optional.of(specialite);
@@ -67,8 +67,8 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
 
             while (resultSet.next()) {
                 Specialite specialite = new Specialite();
-                specialite.setNom(resultSet.getString("Nom"));
-                specialite.setId(resultSet.getInt("SpecialiteID"));
+                specialite.setNom(resultSet.getString("nom"));
+                specialite.setId(resultSet.getInt("id"));
 
                 specialiteList.add(specialite);
             }
@@ -81,7 +81,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
 
     @Override
     public Specialite update(Specialite specialite) {
-        String sql = "UPDATE " + tableName + " SET Nom = ? WHERE id = ?";
+        String sql = "UPDATE " + tableName + " SET nom = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

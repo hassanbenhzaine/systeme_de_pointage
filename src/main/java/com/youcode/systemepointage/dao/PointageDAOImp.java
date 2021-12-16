@@ -17,7 +17,7 @@ public class PointageDAOImp implements PointageDAO {
 
     @Override
     public Pointage create(Pointage pointage) {
-        String sql = "INSERT INTO \"" + tableName + " (\"DateEtHeure\", \"UtilisateurID\")" +
+        String sql = "INSERT INTO \"" + tableName + " (\"dateEtHeure\", \"utilisateurID\")" +
                 " VALUES (?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -36,7 +36,7 @@ public class PointageDAOImp implements PointageDAO {
 
     @Override
     public Optional<Pointage> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"Id\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -46,9 +46,9 @@ public class PointageDAOImp implements PointageDAO {
             try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Pointage pointage = new Pointage();
-                    pointage.setId(resultSet.getInt("PointageID"));
-                    pointage.setDateEtHeure(LocalDateTime.of(resultSet.getDate("DateEtHeure").toLocalDate(), resultSet.getTime("DateEtHeure").toLocalTime()));
-                    pointage.setUtilisateur(new Utilisateur(resultSet.getInt("UtilisateurID")));
+                    pointage.setId(resultSet.getInt("id"));
+                    pointage.setDateEtHeure(LocalDateTime.of(resultSet.getDate("dateEtHeure").toLocalDate(), resultSet.getTime("DateEtHeure").toLocalTime()));
+                    pointage.setUtilisateur(new Utilisateur(resultSet.getInt("utilisateurId")));
 
                     return Optional.of(pointage);
                 }
@@ -76,7 +76,7 @@ public class PointageDAOImp implements PointageDAO {
 
     @Override
     public List<Pointage> findAllByUser(Utilisateur utilisateur) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"UtilisateurID\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"utilisateurId\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -87,9 +87,9 @@ public class PointageDAOImp implements PointageDAO {
                 List<Pointage> pointages = new ArrayList<>();
                 while (resultSet.next()) {
                     Pointage pointage = new Pointage();
-                    pointage.setId(resultSet.getInt("PointageID"));
-                    pointage.setDateEtHeure(LocalDateTime.of(resultSet.getDate("DateEtHeure").toLocalDate(), resultSet.getTime("DateEtHeure").toLocalTime()));
-                    pointage.setUtilisateur(new Utilisateur(resultSet.getInt("UtilisateurID")));
+                    pointage.setId(resultSet.getInt("id"));
+                    pointage.setDateEtHeure(LocalDateTime.of(resultSet.getDate("dateEtHeure").toLocalDate(), resultSet.getTime("DateEtHeure").toLocalTime()));
+                    pointage.setUtilisateur(new Utilisateur(resultSet.getInt("utilisateurId")));
 
                     pointages.add(pointage);
                 }
