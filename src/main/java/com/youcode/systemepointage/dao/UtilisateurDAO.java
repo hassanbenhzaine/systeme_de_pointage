@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface UtilisateurDAO extends GenericDAO<Utilisateur, Integer> {
     Optional<Utilisateur> findByEmailAndPassword(String email, String motDePasse);
     Utilisateur assignRole(Utilisateur utilisateur, Role role);
+    Optional<Utilisateur> findByEmail(String email);
 }

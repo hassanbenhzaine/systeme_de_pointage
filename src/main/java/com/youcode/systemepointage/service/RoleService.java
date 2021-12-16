@@ -15,4 +15,8 @@ public class RoleService {
         roleDAO.create(Role.builder().nom(role).build());
     }
 
+    public Role trouverRole(String role) {
+        return roleDAO.findByName(role).orElseThrow(() -> new RuntimeException("Role introuvable"));
+    }
+
 }

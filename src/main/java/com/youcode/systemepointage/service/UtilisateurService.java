@@ -46,4 +46,9 @@ public class UtilisateurService {
         adresseDAO.create(adresse);
     }
 
+    public Utilisateur trouverUtilisateur(String email) {
+        return utilisateurDAO.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    }
+
 }

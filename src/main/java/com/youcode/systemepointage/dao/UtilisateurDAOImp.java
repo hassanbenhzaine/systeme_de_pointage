@@ -182,5 +182,32 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
         }
         return utilisateur;
     }
+
+    @Override
+    public Optional<Utilisateur> findByEmail(String email) {
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"email\" = ?";
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Utilisateur utilisateur = new Utilisateur();
+                    utilisateur.setEmail(resultSet.getString("email"));
+                    utilisateur.setMotDePasse(resultSet.getString("motDePasse"));
+                    utilisateur.setNom(resultSet.getString("nom"));
+                    utilisateur.setPrenom(resultSet.getString("prenom"));
+                    utilisateur.setTelephone(resultSet.getString("telephone"));
+                    utilisateur.setId(resultSet.getInt("id"));
+
+                    return Optional.of(utilisateur);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 }
 

@@ -17,7 +17,7 @@ public class PointageDAOImp implements PointageDAO {
 
     @Override
     public Pointage create(Pointage pointage) {
-        String sql = "INSERT INTO \"" + tableName + " (\"dateEtHeure\", \"utilisateurID\")" +
+        String sql = "INSERT INTO \"" + tableName + "\" (\"dateEtHeure\", \"utilisateurId\")" +
                 " VALUES (?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
