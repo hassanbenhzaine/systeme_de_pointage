@@ -17,7 +17,7 @@ public class AdresseDAOImp implements AdresseDAO{
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, adresse.getAdresse1());
             preparedStatement.setString(2, adresse.getAdresse2());
@@ -28,6 +28,7 @@ public class AdresseDAOImp implements AdresseDAO{
             preparedStatement.setInt(7, adresse.getUtilisateur().getId());
 
             preparedStatement.executeUpdate();
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -19,11 +19,16 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
                 "\" (\"nom\") VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, specialite.getNom());
 
             preparedStatement.executeUpdate();
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                specialite.setId(rs.getInt(1));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,7 +49,7 @@ public class SpecialiteDAOImp implements SpecialiteDAO {
                 if (resultSet.next()) {
                     Specialite specialite = new Specialite();
                     specialite.setNom(resultSet.getString("nom"));
-                    specialite.setId(resultSet.getInt("UtilisateurID"));
+                    specialite.setId(resultSet.getInt("id"));
 
                     return Optional.of(specialite);
                 }

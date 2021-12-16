@@ -22,7 +22,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
                 " VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, utilisateur.getEmail());
             preparedStatement.setString(2, utilisateur.getMotDePasse());
@@ -31,6 +31,11 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             preparedStatement.setString(5, utilisateur.getTelephone());
 
             preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                utilisateur.setId(generatedKeys.getInt("id"));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

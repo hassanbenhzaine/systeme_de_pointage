@@ -28,15 +28,14 @@ public class UtilisateurService {
                 new Utilisateur(nom, prenom, email, motDePasse, telephone, role)
         );
 
-        Role foundRole = roleDAO.findByName(
-                role.getNom())
+        Role foundRole = roleDAO.findByName(role.getNom())
                 .orElseThrow(() -> new RuntimeException("Role non trouvé")
                 );
-        System.out.println(createdUtilisateur);
-        utilisateurDAO.assignRole(createdUtilisateur, role);
 
-//        adresse.setUtilisateur(createdUtilisateur);
-//        adresseDAO.create(adresse);
+        utilisateurDAO.assignRole(createdUtilisateur, foundRole);
+
+        adresse.setUtilisateur(createdUtilisateur);
+        adresseDAO.create(adresse);
     }
 
 }
