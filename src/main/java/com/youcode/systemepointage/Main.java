@@ -1,17 +1,37 @@
 package com.youcode.systemepointage;
 
+import com.youcode.systemepointage.model.Adresse;
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
-import com.youcode.systemepointage.service.PointageService;
+import com.youcode.systemepointage.service.RoleService;
 import com.youcode.systemepointage.service.UtilisateurService;
 
 public class Main {
 
     public static void main(String[] args){
-        UtilisateurService utilisateurService = new UtilisateurService();
-        Utilisateur hassan = utilisateurService.trouverUtilisateur("cbenhzaine@gmail.com");
+        RoleService role = new RoleService();
+        Role adminRole = role.trouverRole("ADMIN");
 
-        PointageService pointer = new PointageService();
-        pointer.pointer(hassan);
+        Adresse hassanaddress = Adresse.builder()
+                .adresse1("avenue de la liberté")
+                .adresse2("20").codePostal(12030)
+                .ville("Maroc")
+                .pays("Rabat-sale-kenitra")
+                .build();
+
+        UtilisateurService utilisateurService = new UtilisateurService();
+        utilisateurService.seEnregistrer(
+                Utilisateur.builder()
+                        .nom("hassan")
+                        .prenom("benhzaine")
+                        .email("cbenhzaine@gmail.com")
+                        .motDePasse("123456")
+                        .telephone("0612345678")
+                        .statut(true)
+                        .build(),
+                hassanaddress,
+                adminRole
+        );
 
     }
 }

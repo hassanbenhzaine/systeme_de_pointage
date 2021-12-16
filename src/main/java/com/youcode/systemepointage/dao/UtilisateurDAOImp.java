@@ -1,6 +1,5 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -18,8 +17,9 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
         String sql = "INSERT INTO \"" + tableName +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\")" +
-                " VALUES (?, ?, ?, ?, ?)";
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\")" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
+        System.out.println(sql);
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -29,6 +29,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             preparedStatement.setString(3, utilisateur.getNom());
             preparedStatement.setString(4, utilisateur.getPrenom());
             preparedStatement.setString(5, utilisateur.getTelephone());
+            preparedStatement.setBoolean(6, utilisateur.getStatut());
 
             preparedStatement.executeUpdate();
 
@@ -101,7 +102,8 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
 
     @Override
     public Utilisateur update(Utilisateur utilisateur) {
-        String sql = "UPDATE " + tableName + " SET nom = ?, prenom = ?, email = ?, motDePasse = ?, telephone = ? WHERE id = ?";
+        String sql = "UPDATE \"" + tableName + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
+                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -111,7 +113,9 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             preparedStatement.setString(3, utilisateur.getEmail());
             preparedStatement.setString(4, utilisateur.getMotDePasse());
             preparedStatement.setString(5, utilisateur.getTelephone());
-            preparedStatement.setInt(6, utilisateur.getId());
+            preparedStatement.setInt(6, utilisateur.getRole().getId());
+            preparedStatement.setBoolean(7, utilisateur.getStatut());
+            preparedStatement.setInt(8, utilisateur.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -163,24 +167,6 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             e.printStackTrace();
         }
         return Optional.empty();
-    }
-
-    @Override
-    public Utilisateur assignRole(Utilisateur utilisateur, Role role) {
-        String sql = "UPDATE \"" + tableName + "\" SET \"roleId\" = ? WHERE id = ?";
-
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setInt(1, role.getId());
-            preparedStatement.setInt(2, utilisateur.getId());
-
-            preparedStatement.executeUpdate();
-            utilisateur.setRole(role);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return utilisateur;
     }
 
     @Override

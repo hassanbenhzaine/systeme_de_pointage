@@ -23,24 +23,17 @@ public class UtilisateurService {
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
-    public void seEnregistrer(String nom, String prenom, String email, String motDePasse, String telephone, Adresse adresse, Role role) {
-        Utilisateur createdUtilisateur = utilisateurDAO.create(
-                Utilisateur.builder()
-                        .nom(nom)
-                        .prenom(prenom)
-                        .email(email)
-                        .motDePasse(motDePasse)
-                        .telephone(telephone)
-                        .role(role)
-                        .build()
-        );
+    public void seEnregistrer(Utilisateur utilisateur, Adresse adresse, Role role) {
+        utilisateur.setRole(role);
+        Utilisateur createdUtilisateur = utilisateurDAO.create(utilisateur);
 
         Role foundRole = roleDAO
                 .findByName(role.getNom())
                 .orElseThrow(() -> new RuntimeException("Role non trouvé")
         );
 
-        utilisateurDAO.assignRole(createdUtilisateur, foundRole);
+        createdUtilisateur.setRole(foundRole);
+        utilisateurDAO.update(createdUtilisateur);
 
         adresse.setUtilisateur(createdUtilisateur);
         adresseDAO.create(adresse);

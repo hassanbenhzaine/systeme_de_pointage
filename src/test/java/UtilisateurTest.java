@@ -1,5 +1,6 @@
 import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Role;
+import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.service.RoleService;
 import com.youcode.systemepointage.service.UtilisateurService;
 
@@ -16,11 +17,14 @@ public class UtilisateurTest {
                 .build();
 
         UtilisateurService utilisateurService = new UtilisateurService();
-        utilisateurService.seEnregistrer("hassan",
-                "benhzaine",
-                "cbenhzaine@gmail.com",
-                "123456789",
-                "0607873886",
+        utilisateurService.seEnregistrer(
+                Utilisateur.builder()
+                        .nom("hassan")
+                        .prenom("benhzaine")
+                        .email("cbenhzaine@gmail.com")
+                        .motDePasse("123456")
+                        .telephone("0612345678")
+                        .build(),
                 hassanaddress,
                 adminRole
         );

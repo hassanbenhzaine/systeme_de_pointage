@@ -11,7 +11,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class PointageService {
-    private PointageDAO pointageDAO;
+    private final PointageDAO pointageDAO;
 
     public PointageService() {
         this.pointageDAO = new PointageDAOImp();
@@ -24,7 +24,6 @@ public class PointageService {
                 .dateEtHeure(LocalDateTime.now())
                 .build()
         );
-
     }
 
     public List<Pointage> pointagesParUtilisateur(Utilisateur utilisateur){

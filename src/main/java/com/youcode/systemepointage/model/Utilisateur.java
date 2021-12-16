@@ -19,4 +19,5 @@ public class Utilisateur implements Serializable {
     private String motDePasse;
     private String telephone;
     private Role role;
+    private Boolean statut;
 }
