@@ -25,12 +25,20 @@ public class UtilisateurService {
 
     public void seEnregistrer(String nom, String prenom, String email, String motDePasse, String telephone, Adresse adresse, Role role) {
         Utilisateur createdUtilisateur = utilisateurDAO.create(
-                new Utilisateur(nom, prenom, email, motDePasse, telephone, role)
+                Utilisateur.builder()
+                        .nom(nom)
+                        .prenom(prenom)
+                        .email(email)
+                        .motDePasse(motDePasse)
+                        .telephone(telephone)
+                        .role(role)
+                        .build()
         );
 
-        Role foundRole = roleDAO.findByName(role.getNom())
+        Role foundRole = roleDAO
+                .findByName(role.getNom())
                 .orElseThrow(() -> new RuntimeException("Role non trouvé")
-                );
+        );
 
         utilisateurDAO.assignRole(createdUtilisateur, foundRole);
 

@@ -1,13 +1,14 @@
 package com.youcode.systemepointage.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class JournalEvenement implements Serializable {
     private Integer id;
     private LocalDateTime debut;
@@ -15,12 +16,4 @@ public class JournalEvenement implements Serializable {
     private String nom;
     private Secretaire secretaire;
     private Evenement evenement;
-
-    public JournalEvenement(LocalDateTime debut, LocalDateTime fin, String nom, Secretaire secretaire, Evenement evenement) {
-        this.debut = debut;
-        this.fin = fin;
-        this.nom = nom;
-        this.secretaire = secretaire;
-        this.evenement = evenement;
-    }
 }

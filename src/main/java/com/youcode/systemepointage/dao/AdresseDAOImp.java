@@ -5,6 +5,7 @@ import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ public class AdresseDAOImp implements AdresseDAO{
     @Override
     public Adresse create(Adresse adresse) {
         String sql = "INSERT INTO \"" + tableName +
-                " (\"adresse1\", \"adresse2\", \"pays\", \"region\", \"ville\", \"codePostal\", \"utilisateurId\")"
+                "\" (\"adresse1\", \"adresse2\", \"pays\", \"region\", \"ville\", \"codePostal\", \"utilisateurId\")"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -28,7 +29,10 @@ public class AdresseDAOImp implements AdresseDAO{
             preparedStatement.setInt(7, adresse.getUtilisateur().getId());
 
             preparedStatement.executeUpdate();
-        ///
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                adresse.setId(rs.getInt(1));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

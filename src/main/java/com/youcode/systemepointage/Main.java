@@ -11,16 +11,18 @@ public class Main {
 
         Role admin = new Role("ADMIN");
 
+        Adresse hassandr = Adresse.builder().adresse1("avenue de la liberté").adresse2("20").codePostal(12030).ville("Maroc").pays("Rabat-sale-kenitra").build();
+
         UtilisateurService utilisateurService = new UtilisateurService();
         utilisateurService.seEnregistrer("hassan",
                 "benhzaine",
                 "cbenhzaine@gmail.com",
                 "123456789",
                 "0607873886",
-                new Adresse("avenue de la liberté", "20", 12030, "Maroc",
-                        "Rabat-sale-kenitra", "Rabat"),
+                hassandr,
                 admin
         );
+
 
 
         

@@ -1,6 +1,7 @@
 package com.youcode.systemepointage.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Evenement implements Serializable {
     private Integer id;
     private LocalDateTime debut;
@@ -17,12 +19,4 @@ public class Evenement implements Serializable {
     private String nom;
     private String description;
     private Boolean proposer;
-
-    public Evenement(LocalDateTime debut, LocalDateTime fin, String nom, String description, Boolean proposer) {
-        this.debut = debut;
-        this.fin = fin;
-        this.nom = nom;
-        this.description = description;
-        this.proposer = proposer;
-    }
 }
