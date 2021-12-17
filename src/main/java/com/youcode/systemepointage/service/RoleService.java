@@ -2,20 +2,13 @@ package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.RoleDAO;
 import com.youcode.systemepointage.model.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+@AllArgsConstructor
+@Builder
 public class RoleService {
-    private RoleDAO roleDAO;
-    private static RoleService instance = null;
-
-    public static RoleService getInstance(){
-        if(instance==null){
-            instance = new RoleService();
-        }
-        return instance;
-    }
-
-    private RoleService(){
-    }
+    private final RoleDAO roleDAO;
 
     public void creerRole(String role) {
         roleDAO.create(Role.builder().nom(role).build());

@@ -6,26 +6,14 @@ import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @AllArgsConstructor
+@Builder
 public class UtilisateurService {
     private final UtilisateurDAO utilisateurDAO;
     private final RoleService roleService;
     private final AdresseService adresseService;
-    private static UtilisateurService instance = null;
-
-    public static UtilisateurService getInstance(){
-        if(instance==null){
-            instance = new UtilisateurService();
-        }
-        return instance;
-    }
-
-    private UtilisateurService() {
-        utilisateurDAO = new UtilisateurDAOImp();
-        roleService = RoleService.getInstance();
-        adresseService = AdresseService.getInstance();
-    }
 
     public void seConnecter(Utilisateur utilisateur) {
         utilisateurDAO.findByEmailAndPassword(utilisateur.getEmail(), utilisateur.getMotDePasse())

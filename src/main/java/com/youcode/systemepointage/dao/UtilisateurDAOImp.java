@@ -17,9 +17,8 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
         String sql = "INSERT INTO \"" + tableName +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\")" +
-                " VALUES (?, ?, ?, ?, ?, ?)";
-        System.out.println(sql);
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\")" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -30,6 +29,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
             preparedStatement.setString(4, utilisateur.getPrenom());
             preparedStatement.setString(5, utilisateur.getTelephone());
             preparedStatement.setBoolean(6, utilisateur.getStatut());
+            preparedStatement.setInt(7, utilisateur.getRole().getId());
 
             preparedStatement.executeUpdate();
 

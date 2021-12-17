@@ -5,25 +5,16 @@ import com.youcode.systemepointage.dao.PointageDAOImp;
 import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
+@Builder
 public class PointageService {
     private final PointageDAO pointageDAO;
-    private static PointageService instance;
 
-    public static PointageService getInstance(){
-        if(instance == null){
-            instance = new PointageService();
-        }
-        return instance;
-    }
-
-    private PointageService() {
-        pointageDAO = new PointageDAOImp();
-    }
 
     public void pointer(Utilisateur utilisateur){
         pointageDAO.create(
