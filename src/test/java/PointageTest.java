@@ -4,10 +4,10 @@ import com.youcode.systemepointage.service.UtilisateurService;
 
 public class PointageTest {
     public void testpointer(){
-        Utilisateur hassan = UtilisateurService.getInstance().trouverUtilisateurParEmail(
-                Utilisateur.builder().email("cbenhzaine@mail.com").build()
-        );
+        UtilisateurService utilisateurService = new UtilisateurService();
+        Utilisateur hassan = utilisateurService.trouverUtilisateur("cbenhzaine@gmail.com");
 
-        PointageService.getInstance().pointer(hassan);
+        PointageService pointer = new PointageService();
+        pointer.pointer(hassan);
     }
 }
