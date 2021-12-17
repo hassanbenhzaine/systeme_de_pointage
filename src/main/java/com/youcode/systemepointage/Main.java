@@ -19,9 +19,9 @@ public class Main {
                 .pays("Rabat-sale-kenitra")
                 .build();
 
-        UtilisateurService utilisateurService = new UtilisateurService();
-        utilisateurService.seEnregistrer(
-                Utilisateur.builder()
+
+        UtilisateurService.getInstance()
+                .seEnregistrer(Utilisateur.builder()
                         .nom("hassan")
                         .prenom("benhzaine")
                         .email("cbenhzaine@gmail.com")

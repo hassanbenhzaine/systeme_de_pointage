@@ -11,21 +11,23 @@ public class UtilisateurService {
     private final UtilisateurDAO utilisateurDAO;
     private final AdresseDAO adresseDAO;
     private final RoleDAO roleDAO;
-    private static final UtilisateurService utilisateurService= null;
+    private static UtilisateurService utilisateurService= null;
 
-    // singleton
-//    public static UtilisateurService getInstance(){
-//        if(utilisateurService==null){
-//            utilisateurService
-//        }
-//        return utilisateurService;
-//    }
 
-    public UtilisateurService() {
+    public static UtilisateurService getInstance(){
+        if(utilisateurService==null){
+            utilisateurService = new UtilisateurService();
+        }
+        return utilisateurService;
+    }
+
+    private UtilisateurService() {
         this.utilisateurDAO = new UtilisateurDAOImp();
         this.adresseDAO = new AdresseDAOImp();
         this.roleDAO = new RoleDAOImp();
     }
+
+
 
     public void seConnecter(String email, String motDePasse) {
         utilisateurDAO.findByEmailAndPassword(email, motDePasse)
