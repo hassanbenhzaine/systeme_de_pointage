@@ -7,9 +7,12 @@ import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
-@Builder
+@SuperBuilder
+@Data
 public class UtilisateurService {
     private final UtilisateurDAO utilisateurDAO;
     private final RoleService roleService;

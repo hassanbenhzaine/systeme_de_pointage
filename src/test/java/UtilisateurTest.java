@@ -23,22 +23,22 @@ public class UtilisateurTest {
                 .build();
 
 
-        new UtilisateurService(
-                new UtilisateurDAOImp(),
-                new RoleService(new RoleDAOImp()),
-                new AdresseService(new AdresseDAOImp())
-        ).seEnregistrer(
-                Utilisateur.builder()
-                        .nom("hassan")
-                        .prenom("benhzaine")
-                        .email("cbenhzaine@gmail.com")
-                        .motDePasse("123456")
-                        .telephone("0612345678")
-                        .statut(true)
-                        .build(),
-                hassanaddress,
-                adminRole
-        );
+//        new UtilisateurService(
+//                new UtilisateurDAOImp(),
+//                new RoleService(new RoleDAOImp()),
+//                new AdresseService(new AdresseDAOImp())
+//        ).seEnregistrer(
+//                Utilisateur.builder()
+//                        .nom("hassan")
+//                        .prenom("benhzaine")
+//                        .email("cbenhzaine@gmail.com")
+//                        .motDePasse("123456")
+//                        .telephone("0612345678")
+//                        .statut(true)
+//                        .build(),
+//                hassanaddress,
+//                adminRole
+//        );
 
     }
 }

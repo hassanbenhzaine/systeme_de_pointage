@@ -2,6 +2,7 @@ package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
+import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 public class UtilisateurDAOImp implements UtilisateurDAO {
-    private final String tableName = "Utilisateur";
-
+    private final String tableName;
 
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
