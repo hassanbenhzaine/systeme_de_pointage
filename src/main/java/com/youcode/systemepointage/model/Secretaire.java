@@ -13,5 +13,4 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @SuperBuilder
 public class Secretaire extends Utilisateur implements Serializable {
-    private LocalDate entreeFabrique;
 }

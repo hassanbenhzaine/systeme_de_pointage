@@ -2,7 +2,6 @@ package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
-import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
-public class UtilisateurDAOImp implements UtilisateurDAO {
-    private final String tableName;
+public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
+    private final String tableName = "Utilisateur";
 
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
@@ -62,6 +60,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
                     utilisateur.setNom(resultSet.getString("nom"));
                     utilisateur.setPrenom(resultSet.getString("prenom"));
                     utilisateur.setTelephone(resultSet.getString("telephone"));
+                    utilisateur.setStatut(resultSet.getBoolean("statut"));
                     utilisateur.setId(resultSet.getInt("id"));
 
                     return Optional.of(utilisateur);
@@ -90,6 +89,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
                 utilisateur.setNom(resultSet.getString("nom"));
                 utilisateur.setPrenom(resultSet.getString("prenom"));
                 utilisateur.setTelephone(resultSet.getString("telephone"));
+                utilisateur.setStatut(resultSet.getBoolean("statut"));
                 utilisateur.setId(resultSet.getInt("id"));
 
                 chefFabriques.add(utilisateur);
@@ -125,7 +125,7 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
         return utilisateur;
     }
 
-    @Override
+
     public boolean delete(Integer id) {
         String sql = "DELETE FROM " + tableName + " WHERE id = ?";
 
@@ -142,59 +142,5 @@ public class UtilisateurDAOImp implements UtilisateurDAO {
         return false;
     }
 
-    @Override
-    public Optional<Utilisateur> findByEmailAndPassword(String email, String motDePasse) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"email\" = ? AND \"motDePasse\" = ?";
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, motDePasse);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setEmail(resultSet.getString("email"));
-                    utilisateur.setMotDePasse(resultSet.getString("motDePasse"));
-                    utilisateur.setNom(resultSet.getString("nom"));
-                    utilisateur.setPrenom(resultSet.getString("prenom"));
-                    utilisateur.setTelephone(resultSet.getString("telephone"));
-                    utilisateur.setId(resultSet.getInt("id"));
-
-                    return Optional.of(utilisateur);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Utilisateur> findByEmail(String email) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"email\" = ?";
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setString(1, email);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setEmail(resultSet.getString("email"));
-                    utilisateur.setMotDePasse(resultSet.getString("motDePasse"));
-                    utilisateur.setNom(resultSet.getString("nom"));
-                    utilisateur.setPrenom(resultSet.getString("prenom"));
-                    utilisateur.setTelephone(resultSet.getString("telephone"));
-                    utilisateur.setId(resultSet.getInt("id"));
-
-                    return Optional.of(utilisateur);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
 }
 

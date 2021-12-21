@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PointageDAOImp implements PointageDAO {
+public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
     private final String tableName = "Pointage";
 
     @Override
@@ -80,7 +80,7 @@ public class PointageDAOImp implements PointageDAO {
         return false;
     }
 
-    @Override
+
     public List<Pointage> findAllByUser(Utilisateur utilisateur) {
         String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"utilisateurId\" = ?";
 

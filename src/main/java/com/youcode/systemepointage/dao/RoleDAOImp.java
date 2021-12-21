@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
-public class RoleDAOImp implements RoleDAO {
+public class RoleDAOImp implements GenericDAO<Role, Integer> {
     private final String tableName = "Role";
 
     @Override
@@ -49,29 +49,5 @@ public class RoleDAOImp implements RoleDAO {
     public boolean delete(Integer id) {
 
         return false;
-    }
-
-    @Override
-    public Optional<Role> findByName(String name) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"nom\" = ?";
-
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setString(1, name);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Role role = new Role();
-                    role.setId(resultSet.getInt("id"));
-                    role.setNom(resultSet.getString("nom"));
-
-                    return Optional.of(role);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
     }
 }

@@ -5,7 +5,7 @@ import com.youcode.systemepointage.model.JournalEvenement;
 import java.util.List;
 import java.util.Optional;
 
-public class JournalEvenementDAOImp implements JournalEvenementDAO {
+public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Integer> {
     @Override
     public JournalEvenement create(JournalEvenement journalEvenement) {
         return null;

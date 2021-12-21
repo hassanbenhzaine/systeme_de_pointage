@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.service;
 
-import com.youcode.systemepointage.dao.PointageDAO;
-import com.youcode.systemepointage.dao.PointageDAOImp;
+import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PointageService {
-    private final PointageDAO pointageDAO;
+    private final GenericDAO<Pointage, Integer> pointageDAO;
 
 
     public void pointer(Utilisateur utilisateur){
@@ -26,7 +25,9 @@ public class PointageService {
     }
 
     public List<Pointage> pointagesParUtilisateur(Utilisateur utilisateur){
-        return pointageDAO.findAllByUser(utilisateur);
+        return pointageDAO.findAll().parallelStream()
+                .filter(pointage -> pointage.getUtilisateur().getId() == utilisateur.getId())
+                .toList();
     }
 
     public void supprimerPointage(Pointage pointage){

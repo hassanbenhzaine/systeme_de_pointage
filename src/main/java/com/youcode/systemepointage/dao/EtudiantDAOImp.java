@@ -5,7 +5,7 @@ import com.youcode.systemepointage.model.Etudiant;
 import java.util.List;
 import java.util.Optional;
 
-public class EtudiantDAOImp implements EtudiantDAO {
+public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
     @Override
     public Etudiant create(Etudiant etudiant) {
         return null;

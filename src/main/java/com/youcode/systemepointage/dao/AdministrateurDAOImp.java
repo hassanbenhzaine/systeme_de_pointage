@@ -1,36 +1,146 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Administrateur;
+import com.youcode.systemepointage.shared.ConnectionFactory;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AdministrateurDAOImp implements AdministrateurDAO {
+public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer> {
     private final String tableName = "Administrateur";
 
     @Override
     public Administrateur create(Administrateur administrateur) {
-        return null;
+        String sql = "INSERT INTO \"" + tableName +
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\")" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setString(1, administrateur.getEmail());
+            preparedStatement.setString(2, administrateur.getMotDePasse());
+            preparedStatement.setString(3, administrateur.getNom());
+            preparedStatement.setString(4, administrateur.getPrenom());
+            preparedStatement.setString(5, administrateur.getTelephone());
+            preparedStatement.setBoolean(6, administrateur.getStatut());
+            preparedStatement.setInt(7, administrateur.getRole().getId());
+
+            preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                administrateur.setId(generatedKeys.getInt("id"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return administrateur;
     }
 
     @Override
     public Optional<Administrateur> find(Integer id) {
+        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Administrateur administrateur = new Administrateur();
+                    administrateur.setEmail(resultSet.getString("email"));
+                    administrateur.setMotDePasse(resultSet.getString("motDePasse"));
+                    administrateur.setNom(resultSet.getString("nom"));
+                    administrateur.setPrenom(resultSet.getString("prenom"));
+                    administrateur.setTelephone(resultSet.getString("telephone"));
+                    administrateur.setStatut(resultSet.getBoolean("statut"));
+                    administrateur.setId(resultSet.getInt("id"));
+
+                    return Optional.of(administrateur);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Optional.empty();
     }
 
     @Override
     public List<Administrateur> findAll() {
-        return null;
+        String sql = "SELECT * FROM " + tableName;
+        List<Administrateur> chefFabriques = new ArrayList<>();
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Administrateur administrateur = new Administrateur();
+                administrateur.setEmail(resultSet.getString("email"));
+                administrateur.setMotDePasse(resultSet.getString("motDePasse"));
+                administrateur.setNom(resultSet.getString("nom"));
+                administrateur.setPrenom(resultSet.getString("prenom"));
+                administrateur.setTelephone(resultSet.getString("telephone"));
+                administrateur.setStatut(resultSet.getBoolean("statut"));
+                administrateur.setId(resultSet.getInt("id"));
+
+                chefFabriques.add(administrateur);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return chefFabriques;
     }
 
     @Override
     public Administrateur update(Administrateur administrateur) {
-        return null;
+        String sql = "UPDATE \"" + tableName + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
+                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, administrateur.getNom());
+            preparedStatement.setString(2, administrateur.getPrenom());
+            preparedStatement.setString(3, administrateur.getEmail());
+            preparedStatement.setString(4, administrateur.getMotDePasse());
+            preparedStatement.setString(5, administrateur.getTelephone());
+            preparedStatement.setInt(6, administrateur.getRole().getId());
+            preparedStatement.setBoolean(7, administrateur.getStatut());
+            preparedStatement.setInt(8, administrateur.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return administrateur;
     }
 
-    @Override
+
     public boolean delete(Integer id) {
+        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
+
 
 }

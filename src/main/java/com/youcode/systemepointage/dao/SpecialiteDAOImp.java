@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SpecialiteDAOImp implements SpecialiteDAO {
+public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
     private final String tableName = "Specialite";
 
     @Override
     public Specialite create(Specialite specialite) {
-        String sql = "INSERT INTO \"" + tableName +
-                "\" (\"nom\") VALUES (?)";
+        String sql = "INSERT INTO \"" + tableName + "\" (\"nom\") VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {

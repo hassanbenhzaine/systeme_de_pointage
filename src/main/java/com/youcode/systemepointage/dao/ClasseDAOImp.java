@@ -5,7 +5,7 @@ import com.youcode.systemepointage.model.Classe;
 import java.util.List;
 import java.util.Optional;
 
-public class ClasseDAOImp implements ClasseDAO {
+public class ClasseDAOImp implements GenericDAO<Classe, Integer> {
     @Override
     public Classe create(Classe classe) {
         return null;

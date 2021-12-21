@@ -11,41 +11,28 @@ public class ConnectionFactory {
     private final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
     private static ConnectionFactory connectionFactory = null;
 
-    private ConnectionFactory() {
-        try {
-            Class.forName(DRIVER_CLASS_NAME);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    private ConnectionFactory() throws ClassNotFoundException {
+        Class.forName(DRIVER_CLASS_NAME);
     }
 
-    public static ConnectionFactory getInstance() {
+    public static ConnectionFactory getInstance() throws Exception {
         if (connectionFactory == null) {
             connectionFactory = new ConnectionFactory();
         }
         return connectionFactory;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws Exception {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            connection.close();
         }
         return connection;
     }
-
-    public void closeConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 
 }

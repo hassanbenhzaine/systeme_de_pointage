@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
-public class AdresseDAOImp implements AdresseDAO{
+public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     private String tableName = "Adresse";
     @Override
     public Adresse create(Adresse adresse) {

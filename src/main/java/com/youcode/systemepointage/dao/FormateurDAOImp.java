@@ -5,7 +5,7 @@ import com.youcode.systemepointage.model.Formateur;
 import java.util.List;
 import java.util.Optional;
 
-public class FormateurDAOImp implements FormateurDAO {
+public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     @Override
     public Formateur create(Formateur formateur) {
         return null;

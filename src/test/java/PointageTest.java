@@ -1,13 +1,3 @@
-import com.youcode.systemepointage.dao.AdresseDAOImp;
-import com.youcode.systemepointage.dao.PointageDAOImp;
-import com.youcode.systemepointage.dao.RoleDAOImp;
-import com.youcode.systemepointage.dao.UtilisateurDAOImp;
-import com.youcode.systemepointage.model.Utilisateur;
-import com.youcode.systemepointage.service.AdresseService;
-import com.youcode.systemepointage.service.PointageService;
-import com.youcode.systemepointage.service.RoleService;
-import com.youcode.systemepointage.service.UtilisateurService;
-
 public class PointageTest {
     public void testpointer(){
 //        Utilisateur hassan = new UtilisateurService(

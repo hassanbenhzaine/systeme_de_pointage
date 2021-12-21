@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-public class PromotionDAOImp implements PromotionDAO {
+public class PromotionDAOImp implements GenericDAO<Promotion, Integer> {
     private String tableName = "promotion";
 
     @Override
