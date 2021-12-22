@@ -1,6 +1,7 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.GenericDAO;
+import com.youcode.systemepointage.dao.UtilisateurDAOImp;
 import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
@@ -9,12 +10,11 @@ import lombok.Data;
 
 import java.util.Collection;
 
-@AllArgsConstructor
-@Data
+
 public class UtilisateurService {
-    private final GenericDAO<Utilisateur, Integer> utilisateurDAO;
-    private final RoleService roleService;
-    private final AdresseService adresseService;
+    private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
+    private final RoleService roleService = new RoleService();
+    private final AdresseService adresseService = new AdresseService();
 
     public boolean seConnecter(Utilisateur utilisateur) {
        return utilisateurDAO.findAll().parallelStream()
@@ -23,12 +23,11 @@ public class UtilisateurService {
                .anyMatch( x -> true);
     }
 
-    public void seEnregistrer(Utilisateur utilisateur, Adresse adresse, Role role) {
-        Role foundRole = roleService.trouverParNom(role.getNom());
-        utilisateur.setRole(foundRole);
-        Utilisateur createdUtilisateur = utilisateurDAO.create(utilisateur);
-        adresse.setUtilisateur(createdUtilisateur);
-        adresseService.ajouter(adresse);
+    public boolean seEnregistrer(Utilisateur utilisateur) {
+        if(utilisateurDAO.create(utilisateur) != null) {
+            return true;
+        }
+        return false;
     }
 
     public Utilisateur trouverParEmail(Utilisateur utilisateur) {
@@ -37,9 +36,12 @@ public class UtilisateurService {
                 .findFirst().orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
-    public void desactiver(Utilisateur utilisateur) {
+    public boolean desactiver(Utilisateur utilisateur) {
         utilisateur.setStatut(false);
-        utilisateurDAO.update(utilisateur);
+        if(utilisateurDAO.update(utilisateur) != null) {
+            return true;
+        }
+        return false;
     }
 
     public Collection trouverTous() {
@@ -47,15 +49,19 @@ public class UtilisateurService {
     }
 
 
-    public void ajouter(Utilisateur utilisateur) {
-        utilisateurDAO.create(utilisateur);
+    public Utilisateur ajouter(Utilisateur utilisateur) {
+        return utilisateurDAO.create(utilisateur);
     }
 
-    public void modifier(Utilisateur utilisateur) {
-        utilisateurDAO.update(utilisateur);
+    public Utilisateur modifier(Utilisateur utilisateur) {
+        return utilisateurDAO.update(utilisateur);
     }
 
-    public void supprimer(Utilisateur utilisateur) {
-        utilisateurDAO.delete(utilisateur.getId());
+    public boolean supprimer(Utilisateur utilisateur) {
+        return utilisateurDAO.delete(utilisateur.getId());
+    }
+
+    public Utilisateur trouverParId(int id) {
+        return utilisateurDAO.find(id).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 }

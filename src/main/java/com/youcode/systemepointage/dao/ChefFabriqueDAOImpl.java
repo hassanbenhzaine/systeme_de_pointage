@@ -2,6 +2,7 @@ package com.youcode.systemepointage.dao;
 
 
 import com.youcode.systemepointage.model.ChefFabrique;
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
     private final String tableName = "ChefFabrique";
+    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public ChefFabrique create(ChefFabrique chefFabrique) {
@@ -65,6 +67,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
                     chefFabrique.setTelephone(resultSet.getString("telephone"));
                     chefFabrique.setId(resultSet.getInt("id"));
                     chefFabrique.setStatut(resultSet.getBoolean("statut"));
+                    chefFabrique.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                     return Optional.of(chefFabrique);
                 }
@@ -77,7 +80,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
 
     @Override
     public List<ChefFabrique> findAll() {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT * FROM \"" + tableName + "\"";
         List<ChefFabrique> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -130,7 +133,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

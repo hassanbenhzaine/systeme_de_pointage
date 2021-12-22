@@ -1,6 +1,7 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Administrateur;
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer> {
     private final String tableName = "Administrateur";
+    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Administrateur create(Administrateur administrateur) {
@@ -62,6 +64,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
                     administrateur.setTelephone(resultSet.getString("telephone"));
                     administrateur.setStatut(resultSet.getBoolean("statut"));
                     administrateur.setId(resultSet.getInt("id"));
+                    administrateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                     return Optional.of(administrateur);
                 }
@@ -74,7 +77,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
     @Override
     public List<Administrateur> findAll() {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT * FROM \"" + tableName + "\"";
         List<Administrateur> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -91,6 +94,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
                 administrateur.setTelephone(resultSet.getString("telephone"));
                 administrateur.setStatut(resultSet.getBoolean("statut"));
                 administrateur.setId(resultSet.getInt("id"));
+                administrateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                 chefFabriques.add(administrateur);
             }
@@ -127,7 +131,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="systeme_pointage" />
+        <module name="systemepointage" />
         <module name="Système de pointage" />
       </profile>
     </annotationProcessing>

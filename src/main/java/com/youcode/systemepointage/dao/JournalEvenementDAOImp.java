@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Integer> {
+    private final String tableName = "JournalEvenement";
+
     @Override
     public JournalEvenement create(JournalEvenement journalEvenement) {
         return null;

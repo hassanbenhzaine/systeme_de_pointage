@@ -8,10 +8,9 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 
-@AllArgsConstructor
 public class UtilisateurController {
-    private final UtilisateurService utilisateurService;
-    private final PointageService pointageService;
+    private final UtilisateurService utilisateurService = new UtilisateurService();
+    private final PointageService pointageService = new PointageService();
 
     public void pointer(Utilisateur utilisateur){
         pointageService.pointer(utilisateur);

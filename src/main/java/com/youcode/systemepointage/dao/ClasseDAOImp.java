@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClasseDAOImp implements GenericDAO<Classe, Integer> {
+    private final String tableName = "Classe";
+
     @Override
     public Classe create(Classe classe) {
         return null;

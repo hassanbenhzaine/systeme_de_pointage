@@ -1,6 +1,7 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.GenericDAO;
+import com.youcode.systemepointage.dao.PointageDAOImp;
 import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Promotion;
@@ -11,14 +12,11 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-@AllArgsConstructor
-@Builder
 public class PointageService {
-    private final GenericDAO<Pointage, Integer> pointageDAO;
+    private final GenericDAO<Pointage, Integer> pointageDAO = new PointageDAOImp();
 
-
-    public void pointer(Utilisateur utilisateur){
-        pointageDAO.create(
+    public Pointage pointer(Utilisateur utilisateur){
+        return pointageDAO.create(
                 Pointage.builder()
                 .utilisateur(utilisateur)
                 .dateEtHeure(LocalDateTime.now())
@@ -39,11 +37,16 @@ public class PointageService {
                 .toList();
     }
 
-    public void supprimer(Pointage pointage){
-        pointageDAO.delete(pointage.getId());
+    public boolean supprimer(Pointage pointage){
+        return pointageDAO.delete(pointage.getId());
     }
 
-    public void modifier(Pointage pointage){
-        pointageDAO.update(pointage);
+    public Pointage modifier(Pointage pointage){
+        return pointageDAO.update(pointage);
+    }
+
+    public Pointage trouverParId(int id) {
+        return pointageDAO.find(id)
+                .orElseThrow(() -> new RuntimeException("Pointage non trouvé"));
     }
 }

@@ -1,17 +1,19 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.GenericDAO;
+import com.youcode.systemepointage.dao.RoleDAOImp;
 import com.youcode.systemepointage.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-@AllArgsConstructor
-@Builder
-public class RoleService {
-    private final GenericDAO<Role, Integer> roleDAO;
+import java.util.Collection;
 
-    public void creer(Role role) {
-        roleDAO.create(role);
+
+public class RoleService {
+    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
+
+    public Role ajouter(Role role) {
+        return roleDAO.create(role);
     }
 
     public Role trouverParNom(String role) {
@@ -20,6 +22,22 @@ public class RoleService {
                 .filter(r -> r.getNom() == role)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Role introuvable"));
+    }
+
+    public Role trouverParId(int id) {
+        return roleDAO.find(id).orElseThrow(() -> new RuntimeException("Role introuvable"));
+    }
+
+    public Role modifier(Role role) {
+        return roleDAO.update(role);
+    }
+
+    public boolean supprimer(int id) {
+        return roleDAO.delete(id);
+    }
+
+    public Collection<Role> trouverTous() {
+        return roleDAO.findAll();
     }
 
 }

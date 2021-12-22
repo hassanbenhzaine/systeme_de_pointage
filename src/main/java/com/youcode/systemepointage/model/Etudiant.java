@@ -11,4 +11,7 @@ import java.io.Serializable;
 @SuperBuilder
 public class Etudiant extends Utilisateur implements Serializable {
     private Promotion promotion;
+    private Classe classe;
+    private Specialite specialite;
+    private Formateur formateur;
 }

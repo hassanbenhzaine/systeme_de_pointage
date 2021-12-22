@@ -1,5 +1,6 @@
 package com.youcode.systemepointage.dao;
 
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Secretaire;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     private final String tableName = "Secretaire";
+    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Secretaire create(Secretaire secretaire) {
@@ -62,6 +64,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
                     secretaire.setTelephone(resultSet.getString("telephone"));
                     secretaire.setStatut(resultSet.getBoolean("statut"));
                     secretaire.setId(resultSet.getInt("id"));
+                    secretaire.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                     return Optional.of(secretaire);
                 }
@@ -74,7 +77,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
     @Override
     public List<Secretaire> findAll() {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT * FROM \"" + tableName + "\"";
         List<Secretaire> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -91,6 +94,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
                 secretaire.setTelephone(resultSet.getString("telephone"));
                 secretaire.setStatut(resultSet.getBoolean("statut"));
                 secretaire.setId(resultSet.getInt("id"));
+                secretaire.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                 chefFabriques.add(secretaire);
             }
@@ -127,7 +131,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

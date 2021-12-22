@@ -1,5 +1,6 @@
 package com.youcode.systemepointage.dao;
 
+import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     private final String tableName = "Utilisateur";
+    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
@@ -62,6 +64,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                     utilisateur.setTelephone(resultSet.getString("telephone"));
                     utilisateur.setStatut(resultSet.getBoolean("statut"));
                     utilisateur.setId(resultSet.getInt("id"));
+                    utilisateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                     return Optional.of(utilisateur);
                 }
@@ -75,7 +78,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     @Override
     public List<Utilisateur> findAll() {
         String sql = "SELECT * FROM \"" + tableName + "\"";
-        List<Utilisateur> chefFabriques = new ArrayList<>();
+        List<Utilisateur> utilisateurs = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -91,14 +94,15 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                 utilisateur.setTelephone(resultSet.getString("telephone"));
                 utilisateur.setStatut(resultSet.getBoolean("statut"));
                 utilisateur.setId(resultSet.getInt("id"));
+                utilisateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
-                chefFabriques.add(utilisateur);
+                utilisateurs.add(utilisateur);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return chefFabriques;
+        return utilisateurs;
     }
 
     @Override
@@ -127,7 +131,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

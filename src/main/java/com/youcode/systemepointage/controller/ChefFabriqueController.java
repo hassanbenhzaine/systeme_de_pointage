@@ -9,12 +9,11 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 
-@AllArgsConstructor
 public class ChefFabriqueController {
-    private final ChefFabriqueService chefFabriqueService;
-    private final FormateurService formateurService;
-    private final UtilisateurService utilisateurService;
-    private final PointageService pointageService;
+    private final ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
+    private final FormateurService formateurService = new FormateurService();
+    private final UtilisateurService utilisateurService = new UtilisateurService();
+    private final PointageService pointageService = new PointageService();
 
     public void ajouterSecretaire(Secretaire secretaire) {
         chefFabriqueService.ajouter(secretaire);

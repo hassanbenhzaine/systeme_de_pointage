@@ -1,12 +1,14 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Pointage;
+import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
     private final String tableName = "Pointage";
+    private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
     @Override
     public Pointage create(Pointage pointage) {
@@ -27,6 +30,11 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
             preparedStatement.setInt(2, pointage.getUtilisateur().getId());
 
             preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                pointage.setId(generatedKeys.getInt("id"));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +51,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
             preparedStatement.setInt(1, id);
 
-            try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Pointage pointage = new Pointage();
                     pointage.setId(resultSet.getInt("id"));
@@ -51,11 +59,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
                             resultSet.getDate("dateEtHeure").toLocalDate(),
                             resultSet.getTime("DateEtHeure").toLocalTime())
                     );
-                    pointage.setUtilisateur(
-                            Utilisateur.builder()
-                                    .id(resultSet.getInt("utilisateurId"))
-                                    .build()
-                    );
+                    pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
                     return Optional.of(pointage);
                 }
             }
@@ -67,50 +71,64 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
     @Override
     public List<Pointage> findAll() {
-        return null;
-    }
-
-    @Override
-    public Pointage update(Pointage pointage) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-
-    public List<Pointage> findAllByUser(Utilisateur utilisateur) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"utilisateurId\" = ?";
+        String sql = "SELECT * FROM \"" + tableName + "\"";
+        List<Pointage> pointages = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, utilisateur.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
-                List<Pointage> pointages = new ArrayList<>();
-                while (resultSet.next()) {
-                    Pointage pointage = new Pointage();
-                    pointage.setId(resultSet.getInt("id"));
-                    pointage.setDateEtHeure(LocalDateTime.of(
-                            resultSet.getDate("dateEtHeure").toLocalDate(),
-                            resultSet.getTime("DateEtHeure").toLocalTime())
-                    );
-                    pointage.setUtilisateur(
-                            Utilisateur.builder()
-                                    .id(resultSet.getInt("utilisateurId"))
-                                    .build()
-               );
+            while (resultSet.next()) {
+                Pointage pointage = new Pointage();
+                pointage.setId(resultSet.getInt("id"));
+                pointage.setDateEtHeure(LocalDateTime.of(
+                        resultSet.getDate("dateEtHeure").toLocalDate(),
+                        resultSet.getTime("DateEtHeure").toLocalTime())
+                );
+                pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
 
-                    pointages.add(pointage);
-                }
-                return pointages;
+                pointages.add(pointage);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+
+        return pointages;
     }
+
+    @Override
+    public Pointage update(Pointage pointage) {
+        String sql = "UPDATE \"" + tableName + "\" SET dateEtHeure = ?, utilisateurId = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
+            preparedStatement.setInt(2, pointage.getUtilisateur().getId());
+            preparedStatement.setInt(3, pointage.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pointage;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
 }

@@ -1,35 +1,35 @@
 package com.youcode.systemepointage.service;
 
+import com.youcode.systemepointage.dao.FormateurDAOImp;
 import com.youcode.systemepointage.dao.GenericDAO;
+import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Formateur;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
-@SuperBuilder
+
 public class FormateurService extends UtilisateurService{
-    private GenericDAO<Formateur, Integer> formateurDAO;
+    private GenericDAO<Formateur, Integer> formateurDAO = new FormateurDAOImp();
 
-    public void ajouter(Formateur formateur) {
-        formateurDAO.create(formateur);
-    }
-
-    public void modifier(Formateur formateur) {
-        formateurDAO.update(formateur);
-    }
-
-    public Collection<Formateur> getTous() {
+    @Override
+    public Collection<Formateur> trouverTous() {
         return formateurDAO.findAll();
     }
 
     @Override
-    public void ajouter(Utilisateur utilisateur) {
-        formateurDAO.create((Formateur) utilisateur);
+    public Formateur ajouter(Utilisateur utilisateur) {
+        return formateurDAO.create((Formateur) utilisateur);
     }
 
     @Override
-    public void modifier(Utilisateur utilisateur) {
-        formateurDAO.create((Formateur) utilisateur);
+    public Formateur modifier(Utilisateur utilisateur) {
+        return formateurDAO.update((Formateur) utilisateur);
+    }
+
+    @Override
+    public Utilisateur trouverParId(int id) {
+        return formateurDAO.find(id)
+                .orElseThrow(() -> new RuntimeException("Formateur non trouvé"));
     }
 }

@@ -26,7 +26,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
 
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next()) {
-                specialite.setId(rs.getInt(1));
+                specialite.setId(rs.getInt("id"));
             }
 
         } catch (Exception e) {
@@ -61,8 +61,8 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
 
     @Override
     public List<Specialite> findAll() {
-        String sql = "SELECT * FROM " + tableName;
-        List<Specialite> specialiteList = new ArrayList<>();
+        String sql = "SELECT * FROM \"" + tableName + "\"";
+        List<Specialite> specialites = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -74,18 +74,18 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
                 specialite.setNom(resultSet.getString("nom"));
                 specialite.setId(resultSet.getInt("id"));
 
-                specialiteList.add(specialite);
+                specialites.add(specialite);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return specialiteList;
+        return specialites;
     }
 
     @Override
     public Specialite update(Specialite specialite) {
-        String sql = "UPDATE " + tableName + " SET nom = ? WHERE id = ?";
+        String sql = "UPDATE \"" + tableName + "\" SET nom = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -102,7 +102,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
 
     @Override
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
