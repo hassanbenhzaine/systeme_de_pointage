@@ -28,8 +28,6 @@ public class ConnectionFactory {
             connection = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            connection.close();
         }
         return connection;
     }

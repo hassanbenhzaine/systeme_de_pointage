@@ -6,21 +6,21 @@ import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
+
+import java.util.Collection;
 
 @AllArgsConstructor
-@SuperBuilder
 @Data
 public class UtilisateurService {
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO;
     private final RoleService roleService;
     private final AdresseService adresseService;
 
-    public void seConnecter(Utilisateur utilisateur) {
-        utilisateurDAO.findAll().parallelStream()
-        .filter(u -> u.getEmail() == utilisateur.getEmail()
-                && u.getMotDePasse() == utilisateur.getMotDePasse())
-        .findFirst().orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    public boolean seConnecter(Utilisateur utilisateur) {
+       return utilisateurDAO.findAll().parallelStream()
+        .filter(u -> u.getEmail().equals(utilisateur.getEmail())
+                && u.getMotDePasse().equals(utilisateur.getMotDePasse()))
+               .anyMatch( x -> true);
     }
 
     public void seEnregistrer(Utilisateur utilisateur, Adresse adresse, Role role) {
@@ -31,10 +31,31 @@ public class UtilisateurService {
         adresseService.ajouter(adresse);
     }
 
-    public Utilisateur trouverUtilisateurParEmail(Utilisateur utilisateur) {
+    public Utilisateur trouverParEmail(Utilisateur utilisateur) {
         return utilisateurDAO.findAll().parallelStream()
-                .filter(u -> u.getEmail() == utilisateur.getEmail())
+                .filter(u -> u.getEmail().equals(utilisateur.getEmail()))
                 .findFirst().orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
+    public void desactiver(Utilisateur utilisateur) {
+        utilisateur.setStatut(false);
+        utilisateurDAO.update(utilisateur);
+    }
+
+    public Collection trouverTous() {
+        return utilisateurDAO.findAll();
+    }
+
+
+    public void ajouter(Utilisateur utilisateur) {
+        utilisateurDAO.create(utilisateur);
+    }
+
+    public void modifier(Utilisateur utilisateur) {
+        utilisateurDAO.update(utilisateur);
+    }
+
+    public void supprimer(Utilisateur utilisateur) {
+        utilisateurDAO.delete(utilisateur.getId());
+    }
 }

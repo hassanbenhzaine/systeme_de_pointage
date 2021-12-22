@@ -74,7 +74,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
 
     @Override
     public List<Utilisateur> findAll() {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT * FROM \"" + tableName + "\"";
         List<Utilisateur> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();

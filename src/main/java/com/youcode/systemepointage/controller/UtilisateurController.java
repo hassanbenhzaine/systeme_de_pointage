@@ -1,12 +1,28 @@
 package com.youcode.systemepointage.controller;
 
+import com.youcode.systemepointage.model.Pointage;
+import com.youcode.systemepointage.model.Utilisateur;
+import com.youcode.systemepointage.service.PointageService;
 import com.youcode.systemepointage.service.UtilisateurService;
+import lombok.AllArgsConstructor;
 
+import java.util.Collection;
+
+@AllArgsConstructor
 public class UtilisateurController {
-//    private UtilisateurService utilisateurService;
-//
-//    public UtilisateurController() {
-//        this.utilisateurService = new UtilisateurService();
-//    }
+    private final UtilisateurService utilisateurService;
+    private final PointageService pointageService;
+
+    public void pointer(Utilisateur utilisateur){
+        pointageService.pointer(utilisateur);
+    }
+
+    public Collection<Pointage> trouverTousPointages(Utilisateur utilisateur){
+        return pointageService.parUtilisateur(utilisateur);
+    }
+
+    public void seConnecter(Utilisateur utilisateur){
+        utilisateurService.seConnecter(utilisateur);
+    }
 
 }

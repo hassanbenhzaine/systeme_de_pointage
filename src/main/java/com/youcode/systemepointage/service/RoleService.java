@@ -10,8 +10,8 @@ import lombok.Builder;
 public class RoleService {
     private final GenericDAO<Role, Integer> roleDAO;
 
-    public void creer(String role) {
-        roleDAO.create(Role.builder().nom(role).build());
+    public void creer(Role role) {
+        roleDAO.create(role);
     }
 
     public Role trouverParNom(String role) {

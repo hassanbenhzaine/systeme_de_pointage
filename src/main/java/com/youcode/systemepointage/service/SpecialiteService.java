@@ -10,4 +10,9 @@ import lombok.Builder;
 public class SpecialiteService {
     private final GenericDAO<Specialite, Integer> specialiteDAO;
 
+    public Specialite trouver(Specialite specialite) {
+        return specialiteDAO.find(specialite.getId())
+                .orElseThrow(() -> new RuntimeException("Specialite introuvable"));
+    }
+
 }

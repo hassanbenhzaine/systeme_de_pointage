@@ -2,15 +2,12 @@ package com.youcode.systemepointage.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
 public class Secretaire extends Utilisateur implements Serializable {
 }

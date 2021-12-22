@@ -1,13 +1,15 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.GenericDAO;
+import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Pointage;
+import com.youcode.systemepointage.model.Promotion;
 import com.youcode.systemepointage.model.Utilisateur;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 @AllArgsConstructor
 @Builder
@@ -24,17 +26,24 @@ public class PointageService {
         );
     }
 
-    public List<Pointage> pointagesParUtilisateur(Utilisateur utilisateur){
+    public Collection<Pointage> parUtilisateur(Utilisateur utilisateur){
         return pointageDAO.findAll().parallelStream()
                 .filter(pointage -> pointage.getUtilisateur().getId() == utilisateur.getId())
                 .toList();
     }
 
-    public void supprimerPointage(Pointage pointage){
+    public Collection<Pointage> etudiantParPromotion(Promotion promotion){
+        return pointageDAO.findAll().parallelStream()
+                .filter(pointage -> ((Etudiant) pointage.getUtilisateur())
+                        .getPromotion().getId() == promotion.getId())
+                .toList();
+    }
+
+    public void supprimer(Pointage pointage){
         pointageDAO.delete(pointage.getId());
     }
 
-    public void modifierPointage(Pointage pointage){
+    public void modifier(Pointage pointage){
         pointageDAO.update(pointage);
     }
 }
