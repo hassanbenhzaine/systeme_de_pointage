@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AdresseServiceTest {
 
+    private AdresseService adresseService = new AdresseService();
 
     @Test
     void ajouter() {
-//        assertEquals();
+        assertEquals(1,1);
     }
 
     @Test
