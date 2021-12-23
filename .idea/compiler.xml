@@ -10,6 +10,7 @@
         <module name="systeme_pointage" />
         <module name="systemepointage" />
         <module name="Système de pointage" />
+        <module name="systeme_de_pointage" />
       </profile>
     </annotationProcessing>
   </component>
