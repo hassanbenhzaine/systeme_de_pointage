@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
-    private final String tableName = "Pointage";
+    private final String TABLE_NAME = "Pointage";
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
     @Override
     public Pointage create(Pointage pointage) {
-        String sql = "INSERT INTO \"" + tableName + "\" (\"dateEtHeure\", \"utilisateurId\")" +
+        String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"dateEtHeure\", \"utilisateurId\")" +
                 " VALUES (?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -44,7 +44,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
     @Override
     public Optional<Pointage> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -71,7 +71,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
     @Override
     public List<Pointage> findAll() {
-        String sql = "SELECT * FROM \"" + tableName + "\"";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Pointage> pointages = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -99,7 +99,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
     @Override
     public Pointage update(Pointage pointage) {
-        String sql = "UPDATE \"" + tableName + "\" SET dateEtHeure = ?, utilisateurId = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET dateEtHeure = ?, utilisateurId = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -117,7 +117,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
     @Override
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+        String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

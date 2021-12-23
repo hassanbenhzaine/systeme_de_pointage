@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
-    private final String tableName = "Secretaire";
+    private final String TABLE_NAME = "Secretaire";
     private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Secretaire create(Secretaire secretaire) {
-        String sql = "INSERT INTO \"" + tableName +
+        String sql = "INSERT INTO \"" + TABLE_NAME +
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\")" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -47,7 +47,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
     @Override
     public Optional<Secretaire> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -77,7 +77,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
     @Override
     public List<Secretaire> findAll() {
-        String sql = "SELECT * FROM \"" + tableName + "\"";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Secretaire> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -107,7 +107,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
     @Override
     public Secretaire update(Secretaire secretaire) {
-        String sql = "UPDATE \"" + tableName + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
                 ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -131,7 +131,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+        String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

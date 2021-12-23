@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class RoleDAOImp implements GenericDAO<Role, Integer> {
-    private final String tableName = "Role";
+    private final String TABLE_NAME = "Role";
 
     @Override
     public Role create(Role role) {
-        String sql = "INSERT INTO \"" + tableName + "\" (\"nom\") VALUES (?)";
+        String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"nom\") VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -36,7 +36,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
     @Override
     public Optional<Role> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -60,7 +60,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
     @Override
     public List<Role> findAll() {
-        String sql = "SELECT * FROM \"" + tableName + "\"";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Role> roles = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -84,7 +84,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
     @Override
     public Role update(Role role) {
-        String sql = "UPDATE \"" + tableName + "\" SET nom = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -101,7 +101,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
     @Override
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+        String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

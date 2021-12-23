@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
-    private final String tableName = "Adresse";
+    private final String TABLE_NAME = "Adresse";
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
     @Override
     public Adresse create(Adresse adresse) {
-        String sql = "INSERT INTO \"" + tableName +
+        String sql = "INSERT INTO \"" + TABLE_NAME +
                 "\" (\"adresse1\", \"adresse2\", \"pays\", \"region\", \"ville\", \"codePostal\", \"utilisateurId\")"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -47,7 +47,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
 
     @Override
     public Optional<Adresse> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -76,7 +76,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
 
     @Override
     public List<Adresse> findAll() {
-        String sql = "SELECT * FROM \"" + tableName + "\"";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Adresse> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -105,7 +105,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
 
     @Override
     public Adresse update(Adresse adresse) {
-        String sql = "UPDATE \"" + tableName +
+        String sql = "UPDATE \"" + TABLE_NAME +
                 "\" SET adresse1 = ?, adresse2 = ?, pays = ?, region = ?, ville = ?, codePostal = ?" +
                 ", utilisateurId = ? WHERE id = ?";
 
@@ -129,7 +129,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+        String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

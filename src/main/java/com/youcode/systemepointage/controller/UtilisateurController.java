@@ -4,7 +4,6 @@ import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.service.PointageService;
 import com.youcode.systemepointage.service.UtilisateurService;
-import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 

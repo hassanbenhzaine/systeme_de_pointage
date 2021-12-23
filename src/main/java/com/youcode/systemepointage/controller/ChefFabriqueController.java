@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 
-public class ChefFabriqueController {
+public class ChefFabriqueController extends UtilisateurController{
     private final ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
     private final FormateurService formateurService = new FormateurService();
     private final UtilisateurService utilisateurService = new UtilisateurService();
@@ -38,15 +38,6 @@ public class ChefFabriqueController {
     public Collection<Formateur> trouverTousFormateurs(){
         return formateurService.trouverTous();
     }
-
-    public void desactiverSecretaire(Secretaire formateur) {
-        utilisateurService.desactiver(formateur);
-    }
-
-    public void desactiverFormateur(Formateur formateur) {
-        utilisateurService.desactiver(formateur);
-    }
-
 
     public void modifierSecretaire(Secretaire secretaire) {
         chefFabriqueService.modifier(secretaire);

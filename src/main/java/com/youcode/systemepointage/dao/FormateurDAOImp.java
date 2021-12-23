@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
-    private final String tableName = "Formateur";
+    private final String TABLE_NAME = "Formateur";
     private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
     private final GenericDAO<Specialite, Integer> specialiteDAO = new SpecialiteDAOImp();
     private final GenericDAO<Classe, Integer> classeDAO = new ClasseDAOImp();
 
     @Override
     public Formateur create(Formateur formateur) {
-        String sql = "INSERT INTO \"" + tableName +
+        String sql = "INSERT INTO \"" + TABLE_NAME +
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\"" +
                 ", \"specialiteId\", \"classeId\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -51,7 +51,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
 
     @Override
     public Optional<Formateur> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -83,7 +83,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
 
     @Override
     public List<Formateur> findAll() {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT * FROM " + TABLE_NAME;
         List<Formateur> chefFabriques = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -115,7 +115,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
 
     @Override
     public Formateur update(Formateur formateur) {
-        String sql = "UPDATE \"" + tableName + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
                 ", telephone = ?, status = ?, roleId = ?, specialiteId = ?, classeId = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -141,7 +141,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+        String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

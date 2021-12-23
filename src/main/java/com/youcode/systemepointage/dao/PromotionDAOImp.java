@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class PromotionDAOImp implements GenericDAO<Promotion, Integer> {
-    private String tableName = "Promotion";
+    private String TABLE_NAME = "Promotion";
 
     @Override
     public Promotion create(Promotion promotion) {
-//        String sql = "INSERT INTO \"" + tableName + " (\"debut\", \"fin\", \"nom\")" +
+//        String sql = "INSERT INTO \"" + TABLE_NAME + " (\"debut\", \"fin\", \"nom\")" +
 //                " VALUES (?, ?, ?)";
 //
 //        try (Connection connection = ConnectionFactory.getInstance().getConnection();

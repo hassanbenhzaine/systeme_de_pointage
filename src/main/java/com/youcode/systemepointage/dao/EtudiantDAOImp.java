@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
-    private final String tableName = "Etudiant";
+    private final String TABLE_NAME = "Etudiant";
     private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
     private final GenericDAO<Promotion, Integer> promotionDAO = new PromotionDAOImp();
     private final GenericDAO<Classe, Integer> classeDAO = new ClasseDAOImp();
@@ -21,7 +21,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
 
     @Override
     public Etudiant create(Etudiant etudiant) {
-        String sql = "INSERT INTO \"" + tableName +
+        String sql = "INSERT INTO \"" + TABLE_NAME +
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\"," +
                 "\"promotionId\", \"specialiteId\", \"formateurId\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -54,7 +54,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
 
     @Override
     public Optional<Etudiant> find(Integer id) {
-        String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -87,7 +87,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
 
     @Override
     public List<Etudiant> findAll() {
-        String sql = "SELECT * FROM \"" + tableName + "\"";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Etudiant> etudiants = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -120,7 +120,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
 
     @Override
     public Etudiant update(Etudiant etudiant) {
-        String sql = "UPDATE \"" + tableName + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
                 ", telephone = ?, statut = ?, roleId = ?, promotionId = ?, specialiteId = ?, formateurId = ?" +
                 " WHERE id = ?";
 
@@ -148,7 +148,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
 
 
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+        String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

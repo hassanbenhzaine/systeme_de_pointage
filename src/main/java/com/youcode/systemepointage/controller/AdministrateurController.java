@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 
-public class AdministrateurController {
+public class AdministrateurController extends UtilisateurController {
     private final ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
     private final UtilisateurService utilisateurService = new UtilisateurService();
 
