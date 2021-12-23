@@ -1,5 +1,6 @@
 package com.youcode.systemepointage.dao;
 
+import com.youcode.systemepointage.model.ChefFabrique;
 import com.youcode.systemepointage.model.Evenement;
 import com.youcode.systemepointage.model.Specialite;
 import com.youcode.systemepointage.model.Utilisateur;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EvenementDAOImp implements EvenementDAO {
+public class EvenementDAOImp implements GenericDAO<Evenement, Integer>  {
     private String tableName = "Evenement";
     // description nom proposer debut fin
     @Override
@@ -56,8 +57,10 @@ public class EvenementDAOImp implements EvenementDAO {
                     evenement.setNom(resultSet.getString("nom"));
                     evenement.setProposer(resultSet.getBoolean("proposer"));
                     evenement.setId(resultSet.getInt("id"));
-                    evenement.setDebut(LocalDateTime.from(resultSet.getDate("debut").toLocalDate()));
-                    evenement.setDebut(LocalDateTime.from(resultSet.getDate("fin").toLocalDate()));
+                    evenement.setDebut(LocalDateTime.of(resultSet.getDate("debut").toLocalDate(),
+                            resultSet.getTime("debut").toLocalTime()));
+                    evenement.setFin(LocalDateTime.of(resultSet.getDate("fin").toLocalDate(),
+                            resultSet.getTime("fin").toLocalTime()));
 
                     return Optional.of(evenement);
                 }
@@ -70,7 +73,7 @@ public class EvenementDAOImp implements EvenementDAO {
 
     @Override
     public List<Evenement> findAll() {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT * FROM  \"" + tableName + "\"";
         List<Evenement> evenementList = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
@@ -84,8 +87,10 @@ public class EvenementDAOImp implements EvenementDAO {
                 evenement.setNom(resultSet.getString("nom"));
                 evenement.setProposer(resultSet.getBoolean("proposer"));
                 evenement.setId(resultSet.getInt("id"));
-                evenement.setDebut(LocalDateTime.from(resultSet.getDate("debut").toLocalDate()));
-                evenement.setDebut(LocalDateTime.from(resultSet.getDate("fin").toLocalDate()));
+                evenement.setDebut(LocalDateTime.of(resultSet.getDate("debut").toLocalDate(),
+                        resultSet.getTime("debut").toLocalTime()));
+                evenement.setFin(LocalDateTime.of(resultSet.getDate("fin").toLocalDate(),
+                        resultSet.getTime("fin").toLocalTime()));
 
                 evenementList.add(evenement);
             }
@@ -99,7 +104,7 @@ public class EvenementDAOImp implements EvenementDAO {
 
     @Override
     public Evenement update(Evenement evenement) {
-        String sql = "UPDATE " + tableName + " SET description = ?, nom = ?, proposer = ?, debut = ?, fin = ? WHERE id = ?";
+        String sql = "UPDATE \"" + tableName + "\" SET description = ?, nom = ?, proposer = ?, debut = ?, fin = ? WHERE id = ?";
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -121,7 +126,7 @@ public class EvenementDAOImp implements EvenementDAO {
 
     @Override
     public boolean delete(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

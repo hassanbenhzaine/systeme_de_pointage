@@ -1,5 +1,6 @@
 package com.youcode.systemepointage.dao;
 
+import com.youcode.systemepointage.model.ChefFabrique;
 import com.youcode.systemepointage.model.JournalEvenement;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -9,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-public class JournalEvenementDAOImp implements JournalEvenementDAO {
+public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Integer>  {
     private String tableName = "JournalEvenement";
     @Override
     public JournalEvenement create(JournalEvenement journalEvenement) {
