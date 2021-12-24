@@ -18,8 +18,8 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
         String sql = "INSERT INTO \"" + TABLE_NAME +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\")" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", \"sexe\")" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -31,7 +31,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
             preparedStatement.setString(5, utilisateur.getTelephone());
             preparedStatement.setBoolean(6, utilisateur.getStatut());
             preparedStatement.setInt(7, utilisateur.getRole().getId());
-
+            preparedStatement.setString(8, String.valueOf(utilisateur.getSexe()));
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -63,6 +63,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                     utilisateur.setPrenom(resultSet.getString("prenom"));
                     utilisateur.setTelephone(resultSet.getString("telephone"));
                     utilisateur.setStatut(resultSet.getBoolean("statut"));
+                    utilisateur.setSexe(resultSet.getString("sexe").charAt(0));
                     utilisateur.setId(resultSet.getInt("id"));
                     utilisateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
@@ -93,6 +94,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                 utilisateur.setPrenom(resultSet.getString("prenom"));
                 utilisateur.setTelephone(resultSet.getString("telephone"));
                 utilisateur.setStatut(resultSet.getBoolean("statut"));
+                utilisateur.setSexe(resultSet.getString("sexe").charAt(0));
                 utilisateur.setId(resultSet.getInt("id"));
                 utilisateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
@@ -108,7 +110,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     @Override
     public Utilisateur update(Utilisateur utilisateur) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
+                ", telephone = ?, roleId = ?, status = ?, sexe = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -120,7 +122,8 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
             preparedStatement.setString(5, utilisateur.getTelephone());
             preparedStatement.setInt(6, utilisateur.getRole().getId());
             preparedStatement.setBoolean(7, utilisateur.getStatut());
-            preparedStatement.setInt(8, utilisateur.getId());
+            preparedStatement.setString(8, String.valueOf(utilisateur.getSexe()));
+            preparedStatement.setInt(9, utilisateur.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
