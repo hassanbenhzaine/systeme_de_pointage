@@ -3,8 +3,7 @@ package com.youcode.systemepointage.service;
 import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.dao.RoleDAOImp;
 import com.youcode.systemepointage.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.youcode.systemepointage.model.Roles;
 
 import java.util.Collection;
 
@@ -16,10 +15,10 @@ public class RoleService {
         return roleDAO.create(role);
     }
 
-    public Role trouverParNom(String role) {
+    public Role trouverParNom(Roles role) {
         return roleDAO.findAll()
                 .parallelStream()
-                .filter(r -> r.getNom() == role)
+                .filter(r -> r.getNom().equals(role))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Role introuvable"));
     }

@@ -1,7 +1,7 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Role;
-import com.youcode.systemepointage.model.Role;
+import com.youcode.systemepointage.model.Roles;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -19,9 +19,9 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
         String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"nom\") VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setString(1, role.getNom());
+            preparedStatement.setString(1, role.getNom().name());
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -46,7 +46,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
             try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Role role = new Role();
-                    role.setNom(resultSet.getString("nom"));
+                    role.setNom(Roles.valueOf(resultSet.getString("nom")));
                     role.setId(resultSet.getInt("id"));
 
                     return Optional.of(role);
@@ -70,7 +70,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
             while (resultSet.next()) {
                 Role role = new Role();
-                role.setNom(resultSet.getString("nom"));
+                role.setNom(Roles.valueOf(resultSet.getString("nom")));
                 role.setId(resultSet.getInt("id"));
 
                 roles.add(role);
@@ -89,7 +89,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, role.getNom());
+            preparedStatement.setString(1, role.getNom().name());
             preparedStatement.setInt(2, role.getId());
 
             preparedStatement.executeUpdate();

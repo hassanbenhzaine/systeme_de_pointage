@@ -2,19 +2,13 @@ package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.dao.UtilisateurDAOImp;
-import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.util.Collection;
 
 
 public class UtilisateurService {
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
-    private final RoleService roleService = new RoleService();
-    private final AdresseService adresseService = new AdresseService();
 
     public boolean seConnecter(Utilisateur utilisateur) {
        return utilisateurDAO.findAll().parallelStream()
@@ -24,10 +18,7 @@ public class UtilisateurService {
     }
 
     public boolean seEnregistrer(Utilisateur utilisateur) {
-        if(utilisateurDAO.create(utilisateur) != null) {
-            return true;
-        }
-        return false;
+        return utilisateurDAO.create(utilisateur) != null;
     }
 
     public Utilisateur trouverParEmail(Utilisateur utilisateur) {
@@ -38,10 +29,7 @@ public class UtilisateurService {
 
     public boolean desactiver(Utilisateur utilisateur) {
         utilisateur.setStatut(false);
-        if(utilisateurDAO.update(utilisateur) != null) {
-            return true;
-        }
-        return false;
+        return utilisateurDAO.update(utilisateur) != null;
     }
 
     public Collection trouverTous() {
