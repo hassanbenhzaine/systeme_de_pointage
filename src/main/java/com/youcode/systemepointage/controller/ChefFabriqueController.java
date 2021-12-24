@@ -4,15 +4,12 @@ import com.youcode.systemepointage.model.*;
 import com.youcode.systemepointage.service.ChefFabriqueService;
 import com.youcode.systemepointage.service.FormateurService;
 import com.youcode.systemepointage.service.PointageService;
-import com.youcode.systemepointage.service.UtilisateurService;
-import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 
 public class ChefFabriqueController extends UtilisateurController{
     private final ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
     private final FormateurService formateurService = new FormateurService();
-    private final UtilisateurService utilisateurService = new UtilisateurService();
     private final PointageService pointageService = new PointageService();
 
     public void ajouterSecretaire(Secretaire secretaire) {

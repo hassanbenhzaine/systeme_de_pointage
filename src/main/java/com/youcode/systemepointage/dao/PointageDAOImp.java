@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Pointage;
-import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -24,7 +23,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
                 " VALUES (?, ?)";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
             preparedStatement.setInt(2, pointage.getUtilisateur().getId());
@@ -59,7 +58,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
                             resultSet.getDate("dateEtHeure").toLocalDate(),
                             resultSet.getTime("DateEtHeure").toLocalTime())
                     );
-                    pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                    pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
                     return Optional.of(pointage);
                 }
             }
@@ -86,7 +85,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
                         resultSet.getDate("dateEtHeure").toLocalDate(),
                         resultSet.getTime("DateEtHeure").toLocalTime())
                 );
-                pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
 
                 pointages.add(pointage);
             }

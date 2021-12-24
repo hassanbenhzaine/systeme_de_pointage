@@ -11,5 +11,5 @@ import java.io.Serializable;
 @Builder
 public class Role implements Serializable {
     private Integer id;
-    private String nom;
+    private Roles nom;
 }
