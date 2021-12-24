@@ -43,7 +43,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
 
     @Override
     public JournalEvenement update(JournalEvenement journalEvenement) {
-        String sql = "UPDATE " + tableName + " SET modification  = ? WHERE id = ?";
+        String sql = "UPDATE \"" + tableName + "\" SET modification  = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -60,6 +60,17 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
 
     @Override
     public boolean delete(Integer id) {
-        return false;
+        String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

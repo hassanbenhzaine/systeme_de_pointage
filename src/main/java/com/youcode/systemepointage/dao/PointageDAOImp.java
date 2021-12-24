@@ -25,9 +25,8 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
         try (Connection connection = ConnectionFactory.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
-            preparedStatement.setInt(2, pointage.getUtilisateur().getId());
+             preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
+             preparedStatement.setInt(2, pointage.getUtilisateur().getId());
 
             preparedStatement.executeUpdate();
 
