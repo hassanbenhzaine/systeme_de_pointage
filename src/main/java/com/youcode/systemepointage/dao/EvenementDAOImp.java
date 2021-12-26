@@ -23,7 +23,7 @@ public class EvenementDAOImp implements GenericDAO<Evenement, Integer>  {
         String sql = "INSERT INTO \"" + tableName + "\" (\"description\", \"nom\", \"proposer\", \"debut\", \"fin\")" +
                 " VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, evenement.getDescription());
@@ -45,7 +45,7 @@ public class EvenementDAOImp implements GenericDAO<Evenement, Integer>  {
     public Optional<Evenement> find(Integer id) {
         String sql = "SELECT * FROM \"" + tableName + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -76,7 +76,7 @@ public class EvenementDAOImp implements GenericDAO<Evenement, Integer>  {
         String sql = "SELECT * FROM  \"" + tableName + "\"";
         List<Evenement> evenementList = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -105,7 +105,7 @@ public class EvenementDAOImp implements GenericDAO<Evenement, Integer>  {
     @Override
     public Evenement update(Evenement evenement) {
         String sql = "UPDATE \"" + tableName + "\" SET description = ?, nom = ?, proposer = ?, debut = ?, fin = ? WHERE id = ?";
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, evenement.getDescription());
@@ -128,7 +128,7 @@ public class EvenementDAOImp implements GenericDAO<Evenement, Integer>  {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

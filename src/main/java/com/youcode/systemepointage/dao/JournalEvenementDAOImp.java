@@ -17,7 +17,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
         String sql = "INSERT INTO \"" + tableName + "\" (\"ajouter\")" +
                 " VALUES (?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDate(1, Date.valueOf(journalEvenement.getAjoute().toLocalDate()));
@@ -45,7 +45,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
     public JournalEvenement update(JournalEvenement journalEvenement) {
         String sql = "UPDATE " + tableName + " SET modification  = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDate(1, Date.valueOf(journalEvenement.getModification().toLocalDate()));
