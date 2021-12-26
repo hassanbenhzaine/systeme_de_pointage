@@ -18,10 +18,10 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     @Override
     public Secretaire create(Secretaire secretaire) {
         String sql = "INSERT INTO \"" + TABLE_NAME +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\")" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", \"sexe\")" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, secretaire.getEmail());
@@ -31,6 +31,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
             preparedStatement.setString(5, secretaire.getTelephone());
             preparedStatement.setBoolean(6, secretaire.getStatut());
             preparedStatement.setInt(7, secretaire.getRole().getId());
+            preparedStatement.setString(8, String.valueOf(secretaire.getSexe()));
 
             preparedStatement.executeUpdate();
 
@@ -49,7 +50,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     public Optional<Secretaire> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -63,6 +64,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
                     secretaire.setPrenom(resultSet.getString("prenom"));
                     secretaire.setTelephone(resultSet.getString("telephone"));
                     secretaire.setStatut(resultSet.getBoolean("statut"));
+                    secretaire.setSexe(resultSet.getString("sexe").charAt(0));
                     secretaire.setId(resultSet.getInt("id"));
                     secretaire.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
@@ -80,7 +82,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Secretaire> chefFabriques = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -93,6 +95,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
                 secretaire.setPrenom(resultSet.getString("prenom"));
                 secretaire.setTelephone(resultSet.getString("telephone"));
                 secretaire.setStatut(resultSet.getBoolean("statut"));
+                secretaire.setSexe(resultSet.getString("sexe").charAt(0));
                 secretaire.setId(resultSet.getInt("id"));
                 secretaire.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
@@ -108,9 +111,9 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     @Override
     public Secretaire update(Secretaire secretaire) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
+                ", telephone = ?, roleId = ?, status = ?, sexe = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, secretaire.getNom());
@@ -120,7 +123,8 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
             preparedStatement.setString(5, secretaire.getTelephone());
             preparedStatement.setInt(6, secretaire.getRole().getId());
             preparedStatement.setBoolean(7, secretaire.getStatut());
-            preparedStatement.setInt(8, secretaire.getId());
+            preparedStatement.setString(8, String.valueOf(secretaire.getSexe()));
+            preparedStatement.setInt(9, secretaire.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -133,7 +137,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

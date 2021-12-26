@@ -17,7 +17,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
     public Specialite create(Specialite specialite) {
         String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"nom\") VALUES (?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, specialite.getNom());
@@ -39,7 +39,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
     public Optional<Specialite> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -64,7 +64,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Specialite> specialites = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -87,7 +87,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
     public Specialite update(Specialite specialite) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, specialite.getNom());
@@ -104,7 +104,7 @@ public class SpecialiteDAOImp implements GenericDAO<Specialite, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

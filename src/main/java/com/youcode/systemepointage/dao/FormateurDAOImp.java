@@ -1,7 +1,9 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.*;
+import com.youcode.systemepointage.model.Classe;
 import com.youcode.systemepointage.model.Formateur;
+import com.youcode.systemepointage.model.Role;
+import com.youcode.systemepointage.model.Specialite;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -23,7 +25,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\"" +
                 ", \"specialiteId\", \"classeId\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, formateur.getEmail());
@@ -53,7 +55,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     public Optional<Formateur> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -86,7 +88,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Formateur> chefFabriques = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -118,7 +120,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
                 ", telephone = ?, status = ?, roleId = ?, specialiteId = ?, classeId = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, formateur.getNom());
@@ -143,7 +145,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

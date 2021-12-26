@@ -18,7 +18,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
     public Role create(Role role) {
         String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"nom\") VALUES (?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, role.getNom().name());
@@ -38,7 +38,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
     public Optional<Role> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -63,7 +63,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Role> roles = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -86,7 +86,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
     public Role update(Role role) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, role.getNom().name());
@@ -103,7 +103,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

@@ -6,7 +6,6 @@ import com.youcode.systemepointage.model.Classe;
 import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Promotion;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
@@ -35,27 +34,27 @@ public class EtudiantService extends UtilisateurService{
     }
 
     public Long effectifParPromotion(Promotion promotion) {
-        return etudiantDAO.findAll().parallelStream()
+        return etudiantDAO.findAll().stream().parallel()
                 .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId()))
                 .count();
     }
 
     public Long nbrGarconsParPromotion(Promotion promotion) {
-        return etudiantDAO.findAll().parallelStream()
+        return etudiantDAO.findAll().stream().parallel()
                 .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId())
-                && etudiant.getSexe().equals("GARCON"))
+                        && etudiant.getSexe().equals('M'))
                 .count();
     }
 
     public Long nbrFillesParPromotion(Promotion promotion) {
-        return etudiantDAO.findAll().parallelStream()
+        return etudiantDAO.findAll().stream().parallel()
                 .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId())
-                && etudiant.getSexe().equals("FILLE"))
+                        && etudiant.getSexe().equals('F'))
                 .count();
     }
 
     public Long effectifParClasse(Classe classe) {
-        return etudiantDAO.findAll().parallelStream()
+        return etudiantDAO.findAll().stream().parallel()
                 .filter(etudiant -> etudiant.getClasse().getId().equals(classe.getId()))
                 .count();
     }

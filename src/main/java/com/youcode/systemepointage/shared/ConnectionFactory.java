@@ -5,32 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    private final String USERNAME = "dev_oth";
-    private final String PASSWORD = "huhu1996";
-    private final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/pointage";
-    private final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
-    private static ConnectionFactory connectionFactory = null;
+    private static final String USERNAME = "postgre";
+    private static final String PASSWORD = "root";
+    private static final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/pointage";
 
-    private ConnectionFactory() throws ClassNotFoundException {
-        Class.forName(DRIVER_CLASS_NAME);
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
     }
-
-    public static ConnectionFactory getInstance() throws Exception {
-        if (connectionFactory == null) {
-            connectionFactory = new ConnectionFactory();
-        }
-        return connectionFactory;
-    }
-
-    public Connection getConnection() throws Exception {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-
 }
