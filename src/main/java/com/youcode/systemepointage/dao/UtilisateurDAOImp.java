@@ -21,7 +21,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", \"sexe\")" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, utilisateur.getEmail());
@@ -49,7 +49,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     public Optional<Utilisateur> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -81,7 +81,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Utilisateur> utilisateurs = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -112,7 +112,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
                 ", telephone = ?, roleId = ?, status = ?, sexe = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, utilisateur.getNom());
@@ -136,7 +136,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

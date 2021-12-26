@@ -4,7 +4,6 @@ import com.youcode.systemepointage.model.*;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\"," +
                 "\"promotionId\", \"specialiteId\", \"formateurId\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, etudiant.getEmail());
@@ -56,7 +55,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
     public Optional<Etudiant> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -90,7 +89,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Etudiant> etudiants = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -124,7 +123,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
                 ", telephone = ?, statut = ?, roleId = ?, promotionId = ?, specialiteId = ?, formateurId = ?" +
                 " WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, etudiant.getNom());
@@ -150,7 +149,7 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

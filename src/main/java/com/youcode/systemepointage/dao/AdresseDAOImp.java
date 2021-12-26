@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -22,7 +21,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
                 "\" (\"adresse1\", \"adresse2\", \"pays\", \"region\", \"ville\", \"codePostal\", \"utilisateurId\")"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, adresse.getAdresse1());
@@ -49,7 +48,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     public Optional<Adresse> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -79,7 +78,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Adresse> chefFabriques = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -109,7 +108,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
                 "\" SET adresse1 = ?, adresse2 = ?, pays = ?, region = ?, ville = ?, codePostal = ?" +
                 ", utilisateurId = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, adresse.getAdresse1());
@@ -131,7 +130,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

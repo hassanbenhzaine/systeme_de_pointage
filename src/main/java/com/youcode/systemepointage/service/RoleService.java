@@ -17,7 +17,7 @@ public class RoleService {
 
     public Role trouverParNom(Roles role) {
         return roleDAO.findAll()
-                .parallelStream()
+                .stream().parallel()
                 .filter(r -> r.getNom().equals(role))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Role introuvable"));

@@ -22,7 +22,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
         String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"dateEtHeure\", \"utilisateurId\")" +
                 " VALUES (?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
@@ -45,7 +45,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
     public Optional<Pointage> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -73,7 +73,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Pointage> pointages = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -100,7 +100,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
     public Pointage update(Pointage pointage) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET dateEtHeure = ?, utilisateurId = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
@@ -118,7 +118,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

@@ -6,8 +6,6 @@ import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Promotion;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -25,15 +23,15 @@ public class PointageService {
     }
 
     public Collection<Pointage> parUtilisateur(Utilisateur utilisateur){
-        return pointageDAO.findAll().parallelStream()
-                .filter(pointage -> pointage.getUtilisateur().getId() == utilisateur.getId())
+        return pointageDAO.findAll().stream().parallel()
+                .filter(pointage -> pointage.getUtilisateur().getId().equals(utilisateur.getId()))
                 .toList();
     }
 
     public Collection<Pointage> etudiantParPromotion(Promotion promotion){
-        return pointageDAO.findAll().parallelStream()
+        return pointageDAO.findAll().stream().parallel()
                 .filter(pointage -> ((Etudiant) pointage.getUtilisateur())
-                        .getPromotion().getId() == promotion.getId())
+                        .getPromotion().getId().equals(promotion.getId()))
                 .toList();
     }
 
