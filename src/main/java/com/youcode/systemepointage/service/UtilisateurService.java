@@ -12,9 +12,8 @@ public class UtilisateurService {
 
     public boolean seConnecter(Utilisateur utilisateur) {
         return utilisateurDAO.findAll().stream().parallel()
-                .filter(u -> u.getEmail().equals(utilisateur.getEmail())
-                        && u.getMotDePasse().equals(utilisateur.getMotDePasse()))
-                .anyMatch(x -> true);
+                .anyMatch(u -> u.getEmail().equals(utilisateur.getEmail())
+                        && u.getMotDePasse().equals(utilisateur.getMotDePasse()));
     }
 
     public boolean seEnregistrer(Utilisateur utilisateur) {
