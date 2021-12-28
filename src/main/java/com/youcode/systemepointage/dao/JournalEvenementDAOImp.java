@@ -74,3 +74,4 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
         return true;
     }
 }
+// test
