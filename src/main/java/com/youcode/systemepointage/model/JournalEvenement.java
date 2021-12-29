@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class JournalEvenement implements Serializable {
     private Integer id;
-    private LocalDateTime debut;
-    private LocalDateTime fin;
+    private LocalDateTime debut, fin;
     private String nom;
     private Secretaire secretaire;
     private Evenement evenement;

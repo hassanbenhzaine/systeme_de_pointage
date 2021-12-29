@@ -13,11 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Utilisateur implements Serializable {
     private Integer id;
-    private String nom;
-    private String prenom;
-    private String email;
-    private String motDePasse;
-    private String telephone;
+    private String nom, prenom, email, motDePasse, telephone;
     private Role role;
     private Boolean statut;
     private Character sexe;

@@ -14,7 +14,6 @@ import java.time.LocalTime;
 @Builder
 public class Classe implements Serializable {
     private Integer id;
-    private LocalTime debutJournee;
-    private LocalTime finJournee;
+    private LocalTime debutJournee, finJournee;
     private String nom;
 }

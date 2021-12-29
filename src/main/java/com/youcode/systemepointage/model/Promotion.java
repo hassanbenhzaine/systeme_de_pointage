@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @Builder
 public class Promotion implements Serializable {
     private Integer id;
-    private LocalDate debut;
-    private LocalDate fin;
+    private LocalDate debut, fin;
     private String nom;
 }
