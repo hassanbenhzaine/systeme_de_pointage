@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class JournalEvenement implements Serializable {
+    private int id;
     private LocalDateTime ajoute;
     private LocalDateTime suppression;
     private LocalDateTime modification;
