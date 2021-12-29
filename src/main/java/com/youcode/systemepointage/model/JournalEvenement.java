@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class JournalEvenement implements Serializable {
-    private Integer id;
-    private LocalDateTime debut, fin;
-    private String nom;
-    private Secretaire secretaire;
+    private int id;
+    private LocalDateTime ajoute;
+    private LocalDateTime suppression;
+    private LocalDateTime modification;
+    private Utilisateur utilisateur;
     private Evenement evenement;
 }

@@ -21,6 +21,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDate(1, Date.valueOf(journalEvenement.getAjoute().toLocalDate()));
+            preparedStatement.setInt(2, journalEvenement.getId());
 
 
             preparedStatement.executeUpdate();
@@ -49,7 +50,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDate(1, Date.valueOf(journalEvenement.getModification().toLocalDate()));
-            // preparedStatement.setInt();
+            preparedStatement.setInt(2, journalEvenement.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -62,7 +63,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + tableName + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
