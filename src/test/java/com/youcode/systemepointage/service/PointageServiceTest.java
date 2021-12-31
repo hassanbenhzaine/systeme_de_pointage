@@ -1,71 +1,100 @@
 package com.youcode.systemepointage.service;
 
-import com.youcode.systemepointage.model.Pointage;
-import com.youcode.systemepointage.model.Utilisateur;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.youcode.systemepointage.model.*;
+
+import org.junit.jupiter.api.*;
+
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PointageServiceTest {
 
     private PointageService pointageService;
     private UtilisateurService utilisateurService;
+    private PromotionService promotionService;
     private Pointage pointage;
     private Utilisateur utilisateur;
+    private Promotion promotion;
 
     @BeforeEach
     void setUp() {
-//        pointageService = new PointageService();
-//        utilisateurService = new UtilisateurService();
-//        pointage = new Pointage();
-//        utilisateur = Utilisateur.builder()
-//                .email("cbenhzaine@gmail.com")
-//                .nom("Benhzaine")
-//                .prenom("Hassan")
-//                .motDePasse("123456")
-//                .sexe("F")
-//                .
+        pointageService = new PointageService();
+        utilisateurService = new UtilisateurService();
+
+        utilisateur = (Utilisateur) utilisateurService.trouverTous().stream()
+                .findAny().get();
+        pointage = Pointage.builder()
+                .utilisateur(utilisateur)
+                .dateEtHeure(LocalDateTime.of(2020, 12, 30, 9, 59))
+                .build();
+//        promotion = promotionService.
     }
 
     @Test
     void pointer() {
         // given
-        utilisateur.setStatut(true);
         // when
-        Utilisateur createdUtilisateur = utilisateurService.ajouter(utilisateur);
-        Pointage pointage = pointageService.pointer(createdUtilisateur);
-        System.out.println(pointage.getUtilisateur());
-        System.out.println(utilisateur);
+        Pointage pointage = pointageService.pointer(utilisateur);
         // then
-//        assertEquals(pointage.getUtilisateur(), utilisateur);
+        assertEquals(pointage.getUtilisateur(), utilisateur);
     }
 
     @Test
     void parUtilisateur() {
-
+        // given
+        // when
+        Pointage createdPointage = pointageService.pointer(utilisateur);
+        boolean containPointage = pointageService.parUtilisateur(utilisateur).stream()
+                .allMatch(x -> x.getUtilisateur().equals(createdPointage.getUtilisateur()));
+        // then
+        assertTrue(containPointage);
     }
 
     @Test
+    @Disabled
     void etudiantParPromotion() {
+//        // given
+//        // when
+//        Pointage createdPointage = pointageService.pointer(utilisateur);
+//        boolean containPointage = pointageService.etudiantParPromotion(promotion);
+//        // then
+//        assertTrue(containPointage);
+
+        // to do after Yassine has worked Pointage
     }
 
     @Test
     void supprimer() {
         // given
-
         // when
-        Utilisateur createdUtilisateur = utilisateurService.ajouter(utilisateur);
-        System.out.println(createdUtilisateur);
-//        Pointage pointage = pointageService.pointer(createdUtilisateur);
-//        pointageService.supprimer(pointage);
+        Pointage createdAdresse = pointageService.pointer(utilisateur);
+        boolean isDeleted = pointageService.supprimer(createdAdresse);
         // then
-//        assertNull(pointageService.trouverParId(pointage.getId()));
+        assertTrue(isDeleted);
     }
 
     @Test
     void modifier() {
+        // given
+        // when
+        Pointage addedPointage = pointageService.pointer(utilisateur);
+        addedPointage.setDateEtHeure(LocalDateTime.of(2020, 12, 30, 10, 59));
+        addedPointage.setUtilisateur(utilisateur);
+
+        Pointage modifiedPointage = pointageService.modifier(addedPointage);
+        // then
+        assertEquals(addedPointage, modifiedPointage);
     }
 
     @Test
     void trouverParId() {
+        // given
+        // when
+        Pointage createdPointage = pointageService.pointer(utilisateur);
+        Pointage foundRoleById = pointageService.trouverParId(createdPointage.getId());
+        // then
+        assertEquals(createdPointage.getId(), foundRoleById.getId());
     }
 }

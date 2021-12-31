@@ -16,7 +16,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
     @Override
     public Role create(Role role) {
-        String sql = "INSERT INTO \"" + TABLE_NAME + "\" (\"nom\") VALUES (?)";
+        String sql = "INSERT INTO \"" + TABLE_NAME + "\" (nom) VALUES (?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -36,7 +36,7 @@ public class RoleDAOImp implements GenericDAO<Role, Integer> {
 
     @Override
     public Optional<Role> find(Integer id) {
-        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

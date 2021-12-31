@@ -31,8 +31,8 @@ public class RoleService {
         return roleDAO.update(role);
     }
 
-    public boolean supprimer(int id) {
-        return roleDAO.delete(id);
+    public boolean supprimer(Role role) {
+        return roleDAO.delete(role.getId());
     }
 
     public Collection<Role> trouverTous() {

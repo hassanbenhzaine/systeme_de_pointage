@@ -4,10 +4,7 @@ import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(pointage.getDateEtHeure()));
             preparedStatement.setInt(2, pointage.getUtilisateur().getId());
 
             preparedStatement.executeUpdate();
@@ -81,11 +78,9 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
             while (resultSet.next()) {
                 Pointage pointage = new Pointage();
                 pointage.setId(resultSet.getInt("id"));
-                pointage.setDateEtHeure(LocalDateTime.of(
-                        resultSet.getDate("dateEtHeure").toLocalDate(),
-                        resultSet.getTime("DateEtHeure").toLocalTime())
-                );
-                pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
+                pointage.setDateEtHeure(resultSet.getTimestamp("dateEtHeure").toLocalDateTime());
+
+                pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
 
                 pointages.add(pointage);
             }
@@ -98,7 +93,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
 
     @Override
     public Pointage update(Pointage pointage) {
-        String sql = "UPDATE \"" + TABLE_NAME + "\" SET dateEtHeure = ?, utilisateurId = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET \"dateEtHeure\" = ?, \"utilisateurId\" = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
