@@ -4,7 +4,6 @@ import com.youcode.systemepointage.dao.ChefFabriqueDAOImpl;
 import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.model.ChefFabrique;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
@@ -29,7 +28,6 @@ public class ChefFabriqueService extends UtilisateurService{
 
     @Override
     public Utilisateur trouverParId(int id) {
-        return chefFabriqueDAO.find(id)
-                .orElseThrow(() -> new RuntimeException("ChefFabrique non trouvé"));
+        return chefFabriqueDAO.find(id).orElse(null);
     }
 }

@@ -30,7 +30,7 @@ public class EtudiantService extends UtilisateurService{
     @Override
     public Utilisateur trouverParId(int id) {
         return etudiantDAO.find(id)
-                .orElseThrow(() -> new RuntimeException("Etudiant non trouvé"));
+                .orElse(null);
     }
 
     public Long effectifParPromotion(Promotion promotion) {

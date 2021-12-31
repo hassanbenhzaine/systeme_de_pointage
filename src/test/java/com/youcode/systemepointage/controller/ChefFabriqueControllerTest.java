@@ -1,10 +1,13 @@
 package com.youcode.systemepointage.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ChefFabriqueControllerTest {
+
+    @BeforeEach
+    void setUp() {
+    }
 
     @Test
     void ajouterSecretaire() {
@@ -20,29 +23,5 @@ class ChefFabriqueControllerTest {
 
     @Test
     void pointagesEtudiantParPromotion() {
-    }
-
-    @Test
-    void trouverTousSecretaires() {
-    }
-
-    @Test
-    void trouverTousFormateurs() {
-    }
-
-    @Test
-    void desactiverSecretaire() {
-    }
-
-    @Test
-    void desactiverFormateur() {
-    }
-
-    @Test
-    void modifierSecretaire() {
-    }
-
-    @Test
-    void modifierFormateur() {
     }
 }

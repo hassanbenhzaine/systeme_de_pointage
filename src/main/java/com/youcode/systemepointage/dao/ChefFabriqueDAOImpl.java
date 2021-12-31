@@ -60,14 +60,15 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     ChefFabrique chefFabrique = new ChefFabrique();
+                    chefFabrique.setId(resultSet.getInt("id"));
                     chefFabrique.setEmail(resultSet.getString("email"));
                     chefFabrique.setMotDePasse(resultSet.getString("motDePasse"));
                     chefFabrique.setNom(resultSet.getString("nom"));
                     chefFabrique.setPrenom(resultSet.getString("prenom"));
                     chefFabrique.setTelephone(resultSet.getString("telephone"));
-                    chefFabrique.setId(resultSet.getInt("id"));
                     chefFabrique.setStatut(resultSet.getBoolean("statut"));
                     chefFabrique.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                    chefFabrique.setEntreeFabrique(resultSet.getDate("entreeFabrique").toLocalDate());
 
                     return Optional.of(chefFabrique);
                 }
@@ -90,13 +91,14 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
 
             while (resultSet.next()) {
                 ChefFabrique chefFabrique = new ChefFabrique();
+                chefFabrique.setId(resultSet.getInt("id"));
                 chefFabrique.setEmail(resultSet.getString("email"));
                 chefFabrique.setMotDePasse(resultSet.getString("motDePasse"));
                 chefFabrique.setNom(resultSet.getString("nom"));
                 chefFabrique.setPrenom(resultSet.getString("prenom"));
                 chefFabrique.setTelephone(resultSet.getString("telephone"));
                 chefFabrique.setStatut(resultSet.getBoolean("statut"));
-                chefFabrique.setId(resultSet.getInt("id"));
+                chefFabrique.setEntreeFabrique(resultSet.getDate("entreeFabrique").toLocalDate());
 
                 chefFabriques.add(chefFabrique);
             }
@@ -109,8 +111,8 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
 
     @Override
     public ChefFabrique update(ChefFabrique chefFabrique) {
-        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, \"motDePasse\" = ?" +
+                ", telephone = ?, \"roleId\" = ?, statut = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

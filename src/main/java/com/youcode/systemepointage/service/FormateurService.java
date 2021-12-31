@@ -2,7 +2,6 @@ package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.FormateurDAOImp;
 import com.youcode.systemepointage.dao.GenericDAO;
-import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Formateur;
 import com.youcode.systemepointage.model.Utilisateur;
 
@@ -29,7 +28,6 @@ public class FormateurService extends UtilisateurService{
 
     @Override
     public Utilisateur trouverParId(int id) {
-        return formateurDAO.find(id)
-                .orElseThrow(() -> new RuntimeException("Formateur non trouvé"));
+        return formateurDAO.find(id).orElse(null);
     }
 }

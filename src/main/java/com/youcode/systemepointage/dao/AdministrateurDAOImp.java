@@ -18,8 +18,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
     @Override
     public Administrateur create(Administrateur administrateur) {
         String sql = "INSERT INTO \"" + TABLE_NAME +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\")" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", sexe)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -30,7 +30,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
             preparedStatement.setString(4, administrateur.getPrenom());
             preparedStatement.setString(5, administrateur.getTelephone());
             preparedStatement.setBoolean(6, administrateur.getStatut());
-            preparedStatement.setInt(7, administrateur.getRole().getId());
+            preparedStatement.setString(7, Character.toString(administrateur.getSexe()));
+            preparedStatement.setInt(8, administrateur.getRole().getId());
 
             preparedStatement.executeUpdate();
 
@@ -57,13 +58,14 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
             try (java.sql.ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Administrateur administrateur = new Administrateur();
+                    administrateur.setId(resultSet.getInt("id"));
                     administrateur.setEmail(resultSet.getString("email"));
                     administrateur.setMotDePasse(resultSet.getString("motDePasse"));
                     administrateur.setNom(resultSet.getString("nom"));
                     administrateur.setPrenom(resultSet.getString("prenom"));
                     administrateur.setTelephone(resultSet.getString("telephone"));
                     administrateur.setStatut(resultSet.getBoolean("statut"));
-                    administrateur.setId(resultSet.getInt("id"));
+                    administrateur.setSexe(resultSet.getString("sexe").charAt(0));
                     administrateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                     return Optional.of(administrateur);
@@ -87,13 +89,14 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
             while (resultSet.next()) {
                 Administrateur administrateur = new Administrateur();
+                administrateur.setId(resultSet.getInt("id"));
                 administrateur.setEmail(resultSet.getString("email"));
                 administrateur.setMotDePasse(resultSet.getString("motDePasse"));
                 administrateur.setNom(resultSet.getString("nom"));
                 administrateur.setPrenom(resultSet.getString("prenom"));
                 administrateur.setTelephone(resultSet.getString("telephone"));
                 administrateur.setStatut(resultSet.getBoolean("statut"));
-                administrateur.setId(resultSet.getInt("id"));
+                administrateur.setSexe(resultSet.getString("sexe").charAt(0));
                 administrateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
 
                 chefFabriques.add(administrateur);
@@ -107,8 +110,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
     @Override
     public Administrateur update(Administrateur administrateur) {
-        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, \"motDePasse\" = ?" +
+                ", telephone = ?, \"roleId\" = ?, status = ?, sexe = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -120,7 +123,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
             preparedStatement.setString(5, administrateur.getTelephone());
             preparedStatement.setInt(6, administrateur.getRole().getId());
             preparedStatement.setBoolean(7, administrateur.getStatut());
-            preparedStatement.setInt(8, administrateur.getId());
+            preparedStatement.setString(8, Character.toString(administrateur.getSexe()));
+            preparedStatement.setInt(9, administrateur.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {

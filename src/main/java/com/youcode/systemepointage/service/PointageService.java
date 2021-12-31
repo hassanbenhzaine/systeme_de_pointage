@@ -35,16 +35,20 @@ public class PointageService {
                 .toList();
     }
 
-    public boolean supprimer(Pointage pointage){
+    public boolean supprimer(Pointage pointage) {
         return pointageDAO.delete(pointage.getId());
     }
 
-    public Pointage modifier(Pointage pointage){
+    public Pointage modifier(Pointage pointage) {
         return pointageDAO.update(pointage);
     }
 
     public Pointage trouverParId(int id) {
         return pointageDAO.find(id)
-                .orElseThrow(() -> new RuntimeException("Pointage non trouvé"));
+                .orElse(null);
+    }
+
+    public Collection<Pointage> trouverTous() {
+        return pointageDAO.findAll();
     }
 }

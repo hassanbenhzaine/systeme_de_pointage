@@ -1,8 +1,6 @@
 package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Role;
-import com.youcode.systemepointage.model.Roles;
 import com.youcode.systemepointage.model.Utilisateur;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,24 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdresseServiceTest {
 
     private AdresseService adresseService;
-    private UtilisateurService utilisateurService;
     private Adresse adresse;
-    private Utilisateur utilisateur;
+    private static Utilisateur utilisateur;
+
+    @BeforeAll
+    static void beforeAll() {
+        utilisateur = (Utilisateur) new UtilisateurService().trouverTous().stream().findAny().get();
+    }
 
     @BeforeEach
     void setUp() {
         adresseService = new AdresseService();
-        utilisateurService = new UtilisateurService();
-
-        utilisateur = (Utilisateur) utilisateurService.trouverTous().stream().findAny().get();
         adresse = Adresse.builder()
-                .id(890)
                 .adresse1("rue de la paix")
                 .adresse2("block 4")
                 .codePostal(75000)
                 .ville("Paris")
                 .pays("France")
-                .utilisateur(utilisateur)
+                .utilisateur(AdresseServiceTest.utilisateur)
                 .build();
     }
 
@@ -62,7 +60,7 @@ class AdresseServiceTest {
         Adresse createdAdresse = adresseService.ajouter(adresse);
         boolean isDeleted = adresseService.supprimer(createdAdresse);
         // then
-        assertTrue(isDeleted);
+        assertNull(adresseService.trouverParId(createdAdresse.getId()));
     }
 
     @Test

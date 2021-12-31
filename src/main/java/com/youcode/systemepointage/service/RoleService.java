@@ -20,11 +20,11 @@ public class RoleService {
                 .stream().parallel()
                 .filter(r -> r.getNom().equals(role))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Role introuvable"));
+                .orElse(null);
     }
 
     public Role trouverParId(int id) {
-        return roleDAO.find(id).orElseThrow(() -> new RuntimeException("Role introuvable"));
+        return roleDAO.find(id).orElse(null);
     }
 
     public Role modifier(Role role) {

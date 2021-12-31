@@ -2,7 +2,6 @@ package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Roles;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,9 +68,9 @@ class RoleServiceTest {
         // given
         // when
         Role createdRole = roleService.ajouter(role);
-        boolean isDeleted = roleService.supprimer(createdRole);
+        roleService.supprimer(createdRole);
         // then
-        assertTrue(isDeleted);
+        assertNull(roleService.trouverParId(createdRole.getId()));
     }
 
     @Test

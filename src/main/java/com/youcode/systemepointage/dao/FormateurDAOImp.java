@@ -71,8 +71,8 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
                     formateur.setStatut(resultSet.getBoolean("statut"));
                     formateur.setId(resultSet.getInt("id"));
                     formateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
-                    formateur.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).get());
-                    formateur.setClasse(classeDAO.find(resultSet.getInt("classeId")).get());
+                    formateur.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).orElse(null));
+                    formateur.setClasse(classeDAO.find(resultSet.getInt("classeId")).orElse(null));
 
                     return Optional.of(formateur);
                 }
