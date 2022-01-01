@@ -14,19 +14,21 @@ import java.util.Optional;
 
 public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Integer>  {
     private final String TABLE_NAME = "JournalEvenement";
-    private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
+    private final GenericDAO<Secretaire, Integer> secretaireDAO = new SecretaireDAOImp();
     private final GenericDAO<Evenement, Integer> evenementDAO = new EvenementDAOImp();
     @Override
     public JournalEvenement create(JournalEvenement journalEvenement) {
-        String sql = "INSERT INTO \"" + TABLE_NAME  + "\" (\"ajouter\", \"utilisateurId\", \"evenementId\")" +
+        String sql = "INSERT INTO \"" + TABLE_NAME  + "\" (\"debut\", \"fin\", \"nom\", \"secretaireId\", \"evenementId\")" +
                 " VALUES (?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getAjoute().toLocalDate()));
-            preparedStatement.setInt(2, journalEvenement.getUtilisateur().getId());
-            preparedStatement.setInt(3, journalEvenement.getEvenement().getId());
+            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getDebut().toLocalDate()));
+            preparedStatement.setDate(2, Date.valueOf(journalEvenement.getFin().toLocalDate()));
+            preparedStatement.setString(3, journalEvenement.getNom());
+            preparedStatement.setInt(4, journalEvenement.getSecretaire().getId());
+            preparedStatement.setInt(5, journalEvenement.getEvenement().getId());
 
 
             preparedStatement.executeUpdate();
@@ -51,19 +53,16 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
                 if (resultSet.next()) {
                     JournalEvenement journalEvenement = new JournalEvenement();
                     journalEvenement.setId(resultSet.getInt("id"));
-                    journalEvenement.setAjoute(LocalDateTime.of(
-                            resultSet.getDate("ajouter").toLocalDate(),
-                            resultSet.getTime("ajouter").toLocalTime())
+                    journalEvenement.setDebut(LocalDateTime.of(
+                            resultSet.getDate("debut").toLocalDate(),
+                            resultSet.getTime("debut").toLocalTime())
                     );
-                    journalEvenement.setModification(LocalDateTime.of(
-                            resultSet.getDate("modification").toLocalDate(),
-                            resultSet.getTime("modification").toLocalTime())
+                    journalEvenement.setFin(LocalDateTime.of(
+                            resultSet.getDate("fin").toLocalDate(),
+                            resultSet.getTime("fin").toLocalTime())
                     );
-                    journalEvenement.setSuppression(LocalDateTime.of(
-                            resultSet.getDate("suppression").toLocalDate(),
-                            resultSet.getTime("suppression").toLocalTime()
-                    ));
-                    journalEvenement.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
+                    journalEvenement.setNom(resultSet.getString("nom"));
+                    journalEvenement.setSecretaire(secretaireDAO.find(resultSet.getInt("secretaireId")).orElse(null));
                     journalEvenement.setEvenement(evenementDAO.find(resultSet.getInt("evenementId")).orElse(null));
                     return Optional.of(journalEvenement);
                 }
@@ -87,19 +86,16 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
             while (resultSet.next()) {
                 JournalEvenement journalEvenement = new JournalEvenement();
                 journalEvenement.setId(resultSet.getInt("id"));
-                journalEvenement.setAjoute(LocalDateTime.of(
-                        resultSet.getDate("ajouter").toLocalDate(),
-                        resultSet.getTime("ajouter").toLocalTime())
+                journalEvenement.setDebut(LocalDateTime.of(
+                        resultSet.getDate("debut").toLocalDate(),
+                        resultSet.getTime("debut").toLocalTime())
                 );
-                journalEvenement.setModification(LocalDateTime.of(
-                        resultSet.getDate("modification").toLocalDate(),
-                        resultSet.getTime("modification").toLocalTime())
+                journalEvenement.setFin(LocalDateTime.of(
+                        resultSet.getDate("fin").toLocalDate(),
+                        resultSet.getTime("fin").toLocalTime())
                 );
-                journalEvenement.setSuppression(LocalDateTime.of(
-                        resultSet.getDate("suppression").toLocalDate(),
-                        resultSet.getTime("suppression").toLocalTime()
-                ));
-                journalEvenement.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
+                journalEvenement.setNom(resultSet.getString("nom"));
+                journalEvenement.setSecretaire(secretaireDAO.find(resultSet.getInt("secretaireId")).orElse(null));
                 journalEvenement.setEvenement(evenementDAO.find(resultSet.getInt("evenementId")).orElse(null));
                 journalEvenements.add(journalEvenement);
             }
@@ -112,15 +108,16 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
 
     @Override
     public JournalEvenement update(JournalEvenement journalEvenement) {
-        String sql = "UPDATE \"" + TABLE_NAME + "\" SET modification  = ?, utilisateurId = ?, evenementId = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET debut  = ?, fin = ?, nom = ?, secretairerId = ?, evenementId = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getModification().toLocalDate()));
-            preparedStatement.setInt(2, journalEvenement.getUtilisateur().getId());
-            preparedStatement.setInt(3, journalEvenement.getEvenement().getId());
-            preparedStatement.setInt(4, journalEvenement.getId());
+            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getDebut().toLocalDate()));
+            preparedStatement.setDate(2, Date.valueOf(journalEvenement.getFin().toLocalDate()));
+            preparedStatement.setString(3, journalEvenement.getNom());
+            preparedStatement.setInt(4, journalEvenement.getSecretaire().getId());
+            preparedStatement.setInt(5, journalEvenement.getEvenement().getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
