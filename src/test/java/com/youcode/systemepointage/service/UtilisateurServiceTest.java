@@ -41,9 +41,9 @@ class UtilisateurServiceTest {
         // given
         // when
         Utilisateur addedUtillisateur = utilisateurService.ajouter(utilisateur);
-        boolean found = utilisateurService.seConnecter(addedUtillisateur);
+        Utilisateur foundUtilisateur = utilisateurService.seConnecter(addedUtillisateur);
         // then
-        assertTrue(found);
+        assertEquals(foundUtilisateur, addedUtillisateur);
     }
 
     @Test

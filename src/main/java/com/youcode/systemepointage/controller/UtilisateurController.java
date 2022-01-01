@@ -19,7 +19,7 @@ public class UtilisateurController {
         return pointageService.parUtilisateur(utilisateur);
     }
 
-    public boolean seConnecter(Utilisateur utilisateur) {
+    public Utilisateur seConnecter(Utilisateur utilisateur) {
         return utilisateurService.seConnecter(utilisateur);
     }
 

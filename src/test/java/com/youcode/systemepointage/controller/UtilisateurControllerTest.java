@@ -8,8 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UtilisateurControllerTest {
     private static Utilisateur randomutilisateur;
@@ -52,9 +51,9 @@ class UtilisateurControllerTest {
     void seConnecter() {
         // given
         // when
-        boolean isConnected = utilisateurController.seConnecter(randomutilisateur);
+        Utilisateur utilisateur = utilisateurController.seConnecter(randomutilisateur);
         // then
-        assertTrue(isConnected);
+        assertNotNull(utilisateur);
     }
 
 }
