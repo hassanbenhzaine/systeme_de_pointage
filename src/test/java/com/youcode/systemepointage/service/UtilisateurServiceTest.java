@@ -17,7 +17,7 @@ class UtilisateurServiceTest {
 
     @BeforeAll
     static void beforeAll() {
-        randomRole = new RoleService().trouverTous().stream().findAny().get();
+        randomRole = new RoleService().trouverTous().stream().findAny().orElse(null);
     }
 
     @BeforeEach

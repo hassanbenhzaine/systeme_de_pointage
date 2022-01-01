@@ -7,13 +7,13 @@ import com.youcode.systemepointage.service.PointageService;
 
 import java.util.Collection;
 
-public class ChefFabriqueController extends UtilisateurController{
+public class ChefFabriqueController extends UtilisateurController {
     private final ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
     private final FormateurService formateurService = new FormateurService();
     private final PointageService pointageService = new PointageService();
 
-    public void ajouterSecretaire(Secretaire secretaire) {
-        chefFabriqueService.ajouter(secretaire);
+    public ChefFabrique ajouterSecretaire(Secretaire secretaire) {
+        return chefFabriqueService.ajouter(secretaire);
     }
 
     public void ajouterFormateur(Formateur formateur) {
