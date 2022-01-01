@@ -2,6 +2,7 @@ package com.youcode.systemepointage.controller;
 
 import com.youcode.systemepointage.model.*;
 import com.youcode.systemepointage.service.ChefFabriqueService;
+import com.youcode.systemepointage.service.EvenementService;
 import com.youcode.systemepointage.service.FormateurService;
 import com.youcode.systemepointage.service.PointageService;
 
@@ -11,6 +12,7 @@ public class ChefFabriqueController extends UtilisateurController {
     private final ChefFabriqueService chefFabriqueService = new ChefFabriqueService();
     private final FormateurService formateurService = new FormateurService();
     private final PointageService pointageService = new PointageService();
+//    private final EvenementService evenementService = new EvenementService();
 
     public ChefFabrique ajouterSecretaire(Secretaire secretaire) {
         return chefFabriqueService.ajouter(secretaire);
@@ -27,4 +29,34 @@ public class ChefFabriqueController extends UtilisateurController {
     public Collection<Pointage> pointagesEtudiantParPromotion(Promotion promotion) {
         return pointageService.etudiantParPromotion(promotion);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // othmane
+
+//    public ChefFabrique ajouterEvenement(Evenement evenement){
+//        return chefFabriqueService.ajouter(evenement);
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
