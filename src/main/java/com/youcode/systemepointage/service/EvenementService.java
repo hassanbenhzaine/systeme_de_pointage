@@ -23,11 +23,12 @@ public class EvenementService {
     public Optional<Evenement> find(int id){
         return evenementDAO.find(id);
     }
-     public List<Evenement> findAll(){
+
+    public List<Evenement> findAll(){
         return (List<Evenement>) evenementDAO.findAll();
      }
 
-     public boolean delete(int id) {
+    public boolean delete(int id) {
         return evenementDAO.delete(id);
      }
 
