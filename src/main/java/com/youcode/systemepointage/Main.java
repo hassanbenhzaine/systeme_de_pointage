@@ -1,5 +1,6 @@
 package com.youcode.systemepointage;
 
+import com.youcode.systemepointage.model.Adresse;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.service.UtilisateurService;
 

@@ -63,12 +63,12 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Etudiant etudiant = new Etudiant();
+                    etudiant.setId(resultSet.getInt("id"));
                     etudiant.setEmail(resultSet.getString("email"));
                     etudiant.setMotDePasse(resultSet.getString("motDePasse"));
                     etudiant.setNom(resultSet.getString("nom"));
                     etudiant.setPrenom(resultSet.getString("prenom"));
                     etudiant.setTelephone(resultSet.getString("telephone"));
-                    etudiant.setId(resultSet.getInt("id"));
                     etudiant.setStatut(resultSet.getBoolean("statut"));
                     etudiant.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
                     etudiant.setPromotion(promotionDAO.find(resultSet.getInt("promotionId")).get());
@@ -96,13 +96,13 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
 
             while (resultSet.next()) {
                 Etudiant etudiant = new Etudiant();
+                etudiant.setId(resultSet.getInt("id"));
                 etudiant.setEmail(resultSet.getString("email"));
                 etudiant.setMotDePasse(resultSet.getString("motDePasse"));
                 etudiant.setNom(resultSet.getString("nom"));
                 etudiant.setPrenom(resultSet.getString("prenom"));
                 etudiant.setTelephone(resultSet.getString("telephone"));
                 etudiant.setStatut(resultSet.getBoolean("statut"));
-                etudiant.setId(resultSet.getInt("id"));
                 etudiant.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
                 etudiant.setPromotion(promotionDAO.find(resultSet.getInt("promotionId")).get());
                 etudiant.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).get());

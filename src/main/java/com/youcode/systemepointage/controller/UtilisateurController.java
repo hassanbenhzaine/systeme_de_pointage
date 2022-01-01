@@ -11,16 +11,16 @@ public class UtilisateurController {
     private final UtilisateurService utilisateurService = new UtilisateurService();
     private final PointageService pointageService = new PointageService();
 
-    public void pointer(Utilisateur utilisateur){
-        pointageService.pointer(utilisateur);
+    public Pointage pointer(Utilisateur utilisateur) {
+        return pointageService.pointer(utilisateur);
     }
 
-    public Collection<Pointage> trouverTousPointages(Utilisateur utilisateur){
+    public Collection<Pointage> trouverTousPointages(Utilisateur utilisateur) {
         return pointageService.parUtilisateur(utilisateur);
     }
 
-    public void seConnecter(Utilisateur utilisateur){
-        utilisateurService.seConnecter(utilisateur);
+    public boolean seConnecter(Utilisateur utilisateur) {
+        return utilisateurService.seConnecter(utilisateur);
     }
 
 }

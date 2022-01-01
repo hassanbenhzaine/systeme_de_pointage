@@ -27,7 +27,6 @@ public class AdministrateurService extends UtilisateurService {
 
     @Override
     public Utilisateur trouverParId(int id) {
-        return administrateurDAO.find(id)
-                .orElseThrow(() -> new RuntimeException("Administrateur non trouvé"));
+        return administrateurDAO.find(id).orElse(null);
     }
 }

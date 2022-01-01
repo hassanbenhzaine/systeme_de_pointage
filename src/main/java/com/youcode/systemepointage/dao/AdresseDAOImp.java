@@ -56,6 +56,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Adresse adresse = new Adresse();
+                    adresse.setId(resultSet.getInt("id"));
                     adresse.setAdresse1(resultSet.getString("adresse1"));
                     adresse.setAdresse2(resultSet.getString("adresse2"));
                     adresse.setPays(resultSet.getString("pays"));
@@ -105,8 +106,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     @Override
     public Adresse update(Adresse adresse) {
         String sql = "UPDATE \"" + TABLE_NAME +
-                "\" SET adresse1 = ?, adresse2 = ?, pays = ?, region = ?, ville = ?, codePostal = ?" +
-                ", utilisateurId = ? WHERE id = ?";
+                "\" SET adresse1 = ?, adresse2 = ?, pays = ?, region = ?, ville = ?, \"codePostal\" = ?, \"utilisateurId\" = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -118,6 +118,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             preparedStatement.setString(5, adresse.getVille());
             preparedStatement.setInt(6, adresse.getCodePostal());
             preparedStatement.setInt(7, adresse.getUtilisateur().getId());
+            preparedStatement.setInt(8, adresse.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
