@@ -19,6 +19,10 @@ public class ChefFabriqueService extends UtilisateurService{
         return chefFabriqueDAO.create((ChefFabrique) chefFabrique);
     }
 
+    public Evenement ajouter(Evenement evenement){
+        return evenementDAO.create(evenement);
+    }
+
     @Override
     public ChefFabrique modifier(Utilisateur chefFabrique) {
         return chefFabriqueDAO.update((ChefFabrique) chefFabrique);
