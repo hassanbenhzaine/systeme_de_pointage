@@ -11,7 +11,7 @@ public class UtilisateurController {
     private final UtilisateurService utilisateurService = new UtilisateurService();
     private final PointageService pointageService = new PointageService();
 
-    public Pointage pointer(Utilisateur utilisateur) {
+    public Pointage pointerUtilisateur(Utilisateur utilisateur) {
         return pointageService.pointer(utilisateur);
     }
 

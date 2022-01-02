@@ -12,11 +12,11 @@ class AdresseServiceTest {
 
     private AdresseService adresseService;
     private Adresse adresse;
-    private static Utilisateur utilisateur;
+    private static Utilisateur randomUtilisateur;
 
     @BeforeAll
     static void beforeAll() {
-        utilisateur = (Utilisateur) new UtilisateurService().trouverTous().stream().findAny().get();
+        randomUtilisateur = new UtilisateurService().trouverTous().stream().findAny().orElse(null);
     }
 
     @BeforeEach
@@ -28,7 +28,7 @@ class AdresseServiceTest {
                 .codePostal(75000)
                 .ville("Paris")
                 .pays("France")
-                .utilisateur(AdresseServiceTest.utilisateur)
+                .utilisateur(randomUtilisateur)
                 .build();
     }
 

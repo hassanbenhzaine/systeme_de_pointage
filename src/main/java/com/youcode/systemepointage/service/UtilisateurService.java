@@ -32,7 +32,7 @@ public class UtilisateurService {
         return utilisateurDAO.update(utilisateur) != null;
     }
 
-    public Collection trouverTous() {
+    public Collection<? extends Utilisateur> trouverTous() {
         return utilisateurDAO.findAll();
     }
 

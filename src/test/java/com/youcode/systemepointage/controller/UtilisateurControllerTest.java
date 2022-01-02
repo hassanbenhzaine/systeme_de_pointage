@@ -17,8 +17,8 @@ class UtilisateurControllerTest {
 
     @BeforeAll
     static void beforeAll() {
-        randomutilisateur = (Utilisateur) new UtilisateurService().trouverTous().stream()
-                .findAny().get();
+        randomutilisateur = new UtilisateurService().trouverTous().stream()
+                .findAny().orElse(null);
     }
 
     @BeforeEach
@@ -31,7 +31,7 @@ class UtilisateurControllerTest {
     void pointer() {
         // given
         // when
-        Pointage pointage = utilisateurController.pointer(randomutilisateur);
+        Pointage pointage = utilisateurController.pointerUtilisateur(randomutilisateur);
         Pointage foundPointage = pointageService.trouverParId(pointage.getId());
         // then
         assertEquals(foundPointage.getUtilisateur(), pointage.getUtilisateur());

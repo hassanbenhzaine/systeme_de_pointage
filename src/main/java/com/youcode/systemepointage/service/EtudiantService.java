@@ -28,7 +28,7 @@ public class EtudiantService extends UtilisateurService{
     }
 
     @Override
-    public Utilisateur trouverParId(int id) {
+    public Etudiant trouverParId(int id) {
         return etudiantDAO.find(id)
                 .orElse(null);
     }
