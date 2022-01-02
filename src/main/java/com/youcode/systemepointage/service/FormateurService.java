@@ -27,7 +27,7 @@ public class FormateurService extends UtilisateurService{
     }
 
     @Override
-    public Utilisateur trouverParId(int id) {
+    public Formateur trouverParId(int id) {
         return formateurDAO.find(id).orElse(null);
     }
 }

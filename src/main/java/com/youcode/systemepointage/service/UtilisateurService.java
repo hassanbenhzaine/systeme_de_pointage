@@ -10,10 +10,11 @@ import java.util.Collection;
 public class UtilisateurService {
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
-    public boolean seConnecter(Utilisateur utilisateur) {
+    public Utilisateur seConnecter(Utilisateur utilisateur) {
         return utilisateurDAO.findAll().stream().parallel()
-                .anyMatch(u -> u.getEmail().equals(utilisateur.getEmail())
-                        && u.getMotDePasse().equals(utilisateur.getMotDePasse()));
+                .filter(u -> u.getEmail().equals(utilisateur.getEmail())
+                        && u.getMotDePasse().equals(utilisateur.getMotDePasse()))
+                .findAny().orElse(null);
     }
 
     public Utilisateur seEnregistrer(Utilisateur utilisateur) {
@@ -31,7 +32,7 @@ public class UtilisateurService {
         return utilisateurDAO.update(utilisateur) != null;
     }
 
-    public Collection trouverTous() {
+    public Collection<? extends Utilisateur> trouverTous() {
         return utilisateurDAO.findAll();
     }
 

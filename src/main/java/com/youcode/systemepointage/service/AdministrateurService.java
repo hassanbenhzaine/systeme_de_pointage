@@ -26,7 +26,7 @@ public class AdministrateurService extends UtilisateurService {
     }
 
     @Override
-    public Utilisateur trouverParId(int id) {
+    public Administrateur trouverParId(int id) {
         return administrateurDAO.find(id).orElse(null);
     }
 }

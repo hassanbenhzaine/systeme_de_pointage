@@ -27,7 +27,7 @@ public class ChefFabriqueService extends UtilisateurService{
     }
 
     @Override
-    public Utilisateur trouverParId(int id) {
+    public ChefFabrique trouverParId(int id) {
         return chefFabriqueDAO.find(id).orElse(null);
     }
 }

@@ -8,8 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UtilisateurControllerTest {
     private static Utilisateur randomutilisateur;
@@ -18,8 +17,8 @@ class UtilisateurControllerTest {
 
     @BeforeAll
     static void beforeAll() {
-        randomutilisateur = (Utilisateur) new UtilisateurService().trouverTous().stream()
-                .findAny().get();
+        randomutilisateur = new UtilisateurService().trouverTous().stream()
+                .findAny().orElse(null);
     }
 
     @BeforeEach
@@ -32,7 +31,7 @@ class UtilisateurControllerTest {
     void pointer() {
         // given
         // when
-        Pointage pointage = utilisateurController.pointer(randomutilisateur);
+        Pointage pointage = utilisateurController.pointerUtilisateur(randomutilisateur);
         Pointage foundPointage = pointageService.trouverParId(pointage.getId());
         // then
         assertEquals(foundPointage.getUtilisateur(), pointage.getUtilisateur());
@@ -52,9 +51,9 @@ class UtilisateurControllerTest {
     void seConnecter() {
         // given
         // when
-        boolean isConnected = utilisateurController.seConnecter(randomutilisateur);
+        Utilisateur utilisateur = utilisateurController.seConnecter(randomutilisateur);
         // then
-        assertTrue(isConnected);
+        assertNotNull(utilisateur);
     }
 
 }
