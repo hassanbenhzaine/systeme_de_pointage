@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="systeme_pointage" />
         <module name="systemepointage" />
+        <module name="systeme_de_pointagev2" />
         <module name="Système de pointage" />
         <module name="systeme_de_pointage" />
       </profile>

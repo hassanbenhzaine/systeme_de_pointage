@@ -20,7 +20,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getAjoute().toLocalDate()));
+           // preparedStatement.setDate(1, Date.valueOf(journalEvenement.getAjoute().toLocalDate()));
 
 
             preparedStatement.executeUpdate();
@@ -48,7 +48,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getModification().toLocalDate()));
+           // preparedStatement.setDate(1, Date.valueOf(journalEvenement.getModification().toLocalDate()));
             // preparedStatement.setInt();
 
             preparedStatement.executeUpdate();
