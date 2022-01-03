@@ -13,9 +13,9 @@ public class Main {
 
     public static void main(String[] args) {
         PromotionDAOImp promotionDAOImp = new PromotionDAOImp();
-       // promotionDAOImp.create(new Promotion(LocalDate.now(),LocalDate.now(),"new Yassine"));
-         System.out.println(promotionDAOImp.find(5));
-        promotionDAOImp.update(new Promotion(5,LocalDate.now(),LocalDate.now(),"new Yassine"));
+        promotionDAOImp.create(new Promotion(LocalDate.now(),LocalDate.now(),"Last Yassine"));
+        // System.out.println(promotionDAOImp.find(5));
+       // promotionDAOImp.update(new Promotion(5,LocalDate.now(),LocalDate.now(),"new Yassine"));
         //promotionDAOImp.delete(3);
     }
 
