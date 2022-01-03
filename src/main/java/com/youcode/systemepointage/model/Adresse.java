@@ -14,6 +14,6 @@ import java.io.Serializable;
 public class Adresse implements Serializable {
     private Integer id, codePostal;
     private String adresse1, adresse2, pays, region, ville;
-    private Utilisateur utilisateur;
+    private Integer utilisateurId;
 
 }

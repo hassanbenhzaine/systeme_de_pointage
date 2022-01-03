@@ -15,5 +15,5 @@ import java.time.LocalDateTime;
 public class Pointage implements Serializable {
     private Integer id;
     private LocalDateTime dateEtHeure;
-    private Utilisateur utilisateur;
+    private Integer utilisateurId;
 }

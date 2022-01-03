@@ -39,7 +39,7 @@ class ChefFabriqueControllerTest {
         Secretaire secretaire = Secretaire.builder()
                 .statut(true)
                 .telephone("0612345678")
-                .role(randomRole)
+                .roleId(randomRole.getId())
                 .prenom("prenom")
                 .nom("nom")
                 .motDePasse("motDePasse")
@@ -64,7 +64,7 @@ class ChefFabriqueControllerTest {
         // when
         Pointage createdPointage = chefFabriqueController.pointerUtilisateur(randomUtilisateur);
         boolean containPointage = chefFabriqueController.pointagesParUtilisateur(randomUtilisateur).stream()
-                .allMatch(x -> x.getUtilisateur().equals(createdPointage.getUtilisateur()));
+                .allMatch(x -> x.getUtilisateurId().equals(createdPointage.getUtilisateurId()));
         // then
         assertTrue(containPointage);
     }

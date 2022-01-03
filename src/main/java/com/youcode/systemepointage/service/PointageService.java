@@ -2,13 +2,13 @@ package com.youcode.systemepointage.service;
 
 import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.dao.PointageDAOImp;
-import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Pointage;
 import com.youcode.systemepointage.model.Promotion;
 import com.youcode.systemepointage.model.Utilisateur;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 
 public class PointageService {
     private final GenericDAO<Pointage, Integer> pointageDAO = new PointageDAOImp();
@@ -16,23 +16,24 @@ public class PointageService {
     public Pointage pointer(Utilisateur utilisateur){
         return pointageDAO.create(
                 Pointage.builder()
-                .utilisateur(utilisateur)
-                .dateEtHeure(LocalDateTime.now())
-                .build()
+                        .utilisateurId(utilisateur.getId())
+                        .dateEtHeure(LocalDateTime.now())
+                        .build()
         );
     }
 
-    public Collection<Pointage> parUtilisateur(Utilisateur utilisateur){
+    public Collection<Pointage> parUtilisateur(Utilisateur utilisateur) {
         return pointageDAO.findAll().stream().parallel()
-                .filter(pointage -> pointage.getUtilisateur().getId().equals(utilisateur.getId()))
+                .filter(pointage -> pointage.getUtilisateurId().equals(utilisateur.getId()))
                 .toList();
     }
 
-    public Collection<Pointage> etudiantParPromotion(Promotion promotion){
-        return pointageDAO.findAll().stream().parallel()
-                .filter(pointage -> ((Etudiant) pointage.getUtilisateur())
-                        .getPromotion().getId().equals(promotion.getId()))
-                .toList();
+    public Collection<Pointage> etudiantParPromotion(Promotion promotion) {
+//        return pointageDAO.findAll().stream().parallel()
+//                .filter(pointage -> ((Etudiant) pointage.getUtilisateurId())
+//                        .getPromotion().getId().equals(promotion.getId()))
+//                .toList();
+        return Collections.emptyList();
     }
 
     public boolean supprimer(Pointage pointage) {

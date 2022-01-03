@@ -28,7 +28,7 @@ class AdresseServiceTest {
                 .codePostal(75000)
                 .ville("Paris")
                 .pays("France")
-                .utilisateur(randomUtilisateur)
+                .utilisateurId(randomUtilisateur.getId())
                 .build();
     }
 

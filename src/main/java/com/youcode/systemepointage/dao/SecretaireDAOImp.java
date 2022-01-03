@@ -1,6 +1,5 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Secretaire;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     private final String TABLE_NAME = "Secretaire";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Secretaire create(Secretaire secretaire) {
@@ -30,7 +28,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
             preparedStatement.setString(4, secretaire.getPrenom());
             preparedStatement.setString(5, secretaire.getTelephone());
             preparedStatement.setBoolean(6, secretaire.getStatut());
-            preparedStatement.setInt(7, secretaire.getRole().getId());
+            preparedStatement.setInt(7, secretaire.getRoleId());
             preparedStatement.setString(8, String.valueOf(secretaire.getSexe()));
 
             preparedStatement.executeUpdate();
@@ -66,7 +64,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
                     secretaire.setStatut(resultSet.getBoolean("statut"));
                     secretaire.setSexe(resultSet.getString("sexe").charAt(0));
                     secretaire.setId(resultSet.getInt("id"));
-                    secretaire.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                    secretaire.setRoleId(resultSet.getInt("roleId"));
 
                     return Optional.of(secretaire);
                 }
@@ -97,7 +95,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
                 secretaire.setStatut(resultSet.getBoolean("statut"));
                 secretaire.setSexe(resultSet.getString("sexe").charAt(0));
                 secretaire.setId(resultSet.getInt("id"));
-                secretaire.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                secretaire.setRoleId(resultSet.getInt("roleId"));
 
                 chefFabriques.add(secretaire);
             }
@@ -121,7 +119,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
             preparedStatement.setString(3, secretaire.getEmail());
             preparedStatement.setString(4, secretaire.getMotDePasse());
             preparedStatement.setString(5, secretaire.getTelephone());
-            preparedStatement.setInt(6, secretaire.getRole().getId());
+            preparedStatement.setInt(6, secretaire.getRoleId());
             preparedStatement.setBoolean(7, secretaire.getStatut());
             preparedStatement.setString(8, String.valueOf(secretaire.getSexe()));
             preparedStatement.setInt(9, secretaire.getId());

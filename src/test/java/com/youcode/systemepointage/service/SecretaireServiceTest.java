@@ -26,7 +26,7 @@ class SecretaireServiceTest {
         secretaire = Secretaire.builder()
                 .statut(true)
                 .telephone("0612345678")
-                .role(randomRole)
+                .roleId(randomRole.getId())
                 .prenom("prenom")
                 .nom("nom")
                 .motDePasse("motDePasse")

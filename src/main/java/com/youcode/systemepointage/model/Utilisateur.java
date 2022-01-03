@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Utilisateur implements Serializable {
     private Integer id;
     private String nom, prenom, email, motDePasse, telephone;
-    private Role role;
+    private Integer roleId;
     private Boolean statut;
     private Character sexe;
 }

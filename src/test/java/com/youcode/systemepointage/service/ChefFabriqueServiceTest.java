@@ -29,7 +29,7 @@ class ChefFabriqueServiceTest {
                 .entreeFabrique(LocalDate.now())
                 .statut(true)
                 .telephone("0612345678")
-                .role(randomRole)
+                .roleId(randomRole.getId())
                 .prenom("prenom")
                 .nom("nom")
                 .motDePasse("motDePasse")
