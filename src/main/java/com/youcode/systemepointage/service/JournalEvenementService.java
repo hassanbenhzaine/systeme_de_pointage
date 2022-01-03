@@ -9,6 +9,10 @@ import java.util.Collection;
 public class JournalEvenementService {
     private final GenericDAO<JournalEvenement, Integer> journalEvenementDAO = new JournalEvenementDAOImp();
 
+    public JournalEvenement ajouter(JournalEvenement journalEvenement){
+        return journalEvenementDAO.create(journalEvenement);
+    }
+
     public boolean supprimer(JournalEvenement journalEvenement){
         return journalEvenementDAO.delete(journalEvenement.getId());
     }
@@ -18,6 +22,7 @@ public class JournalEvenementService {
     public JournalEvenement trouverParId(int id){
         return journalEvenementDAO.find(id).orElse(null);
     }
+
     public Collection<JournalEvenement> trouverTout(){
         return journalEvenementDAO.findAll();
     }
