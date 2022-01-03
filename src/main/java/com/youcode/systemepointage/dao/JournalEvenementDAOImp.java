@@ -1,11 +1,9 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.ChefFabrique;
 import com.youcode.systemepointage.model.JournalEvenement;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;

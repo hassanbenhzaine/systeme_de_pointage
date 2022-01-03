@@ -1,4 +1,4 @@
-package com.youcode.systemepointage.config;
+package com.youcode.systemepointage.shared;
 
 import com.opentable.db.postgres.embedded.EmbeddedPostgres;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class TestConfig {
+public class ConnectionFactoryTest {
     public Connection getConnection(){
         try {
             return getDataSource().getConnection();

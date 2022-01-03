@@ -1,9 +1,6 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.ChefFabrique;
 import com.youcode.systemepointage.model.Evenement;
-import com.youcode.systemepointage.model.Specialite;
-import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;

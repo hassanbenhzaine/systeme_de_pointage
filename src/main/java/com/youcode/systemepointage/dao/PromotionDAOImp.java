@@ -1,11 +1,9 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Promotion;
-import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,18 +19,13 @@ public class PromotionDAOImp implements GenericDAO<Promotion, Integer> {
     }
 
 
-    {
-        try {
-            connection = ConnectionFactory.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Override
     public Promotion create(Promotion promotion) {
-      String sql = "INSERT INTO \"" + TABLE_NAME + " (\"debut\", \"fin\", \"nom\")" +
-                " VALUES (?, ?, ?)";
+      String sql = "INSERT INTO public.\"Promotion\"(\n" +
+              "\tdebut, fin, nom)\n" +
+              "\tVALUES (?, ?, ?)";
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
@@ -67,6 +60,7 @@ public class PromotionDAOImp implements GenericDAO<Promotion, Integer> {
                     promotion.setDebut(resultSet.getDate("debut").toLocalDate());
                     promotion.setFin(resultSet.getDate("fin").toLocalDate());
                     promotion.setNom(resultSet.getString("nom"));
+                    promotion.setId(resultSet.getInt("id"));
 
                     return Optional.of(promotion);
                 }

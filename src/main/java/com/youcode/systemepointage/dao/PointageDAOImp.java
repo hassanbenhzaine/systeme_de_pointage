@@ -106,6 +106,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return pointage;
     }
 

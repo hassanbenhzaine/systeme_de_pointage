@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Classe;
-import com.youcode.systemepointage.model.Promotion;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.*;
