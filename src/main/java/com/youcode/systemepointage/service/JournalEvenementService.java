@@ -9,7 +9,9 @@ import java.util.Collection;
 public class JournalEvenementService {
     private final GenericDAO<JournalEvenement, Integer> journalEvenementDAO = new JournalEvenementDAOImp();
 
-
+    public JournalEvenement ajouter(JournalEvenement journalEvenement){
+        return journalEvenementDAO.create(journalEvenement);
+    }
 
     public boolean supprimer(JournalEvenement journalEvenement){
         return journalEvenementDAO.delete(journalEvenement.getId());
