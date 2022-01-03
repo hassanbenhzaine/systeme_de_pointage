@@ -12,9 +12,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Utilisateur implements Serializable {
-    private Integer id;
+    private Integer id, roleId;
     private String nom, prenom, email, motDePasse, telephone;
-    private Role role;
     private Boolean statut;
     private Character sexe;
 }

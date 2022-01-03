@@ -12,6 +12,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 @SuperBuilder
 public class Formateur extends Utilisateur implements Serializable {
-    private Specialite specialite;
-    private Classe classe;
+    private Integer specialiteId, classeId;
 }

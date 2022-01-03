@@ -2,7 +2,6 @@ package com.youcode.systemepointage.dao;
 
 
 import com.youcode.systemepointage.model.ChefFabrique;
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
     private final String TABLE_NAME = "ChefFabrique";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public ChefFabrique create(ChefFabrique chefFabrique) {
@@ -32,7 +30,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
             preparedStatement.setString(4, chefFabrique.getPrenom());
             preparedStatement.setString(5, chefFabrique.getTelephone());
             preparedStatement.setBoolean(6, chefFabrique.getStatut());
-            preparedStatement.setInt(7, chefFabrique.getRole().getId());
+            preparedStatement.setInt(7, chefFabrique.getRoleId());
             preparedStatement.setDate(8, Date.valueOf(chefFabrique.getEntreeFabrique()));
 
             preparedStatement.executeUpdate();
@@ -67,7 +65,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
                     chefFabrique.setPrenom(resultSet.getString("prenom"));
                     chefFabrique.setTelephone(resultSet.getString("telephone"));
                     chefFabrique.setStatut(resultSet.getBoolean("statut"));
-                    chefFabrique.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                    chefFabrique.setRoleId(resultSet.getInt("roleId"));
                     chefFabrique.setEntreeFabrique(resultSet.getDate("entreeFabrique").toLocalDate());
 
                     return Optional.of(chefFabrique);
@@ -122,7 +120,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
             preparedStatement.setString(3, chefFabrique.getEmail());
             preparedStatement.setString(4, chefFabrique.getMotDePasse());
             preparedStatement.setString(5, chefFabrique.getTelephone());
-            preparedStatement.setInt(6, chefFabrique.getRole().getId());
+            preparedStatement.setInt(6, chefFabrique.getRoleId());
             preparedStatement.setBoolean(7, chefFabrique.getStatut());
             preparedStatement.setInt(8, chefFabrique.getId());
 

@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     private final String TABLE_NAME = "Adresse";
-    private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
     @Override
     public Adresse create(Adresse adresse) {
@@ -30,7 +28,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             preparedStatement.setString(4, adresse.getRegion());
             preparedStatement.setString(5, adresse.getVille());
             preparedStatement.setInt(6, adresse.getCodePostal());
-            preparedStatement.setInt(7, adresse.getUtilisateur().getId());
+            preparedStatement.setInt(7, adresse.getUtilisateurId());
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -63,7 +61,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
                     adresse.setRegion(resultSet.getString("region"));
                     adresse.setVille(resultSet.getString("ville"));
                     adresse.setCodePostal(resultSet.getInt("codePostal"));
-                    adresse.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                    adresse.setUtilisateurId(resultSet.getInt("utilisateurId"));
 
                     return Optional.of(adresse);
                 }
@@ -92,7 +90,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
                 adresse.setRegion(resultSet.getString("region"));
                 adresse.setVille(resultSet.getString("ville"));
                 adresse.setCodePostal(resultSet.getInt("codePostal"));
-                adresse.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                adresse.setUtilisateurId(resultSet.getInt("utilisateurId"));
 
                 chefFabriques.add(adresse);
             }
@@ -117,7 +115,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             preparedStatement.setString(4, adresse.getRegion());
             preparedStatement.setString(5, adresse.getVille());
             preparedStatement.setInt(6, adresse.getCodePostal());
-            preparedStatement.setInt(7, adresse.getUtilisateur().getId());
+            preparedStatement.setInt(7, adresse.getUtilisateurId());
             preparedStatement.setInt(8, adresse.getId());
 
             preparedStatement.executeUpdate();

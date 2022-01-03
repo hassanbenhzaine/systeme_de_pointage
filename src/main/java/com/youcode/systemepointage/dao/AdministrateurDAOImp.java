@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Administrateur;
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -13,12 +12,11 @@ import java.util.Optional;
 
 public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer> {
     private final String TABLE_NAME = "Administrateur";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Administrateur create(Administrateur administrateur) {
         String sql = "INSERT INTO \"" + TABLE_NAME +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", sexe)" +
+                "\" (email, \"motDePasse\", nom, prenom, telephone, statut, \"roleId\", sexe)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -30,8 +28,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
             preparedStatement.setString(4, administrateur.getPrenom());
             preparedStatement.setString(5, administrateur.getTelephone());
             preparedStatement.setBoolean(6, administrateur.getStatut());
-            preparedStatement.setString(7, Character.toString(administrateur.getSexe()));
-            preparedStatement.setInt(8, administrateur.getRole().getId());
+            preparedStatement.setInt(7, administrateur.getRoleId());
+            preparedStatement.setString(8, Character.toString(administrateur.getSexe()));
 
             preparedStatement.executeUpdate();
 
@@ -48,7 +46,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
     @Override
     public Optional<Administrateur> find(Integer id) {
-        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -66,7 +64,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
                     administrateur.setTelephone(resultSet.getString("telephone"));
                     administrateur.setStatut(resultSet.getBoolean("statut"));
                     administrateur.setSexe(resultSet.getString("sexe").charAt(0));
-                    administrateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                    administrateur.setRoleId(resultSet.getInt("roleId"));
 
                     return Optional.of(administrateur);
                 }
@@ -97,7 +95,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
                 administrateur.setTelephone(resultSet.getString("telephone"));
                 administrateur.setStatut(resultSet.getBoolean("statut"));
                 administrateur.setSexe(resultSet.getString("sexe").charAt(0));
-                administrateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                administrateur.setRoleId(resultSet.getInt("roleId"));
 
                 chefFabriques.add(administrateur);
             }
@@ -111,7 +109,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
     @Override
     public Administrateur update(Administrateur administrateur) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, \"motDePasse\" = ?" +
-                ", telephone = ?, \"roleId\" = ?, status = ?, sexe = ? WHERE id = ?";
+                ", telephone = ?, \"roleId\" = ?, statut = ?, sexe = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -121,7 +119,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
             preparedStatement.setString(3, administrateur.getEmail());
             preparedStatement.setString(4, administrateur.getMotDePasse());
             preparedStatement.setString(5, administrateur.getTelephone());
-            preparedStatement.setInt(6, administrateur.getRole().getId());
+            preparedStatement.setInt(6, administrateur.getId());
             preparedStatement.setBoolean(7, administrateur.getStatut());
             preparedStatement.setString(8, Character.toString(administrateur.getSexe()));
             preparedStatement.setInt(9, administrateur.getId());

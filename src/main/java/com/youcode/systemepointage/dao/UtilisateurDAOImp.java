@@ -1,6 +1,5 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
     private final String TABLE_NAME = "Utilisateur";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public Utilisateur create(Utilisateur utilisateur) {
@@ -30,7 +28,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
             preparedStatement.setString(4, utilisateur.getPrenom());
             preparedStatement.setString(5, utilisateur.getTelephone());
             preparedStatement.setBoolean(6, utilisateur.getStatut());
-            preparedStatement.setInt(7, utilisateur.getRole().getId());
+            preparedStatement.setInt(7, utilisateur.getRoleId());
             preparedStatement.setString(8, String.valueOf(utilisateur.getSexe()));
             preparedStatement.executeUpdate();
 
@@ -65,7 +63,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                     utilisateur.setStatut(resultSet.getBoolean("statut"));
                     utilisateur.setSexe(resultSet.getString("sexe").charAt(0));
                     utilisateur.setId(resultSet.getInt("id"));
-                    utilisateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                    utilisateur.setRoleId(resultSet.getInt("roleId"));
 
                     return Optional.of(utilisateur);
                 }
@@ -96,7 +94,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
                 utilisateur.setStatut(resultSet.getBoolean("statut"));
                 utilisateur.setSexe(resultSet.getString("sexe") == null ? ' ' : resultSet.getString("sexe").charAt(0));
                 utilisateur.setId(resultSet.getInt("id"));
-                utilisateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                utilisateur.setRoleId(resultSet.getInt("roleId"));
 
                 utilisateurs.add(utilisateur);
             }
@@ -120,7 +118,7 @@ public class UtilisateurDAOImp implements GenericDAO<Utilisateur, Integer> {
             preparedStatement.setString(3, utilisateur.getEmail());
             preparedStatement.setString(4, utilisateur.getMotDePasse());
             preparedStatement.setString(5, utilisateur.getTelephone());
-            preparedStatement.setInt(6, utilisateur.getRole().getId());
+            preparedStatement.setInt(6, utilisateur.getRoleId());
             preparedStatement.setBoolean(7, utilisateur.getStatut());
             preparedStatement.setString(8, Character.toString(utilisateur.getSexe()));
             preparedStatement.setInt(9, utilisateur.getId());

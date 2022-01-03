@@ -34,7 +34,7 @@ class UtilisateurControllerTest {
         Pointage pointage = utilisateurController.pointerUtilisateur(randomutilisateur);
         Pointage foundPointage = pointageService.trouverParId(pointage.getId());
         // then
-        assertEquals(foundPointage.getUtilisateur(), pointage.getUtilisateur());
+        assertEquals(foundPointage.getUtilisateurId(), pointage.getUtilisateurId());
     }
 
     @Test
