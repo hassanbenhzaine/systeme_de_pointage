@@ -18,7 +18,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
     @Override
     public Administrateur create(Administrateur administrateur) {
         String sql = "INSERT INTO \"" + TABLE_NAME +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", sexe)" +
+                "\" (email, \"motDePasse\", nom, prenom, telephone, statut, \"roleId\", sexe)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -30,8 +30,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
             preparedStatement.setString(4, administrateur.getPrenom());
             preparedStatement.setString(5, administrateur.getTelephone());
             preparedStatement.setBoolean(6, administrateur.getStatut());
-            preparedStatement.setString(7, Character.toString(administrateur.getSexe()));
-            preparedStatement.setInt(8, administrateur.getRole().getId());
+            preparedStatement.setInt(7, administrateur.getRole().getId());
+            preparedStatement.setString(8, Character.toString(administrateur.getSexe()));
 
             preparedStatement.executeUpdate();
 
@@ -48,7 +48,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
     @Override
     public Optional<Administrateur> find(Integer id) {
-        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -111,7 +111,7 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
     @Override
     public Administrateur update(Administrateur administrateur) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, \"motDePasse\" = ?" +
-                ", telephone = ?, \"roleId\" = ?, status = ?, sexe = ? WHERE id = ?";
+                ", telephone = ?, \"roleId\" = ?, statut = ?, sexe = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

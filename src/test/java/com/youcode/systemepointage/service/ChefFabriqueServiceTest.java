@@ -18,7 +18,7 @@ class ChefFabriqueServiceTest {
 
     @BeforeAll
     static void beforeAll() {
-        randomRole = new RoleService().trouverTous().stream().findAny().get();
+        randomRole = new RoleService().trouverTous().stream().findAny().orElse(null);
     }
 
     @BeforeEach
@@ -63,7 +63,7 @@ class ChefFabriqueServiceTest {
         // given
         // when
         ChefFabrique createdChefFabrique = chefFabriqueService.ajouter(chefFabrique);
-        ChefFabrique foundChefFabfriqueById = (ChefFabrique) chefFabriqueService
+        ChefFabrique foundChefFabfriqueById = chefFabriqueService
                 .trouverParId(createdChefFabrique.getId());
         // then
         assertEquals(createdChefFabrique, foundChefFabfriqueById);

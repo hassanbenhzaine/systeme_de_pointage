@@ -11,13 +11,13 @@ public class SecretaireService extends UtilisateurService {
     private final GenericDAO<Secretaire, Integer> secretaireDAOImp = new SecretaireDAOImp();
 
     @Override
-    public Secretaire ajouter(Utilisateur administrateur) {
-        return secretaireDAOImp.create((Secretaire) administrateur);
+    public Secretaire ajouter(Utilisateur secretaire) {
+        return secretaireDAOImp.create((Secretaire) secretaire);
     }
 
     @Override
-    public Secretaire modifier(Utilisateur administrateur) {
-        return secretaireDAOImp.update((Secretaire) administrateur);
+    public Secretaire modifier(Utilisateur secretaire) {
+        return secretaireDAOImp.update((Secretaire) secretaire);
     }
 
     @Override

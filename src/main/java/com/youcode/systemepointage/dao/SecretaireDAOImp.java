@@ -18,7 +18,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
     @Override
     public Secretaire create(Secretaire secretaire) {
         String sql = "INSERT INTO \"" + TABLE_NAME +
-                "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\", \"sexe\")" +
+                "\" (email, \"motDePasse\", nom, prenom, telephone, statut, \"roleId\", sexe)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -48,7 +48,7 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
     @Override
     public Optional<Secretaire> find(Integer id) {
-        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -110,8 +110,8 @@ public class SecretaireDAOImp implements GenericDAO<Secretaire, Integer> {
 
     @Override
     public Secretaire update(Secretaire secretaire) {
-        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, roleId = ?, status = ?, sexe = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, \"motDePasse\" = ?" +
+                ", telephone = ?, \"roleId\" = ?, statut = ?, sexe = ? WHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
