@@ -3,10 +3,7 @@ package com.youcode.systemepointage.dao;
 import com.youcode.systemepointage.model.*;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +21,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getAjoute().toLocalDate()));
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(journalEvenement.getAjoute()));
             preparedStatement.setInt(2, journalEvenement.getUtilisateur().getId());
             preparedStatement.setInt(3, journalEvenement.getEvenement().getId());
 
@@ -51,18 +48,21 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
                 if (resultSet.next()) {
                     JournalEvenement journalEvenement = new JournalEvenement();
                     journalEvenement.setId(resultSet.getInt("id"));
-                    journalEvenement.setAjoute(LocalDateTime.of(
-                            resultSet.getDate("ajouter").toLocalDate(),
-                            resultSet.getTime("ajouter").toLocalTime())
-                    );
-                    journalEvenement.setModification(LocalDateTime.of(
-                            resultSet.getDate("modification").toLocalDate(),
-                            resultSet.getTime("modification").toLocalTime())
-                    );
-                    journalEvenement.setSuppression(LocalDateTime.of(
-                            resultSet.getDate("suppression").toLocalDate(),
-                            resultSet.getTime("suppression").toLocalTime()
-                    ));
+//                    journalEvenement.setAjoute(LocalDateTime.of(
+//                            resultSet.getDate("ajouter").toLocalDate(),
+//                            resultSet.getTime("ajouter").toLocalTime())
+//                    );
+//                    journalEvenement.setModification(LocalDateTime.of(
+//                            resultSet.getDate("modification").toLocalDate(),
+//                            resultSet.getTime("modification").toLocalTime())
+//                    );
+//                    journalEvenement.setSuppression(LocalDateTime.of(
+//                            resultSet.getDate("suppression").toLocalDate(),
+//                            resultSet.getTime("suppression").toLocalTime()
+//                    ));
+                    journalEvenement.setAjoute(resultSet.getTimestamp("ajouter").toLocalDateTime());
+                    journalEvenement.setModification(resultSet.getTimestamp("modification").toLocalDateTime());
+                    journalEvenement.setSuppression(resultSet.getTimestamp("suppression").toLocalDateTime());
                     journalEvenement.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
                     journalEvenement.setEvenement(evenementDAO.find(resultSet.getInt("evenementId")).orElse(null));
                     return Optional.of(journalEvenement);
@@ -87,18 +87,21 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
             while (resultSet.next()) {
                 JournalEvenement journalEvenement = new JournalEvenement();
                 journalEvenement.setId(resultSet.getInt("id"));
-                journalEvenement.setAjoute(LocalDateTime.of(
-                        resultSet.getDate("ajouter").toLocalDate(),
-                        resultSet.getTime("ajouter").toLocalTime())
-                );
-                journalEvenement.setModification(LocalDateTime.of(
-                        resultSet.getDate("modification").toLocalDate(),
-                        resultSet.getTime("modification").toLocalTime())
-                );
-                journalEvenement.setSuppression(LocalDateTime.of(
-                        resultSet.getDate("suppression").toLocalDate(),
-                        resultSet.getTime("suppression").toLocalTime()
-                ));
+//                journalEvenement.setAjoute(LocalDateTime.of(
+//                        resultSet.getDate("ajouter").toLocalDate(),
+//                        resultSet.getTime("ajouter").toLocalTime())
+//                );
+//                journalEvenement.setModification(LocalDateTime.of(
+//                        resultSet.getDate("modification").toLocalDate(),
+//                        resultSet.getTime("modification").toLocalTime())
+//                );
+//                journalEvenement.setSuppression(LocalDateTime.of(
+//                        resultSet.getDate("suppression").toLocalDate(),
+//                        resultSet.getTime("suppression").toLocalTime()
+//                ));
+                journalEvenement.setAjoute(resultSet.getTimestamp("ajouter").toLocalDateTime());
+                journalEvenement.setModification(resultSet.getTimestamp("modification").toLocalDateTime());
+                journalEvenement.setSuppression(resultSet.getTimestamp("suppression").toLocalDateTime());
                 journalEvenement.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
                 journalEvenement.setEvenement(evenementDAO.find(resultSet.getInt("evenementId")).orElse(null));
                 journalEvenements.add(journalEvenement);
@@ -117,7 +120,7 @@ public class JournalEvenementDAOImp implements GenericDAO<JournalEvenement, Inte
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setDate(1, Date.valueOf(journalEvenement.getModification().toLocalDate()));
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(journalEvenement.getModification()));
             preparedStatement.setInt(2, journalEvenement.getUtilisateur().getId());
             preparedStatement.setInt(3, journalEvenement.getEvenement().getId());
             preparedStatement.setInt(4, journalEvenement.getId());

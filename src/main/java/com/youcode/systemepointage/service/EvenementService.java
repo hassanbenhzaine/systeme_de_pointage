@@ -5,11 +5,9 @@ import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.model.Evenement;
 import com.youcode.systemepointage.model.JournalEvenement;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 public class EvenementService {
@@ -39,15 +37,15 @@ public class EvenementService {
         return updateEvenement;
     }
 
-    public Optional<Evenement> find(int id){
-        return evenementDAO.find(id);
+    public Evenement find(Integer id){
+        return evenementDAO.find(id).orElse(null);
     }
 
     public List<Evenement> findAll(){
         return (List<Evenement>) evenementDAO.findAll();
      }
 
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return evenementDAO.delete(id);
      }
 
