@@ -29,7 +29,7 @@ class EvenementServiceTest {
     @BeforeEach
     void setUp() {
         evenementService = new EvenementService();
-        // journalEvenementService = new JournalEvenementService();
+        journalEvenementService = new JournalEvenementService();
 
         evenement = Evenement.builder()
                 .id(1)
