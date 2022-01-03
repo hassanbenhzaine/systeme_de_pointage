@@ -16,4 +16,10 @@ public class Classe implements Serializable {
     private Integer id;
     private LocalTime debutJournee, finJournee;
     private String nom;
+
+    public Classe(LocalTime debutJournee, LocalTime finJournee, String nom) {
+        this.debutJournee = debutJournee;
+        this.finJournee = finJournee;
+        this.nom = nom;
+    }
 }

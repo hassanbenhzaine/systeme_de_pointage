@@ -1,0 +1,10 @@
+insert into Classe (id, debutJournee, finJournee, nom) values (1, '7:44 PM', '3:06 PM', 'mmcqueen0');
+insert into Classe (id, debutJournee, finJournee, nom) values (2, '7:56 AM', '10:32 AM', 'mmichelle1');
+insert into Classe (id, debutJournee, finJournee, nom) values (3, '8:19 PM', '4:28 PM', 'lscully2');
+insert into Classe (id, debutJournee, finJournee, nom) values (4, '10:36 AM', '7:15 AM', 'jwybrew3');
+insert into Classe (id, debutJournee, finJournee, nom) values (5, '7:35 PM', '3:41 PM', 'bharberer4');
+insert into Classe (id, debutJournee, finJournee, nom) values (6, '2:24 AM', '7:49 AM', 'kcasiroli5');
+insert into Classe (id, debutJournee, finJournee, nom) values (7, '10:17 PM', '10:53 AM', 'gchildes6');
+insert into Classe (id, debutJournee, finJournee, nom) values (8, '2:41 PM', '7:08 AM', 'aridolfi7');
+insert into Classe (id, debutJournee, finJournee, nom) values (9, '4:18 PM', '10:17 PM', 'ctomasz8');
+insert into Classe (id, debutJournee, finJournee, nom) values (10, '9:39 PM', '10:28 AM', 'jchadbourne9');

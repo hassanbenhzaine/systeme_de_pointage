@@ -32,16 +32,16 @@ class PromotionDAOImpTest {
         promotionDAOImp.create(new Promotion(LocalDate.now(),LocalDate.now(),"new Class"));
         List<Promotion> promotions = promotionDAOImp.findAll();
         int acualPromotionSize = promotions.size();
-        int expectedUserSize = 9;
-        assertEquals(expectedUserSize , acualPromotionSize);
+        int expectedPromotionSize = 9;
+        assertEquals(expectedPromotionSize , acualPromotionSize);
     }
 
     @Test
     void find() {
         PromotionDAOImp promotionDAOImp = new PromotionDAOImp();
-        Promotion newPromotion = new Promotion(11,LocalDate.now(),LocalDate.now(),"new Class");
-        Optional<Promotion> acualPromotion = promotionDAOImp.find(11);
-        assertEquals(newPromotion , acualPromotion.get());
+        Boolean expectedPromotionSize = true;
+        Optional<Promotion> acualPromotion = promotionDAOImp.find(1);
+        assertEquals(expectedPromotionSize , acualPromotion.isPresent());
     }
 
     @Test
@@ -49,8 +49,8 @@ class PromotionDAOImpTest {
         PromotionDAOImp promotionDAOImp = new PromotionDAOImp();
         List<Promotion> promotions =  promotionDAOImp.findAll();
         int acualPromotionSize = promotions.size();
-        int expectedUserSize = 9;
-        assertEquals(expectedUserSize , acualPromotionSize);
+        int expectedPromotionSize = 9;
+        assertEquals(expectedPromotionSize , acualPromotionSize);
     }
 
     @Test
@@ -64,8 +64,8 @@ class PromotionDAOImpTest {
     @Test
     void delete() {
         PromotionDAOImp promotionDAOImp = new PromotionDAOImp();
-        Boolean actualStatusUserDIo = promotionDAOImp.delete(11);
-        Boolean exectedUPdateStatusUserDIo = true ;
-        assertEquals(actualStatusUserDIo , exectedUPdateStatusUserDIo);
+        Boolean actualStatusPromotionDIo = promotionDAOImp.delete(11);
+        Boolean exectedUPdateStatusPromotionDIo = true ;
+        assertEquals(actualStatusPromotionDIo , exectedUPdateStatusPromotionDIo);
     }
 }

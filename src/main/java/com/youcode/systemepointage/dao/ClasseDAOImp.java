@@ -10,17 +10,26 @@ import java.util.Optional;
 
 public class ClasseDAOImp implements GenericDAO<Classe, Integer> {
     private final String TABLE_NAME = "Classe";
+    Connection connection;
+
+    public ClasseDAOImp() {
+    }
+
+    public ClasseDAOImp(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public Classe create(Classe classe) {
-        String sql = "INSERT INTO \"" + TABLE_NAME + " (\"nom\", \"debutJournee\", \"finJournee\")" +
-                " VALUES (?, ?, ?)";
+        String sql = "INSERT INTO public.\"Classe\"(\n" +
+                "\t\"debutJournee\", \"finJournee\", nom)\n" +
+                "\tVALUES (?, ?, ?)";
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setDate(1, Date.valueOf(classe.getNom()));
-            preparedStatement.setTime(2, Time.valueOf(classe.getDebutJournee()));
-            preparedStatement.setTime(3, Time.valueOf(classe.getFinJournee()));
+            preparedStatement.setTime(1, Time.valueOf(classe.getDebutJournee()));
+            preparedStatement.setTime(2, Time.valueOf(classe.getFinJournee()));
+            preparedStatement.setString(3, classe.getNom());
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -85,15 +94,15 @@ public class ClasseDAOImp implements GenericDAO<Classe, Integer> {
 
     @Override
     public Classe update(Classe classe) {
-        String sql = "UPDATE public.\"Promotion\"\n" +
-                "\tSET nom=?, debutJournee=?, finJournee=?\n" +
+        String sql = "UPDATE public.\"Classe\"\n" +
+                "\tSET \"debutJournee\"=?, \"finJournee\"=?, nom=?\n" +
                 "\tWHERE id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setDate(1, Date.valueOf(classe.getNom()));
-            preparedStatement.setTime(2, Time.valueOf(classe.getDebutJournee()));
-            preparedStatement.setTime(3, Time.valueOf(classe.getFinJournee()));
+            preparedStatement.setTime(1, Time.valueOf(classe.getDebutJournee()));
+            preparedStatement.setTime(2, Time.valueOf(classe.getFinJournee()));
+            preparedStatement.setString(3, classe.getNom());
             preparedStatement.setInt(4, classe.getId());
 
             preparedStatement.executeUpdate();
