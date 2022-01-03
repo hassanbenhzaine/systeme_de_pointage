@@ -1,9 +1,6 @@
 package com.youcode.systemepointage.controller;
 
-import com.youcode.systemepointage.model.Pointage;
-import com.youcode.systemepointage.model.Role;
-import com.youcode.systemepointage.model.Secretaire;
-import com.youcode.systemepointage.model.Utilisateur;
+import com.youcode.systemepointage.model.*;
 import com.youcode.systemepointage.service.RoleService;
 import com.youcode.systemepointage.service.UtilisateurService;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -73,5 +73,20 @@ class ChefFabriqueControllerTest {
     @Disabled
         // for yassine to work on it
     void pointagesEtudiantParPromotion() {
+    }
+
+    @Test
+    void ajouterEvenement() {
+        Evenement evenement = Evenement.builder()
+                .fin(LocalDateTime.of(LocalDate.of(2020, 12, 20),
+                         LocalTime.of(12,46, 20)))
+                .debut(LocalDateTime.of(LocalDate.of(2020, 12, 20),
+                        LocalTime.of(12,46, 20)))
+                .nom("yahya44")
+                .description("description evenement 2")
+                .proposer(false)
+                .build();
+        Evenement addEvenement = chefFabriqueController.ajouterEvenement(evenement, randomUtilisateur);
+        assertEquals(evenement, evenement);
     }
 }

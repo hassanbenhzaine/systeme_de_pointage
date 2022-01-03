@@ -20,12 +20,16 @@ public class SpecialiteService {
         return specialiteDAO.update(specialite);
     }
 
-    public Optional<Specialite> find(int id){
-        return specialiteDAO.find(id);
+    public Specialite find(int id){
+        return specialiteDAO.find(id).orElse(null);
     }
 
     public List<Specialite> findAll(){
         return (List<Specialite>) specialiteDAO.findAll();
+    }
+
+    public boolean delete(int id){
+        return specialiteDAO.delete(id);
     }
 
 //    public Specialite trouver(Specialite specialite) {
