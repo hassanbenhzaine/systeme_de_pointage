@@ -8,29 +8,30 @@ import com.youcode.systemepointage.model.Promotion;
 import java.util.Collection;
 import java.util.Optional;
 
-public class PromotionService {
+public class PromotionService implements GenericService<Promotion, Integer>{
     private GenericDAO<Promotion, Integer> promotionDAO = new PromotionDAOImp();
-
-
-
-    public void ajouter(Promotion promotion) {
-        promotionDAO.create(promotion);
+    @Override
+    public Promotion create(Promotion promotion) {
+        return promotionDAO.create(promotion);
     }
 
-    public Promotion modifier(Promotion promotion) {
-        promotionDAO.update(promotion);
-        return promotion;
-    }
-    public Optional<Promotion> getByid(int id) {
-        promotionDAO.find(id);
-        return  Optional.empty();
+    @Override
+    public Optional<Promotion> find(Integer id) {
+        return  promotionDAO.find(id);
     }
 
-    public Collection<Promotion> trouverTous() {
+    @Override
+    public Collection<Promotion> findAll() {
         return promotionDAO.findAll();
     }
-    public boolean supprimer(Integer id) {
-        promotionDAO.delete(id);
-        return true;
+
+    @Override
+    public Promotion update(Promotion promotion) {
+        return promotionDAO.update(promotion);
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return promotionDAO.delete(id);
     }
 }
