@@ -12,6 +12,22 @@ import java.util.Optional;
 
 public class PromotionDAOImp implements GenericDAO<Promotion, Integer> {
     private String TABLE_NAME = "Promotion";
+    Connection connection;
+    public PromotionDAOImp() {
+    }
+
+    public PromotionDAOImp(Connection connection) {
+        this.connection = connection;
+    }
+
+
+    {
+        try {
+            connection = ConnectionFactory.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Promotion create(Promotion promotion) {

@@ -1,0 +1,14 @@
+insert into Promotion   (debut, fin, nom, id) values (11, '2021-11-16', '2021-08-26', "9000.55");
+insert into Promotion (debut, fin, nom, id) values (17, 17, '2021-05-16', '2021-03-21', 5500.85);
+insert into Promotion (debut, fin, nom, id) values (18, 18, '2021-02-04', '2021-09-11', 1260.54);
+insert into Promotion (debut, fin, nom, id) values (19, 19, '2021-10-12', '2021-03-12', 1527.47);
+insert into Promotion (debut, fin, nom, id) values (20, 20, '2021-04-21', '2021-07-08', 7806.71);
+insert into Promotion (debut, fin, nom, id) values (21, 21, '2021-06-22', '2021-03-07', 8443.16);
+insert into Promotion (debut, fin, nom, id) values (22, 22, '2021-04-07', '2021-02-13', 3489.74);
+insert into Promotion (debut, fin, nom, id) values (23, 23, '2021-04-25', '2021-04-28', 6755.41);
+insert into Promotion (debut, fin, nom, id) values (24, 24, '2021-08-31', '2021-07-30', 8949.51);
+insert into Promotion (debut, fin, nom, id) values (25, 25, '2021-08-22', '2021-11-21', 6154.27);
+insert into Promotion (debut, fin, nom, id) values (26, 26, '2021-11-06', '2021-02-05', 9863.74);
+insert into Promotion (debut, fin, nom, id) values (27, 27, '2021-06-04', '2021-09-17', 2678.65);
+insert into Promotion (debut, fin, nom, id) values (28, 28, '2021-09-22', '2021-05-23', 3502.07);
+insert into Promotion (debut, fin, nom, id) values (29, 29, '2021-02-13', '2021-10-26', 7948.51);
