@@ -12,8 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Adresse implements Serializable {
-    private Integer id, codePostal;
+    private Integer id, codePostal, utilisateurId;
     private String adresse1, adresse2, pays, region, ville;
-    private Integer utilisateurId;
-
 }

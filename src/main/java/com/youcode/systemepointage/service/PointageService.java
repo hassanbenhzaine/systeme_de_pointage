@@ -8,10 +8,11 @@ import com.youcode.systemepointage.model.Utilisateur;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class PointageService {
     private final GenericDAO<Pointage, Integer> pointageDAO = new PointageDAOImp();
+    private final EtudiantService etudiantService = new EtudiantService();
 
     public Pointage pointer(Utilisateur utilisateur){
         return pointageDAO.create(
@@ -29,11 +30,11 @@ public class PointageService {
     }
 
     public Collection<Pointage> etudiantParPromotion(Promotion promotion) {
-//        return pointageDAO.findAll().stream().parallel()
-//                .filter(pointage -> ((Etudiant) pointage.getUtilisateurId())
-//                        .getPromotion().getId().equals(promotion.getId()))
-//                .toList();
-        return Collections.emptyList();
+        return etudiantService.trouverTous().stream().parallel()
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId()))
+                .map(etudiant -> pointageDAO.findAll().stream().parallel().filter(pointage -> pointage.getUtilisateurId().equals(etudiant.getId()))
+                        .collect(Collectors.toList())).flatMap(Collection::stream).toList();
+
     }
 
     public boolean supprimer(Pointage pointage) {

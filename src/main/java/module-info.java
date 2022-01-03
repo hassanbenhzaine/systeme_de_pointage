@@ -6,4 +6,6 @@ module com.youcode.systemepointage {
 
     opens com.youcode.systemepointage to javafx.fxml;
     exports com.youcode.systemepointage;
+    exports com.youcode.systemepointage.controller;
+    opens com.youcode.systemepointage.controller to javafx.fxml;
 }
