@@ -7,13 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="systeme_pointage" />
-        <module name="systemepointage" />
-        <module name="Système de pointage" />
+        <module name="systeme_de_pointage" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="demo" target="17" />
+      <module name="systeme_de_pointage" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
