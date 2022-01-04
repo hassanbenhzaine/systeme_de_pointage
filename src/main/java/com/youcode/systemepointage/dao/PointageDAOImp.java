@@ -1,7 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Pointage;
-import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.*;
@@ -12,7 +11,6 @@ import java.util.Optional;
 
 public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
     private final String TABLE_NAME = "Pointage";
-    private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
     @Override
     public Pointage create(Pointage pointage) {
@@ -23,7 +21,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setTimestamp(1, Timestamp.valueOf(pointage.getDateEtHeure()));
-            preparedStatement.setInt(2, pointage.getUtilisateur().getId());
+            preparedStatement.setInt(2, pointage.getUtilisateurId());
 
             preparedStatement.executeUpdate();
 
@@ -55,7 +53,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
                             resultSet.getDate("dateEtHeure").toLocalDate(),
                             resultSet.getTime("DateEtHeure").toLocalTime())
                     );
-                    pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).orElse(null));
+                    pointage.setUtilisateurId(resultSet.getInt("utilisateurId"));
                     return Optional.of(pointage);
                 }
             }
@@ -80,7 +78,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
                 pointage.setId(resultSet.getInt("id"));
                 pointage.setDateEtHeure(resultSet.getTimestamp("dateEtHeure").toLocalDateTime());
 
-                pointage.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                pointage.setUtilisateurId(resultSet.getInt("utilisateurId"));
 
                 pointages.add(pointage);
             }
@@ -99,7 +97,7 @@ public class PointageDAOImp implements GenericDAO<Pointage, Integer> {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setDate(1, Date.valueOf(pointage.getDateEtHeure().toLocalDate()));
-            preparedStatement.setInt(2, pointage.getUtilisateur().getId());
+            preparedStatement.setInt(2, pointage.getUtilisateurId());
             preparedStatement.setInt(3, pointage.getId());
 
             preparedStatement.executeUpdate();

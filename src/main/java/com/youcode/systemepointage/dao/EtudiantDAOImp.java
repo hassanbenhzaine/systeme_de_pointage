@@ -1,6 +1,6 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.*;
+import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -12,11 +12,6 @@ import java.util.Optional;
 
 public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
     private final String TABLE_NAME = "Etudiant";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
-    private final GenericDAO<Promotion, Integer> promotionDAO = new PromotionDAOImp();
-    private final GenericDAO<Classe, Integer> classeDAO = new ClasseDAOImp();
-    private final GenericDAO<Specialite, Integer> specialiteDAO = new SpecialiteDAOImp();
-    private final GenericDAO<Formateur, Integer> formateurDAO = new FormateurDAOImp();
 
     @Override
     public Etudiant create(Etudiant etudiant) {
@@ -33,10 +28,10 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
             preparedStatement.setString(4, etudiant.getPrenom());
             preparedStatement.setString(5, etudiant.getTelephone());
             preparedStatement.setBoolean(6, etudiant.getStatut());
-            preparedStatement.setInt(7, etudiant.getRole().getId());
-            preparedStatement.setInt(8, etudiant.getPromotion().getId());
-            preparedStatement.setInt(9, etudiant.getSpecialite().getId());
-            preparedStatement.setInt(10, etudiant.getFormateur().getId());
+            preparedStatement.setInt(7, etudiant.getRoleId());
+            preparedStatement.setInt(8, etudiant.getPromotionId());
+            preparedStatement.setInt(9, etudiant.getSpecialiteId());
+            preparedStatement.setInt(10, etudiant.getFormateurId());
 
             preparedStatement.executeUpdate();
 
@@ -70,10 +65,10 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
                     etudiant.setPrenom(resultSet.getString("prenom"));
                     etudiant.setTelephone(resultSet.getString("telephone"));
                     etudiant.setStatut(resultSet.getBoolean("statut"));
-                    etudiant.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
-                    etudiant.setPromotion(promotionDAO.find(resultSet.getInt("promotionId")).get());
-                    etudiant.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).get());
-                    etudiant.setFormateur(formateurDAO.find(resultSet.getInt("formateurId")).get());
+                    etudiant.setRoleId(resultSet.getInt("roleId"));
+                    etudiant.setPromotionId(resultSet.getInt("promotionId"));
+                    etudiant.setSpecialiteId(resultSet.getInt("specialiteId"));
+                    etudiant.setFormateurId(resultSet.getInt("formateurId"));
 
                     return Optional.of(etudiant);
                 }
@@ -103,10 +98,10 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
                 etudiant.setPrenom(resultSet.getString("prenom"));
                 etudiant.setTelephone(resultSet.getString("telephone"));
                 etudiant.setStatut(resultSet.getBoolean("statut"));
-                etudiant.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
-                etudiant.setPromotion(promotionDAO.find(resultSet.getInt("promotionId")).get());
-                etudiant.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).get());
-                etudiant.setFormateur(formateurDAO.find(resultSet.getInt("formateurId")).get());
+                etudiant.setRoleId(resultSet.getInt("roleId"));
+                etudiant.setPromotionId(resultSet.getInt("promotionId"));
+                etudiant.setSpecialiteId(resultSet.getInt("specialiteId"));
+                etudiant.setFormateurId(resultSet.getInt("formateurId"));
 
                 etudiants.add(etudiant);
             }
@@ -132,10 +127,10 @@ public class EtudiantDAOImp implements GenericDAO<Etudiant, Integer> {
             preparedStatement.setString(4, etudiant.getMotDePasse());
             preparedStatement.setString(5, etudiant.getTelephone());
             preparedStatement.setBoolean(6, etudiant.getStatut());
-            preparedStatement.setInt(7, etudiant.getRole().getId());
-            preparedStatement.setInt(8, etudiant.getPromotion().getId());
-            preparedStatement.setInt(9, etudiant.getSpecialite().getId());
-            preparedStatement.setInt(10, etudiant.getFormateur().getId());
+            preparedStatement.setInt(7, etudiant.getRoleId());
+            preparedStatement.setInt(8, etudiant.getFormateurId());
+            preparedStatement.setInt(9, etudiant.getSpecialiteId());
+            preparedStatement.setInt(10, etudiant.getFormateurId());
             preparedStatement.setInt(11, etudiant.getId());
 
             preparedStatement.executeUpdate();

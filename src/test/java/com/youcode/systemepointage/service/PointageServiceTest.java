@@ -32,7 +32,7 @@ class PointageServiceTest {
         // when
         Pointage pointage = pointageService.pointer(randomUtilisateur);
         // then
-        assertEquals(pointage.getUtilisateur(), randomUtilisateur);
+        assertEquals(pointage.getUtilisateurId(), randomUtilisateur.getId());
     }
 
     @Test
@@ -41,7 +41,7 @@ class PointageServiceTest {
         // when
         Pointage createdPointage = pointageService.pointer(randomUtilisateur);
         boolean containPointage = pointageService.parUtilisateur(randomUtilisateur).stream()
-                .allMatch(x -> x.getUtilisateur().equals(createdPointage.getUtilisateur()));
+                .allMatch(x -> x.getUtilisateurId().equals(createdPointage.getUtilisateurId()));
         // then
         assertTrue(containPointage);
     }
@@ -76,7 +76,7 @@ class PointageServiceTest {
         Pointage addedPointage = pointageService.pointer(randomUtilisateur);
 
         addedPointage.setDateEtHeure(LocalDateTime.now());
-        addedPointage.setUtilisateur(randomUtilisateur);
+        addedPointage.setUtilisateurId(randomUtilisateur.getId());
 
         Pointage modifiedPointage = pointageService.modifier(addedPointage);
         // then

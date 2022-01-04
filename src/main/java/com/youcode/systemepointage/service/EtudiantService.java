@@ -35,27 +35,27 @@ public class EtudiantService extends UtilisateurService{
 
     public Long effectifParPromotion(Promotion promotion) {
         return etudiantDAO.findAll().stream().parallel()
-                .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId()))
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId()))
                 .count();
     }
 
     public Long nbrGarconsParPromotion(Promotion promotion) {
         return etudiantDAO.findAll().stream().parallel()
-                .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId())
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId())
                         && etudiant.getSexe().equals('M'))
                 .count();
     }
 
     public Long nbrFillesParPromotion(Promotion promotion) {
         return etudiantDAO.findAll().stream().parallel()
-                .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId())
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId())
                         && etudiant.getSexe().equals('F'))
                 .count();
     }
 
     public Long effectifParClasse(Classe classe) {
         return etudiantDAO.findAll().stream().parallel()
-                .filter(etudiant -> etudiant.getClasse().getId().equals(classe.getId()))
+                .filter(etudiant -> etudiant.getClasseId().equals(classe.getId()))
                 .count();
     }
 }

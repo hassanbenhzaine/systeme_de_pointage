@@ -1,27 +1,22 @@
 package com.youcode.systemepointage;
 
-import com.youcode.systemepointage.dao.ClasseDAOImp;
-import com.youcode.systemepointage.dao.PointageDAOImp;
-import com.youcode.systemepointage.dao.PromotionDAOImp;
-import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Classe;
-import com.youcode.systemepointage.model.Promotion;
-import com.youcode.systemepointage.model.Utilisateur;
-import com.youcode.systemepointage.service.UtilisateurService;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.io.IOException;
 
-public class Main {
-
+public class Main extends Application {
     public static void main(String[] args) {
-        //PromotionDAOImp promotionDAOImp = new PromotionDAOImp();
-        //promotionDAOImp.create(new Promotion(LocalDate.now(),LocalDate.now(),"Last Yassine"));
-        ClasseDAOImp classeDAOImp = new ClasseDAOImp();
-        classeDAOImp.create(new Classe(LocalTime.now(),LocalTime.now(),"new Class"));
-        // System.out.println(promotionDAOImp.find(5));
-       // promotionDAOImp.update(new Promotion(5,LocalDate.now(),LocalDate.now(),"new Yassine"));
-        //promotionDAOImp.delete(3);
+        launch();
     }
 
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com.youcode.systemepointage/view/login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+        stage.show();
+    }
 }

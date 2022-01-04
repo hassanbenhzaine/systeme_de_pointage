@@ -14,5 +14,8 @@
         <module name="systeme_de_pointage" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
