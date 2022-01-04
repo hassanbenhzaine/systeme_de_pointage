@@ -7,7 +7,7 @@ import com.youcode.systemepointage.model.JournalEvenement;
 import com.youcode.systemepointage.model.Utilisateur;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 
 public class EvenementService {
@@ -41,8 +41,8 @@ public class EvenementService {
         return evenementDAO.find(id).orElse(null);
     }
 
-    public List<Evenement> findAll(){
-        return (List<Evenement>) evenementDAO.findAll();
+    public Collection<Evenement> findAll(){
+        return evenementDAO.findAll();
      }
 
     public boolean delete(Integer id) {
