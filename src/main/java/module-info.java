@@ -3,6 +3,8 @@ module com.youcode.systemepointage {
     requires javafx.fxml;
     requires java.sql;
     requires lombok;
+    requires otj.pg.embedded;
+    requires org.flywaydb.core;
 
     opens com.youcode.systemepointage to javafx.fxml;
     exports com.youcode.systemepointage;
