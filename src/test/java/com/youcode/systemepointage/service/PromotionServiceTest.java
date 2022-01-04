@@ -18,19 +18,13 @@ class PromotionServiceTest {
     @Test
     void ajouter() {
         Promotion promotion =promotionService.create(new Promotion(LocalDate.now(),LocalDate.now(),"new Class"));
-        if (promotion != null)
-            assertTrue(true );
-        else
-            assertTrue(false );
+        assertNotNull(promotion);
     }
 
     @Test
     void modifier() {
         Promotion expectedPromotion = promotionService.update(new Promotion(0,LocalDate.now(),LocalDate.now(),"newjddj Class"));
-        if (expectedPromotion != null)
-            assertTrue(true );
-        else
-            assertTrue(false );
+        assertNotNull(expectedPromotion);
     }
 
     @Test

@@ -33,6 +33,7 @@ class PromotionDAOImpTest {
             assertTrue(true );
         else
             assertTrue(false );
+        assertNotNull(promotion);
     }
 
 
@@ -53,10 +54,7 @@ class PromotionDAOImpTest {
     @Test
     void update() {
         Promotion expectedPromotion = promotionDAOImp.update(new Promotion(0,LocalDate.now(),LocalDate.now(),"newjddj Class"));
-        if (expectedPromotion != null)
-            assertTrue(true );
-        else
-            assertTrue(false );
+        assertNotNull(expectedPromotion);
     }
 
     @Test

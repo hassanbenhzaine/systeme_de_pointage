@@ -30,10 +30,7 @@ class ClasseDAOImpTest {
     @Test
     void create() {
        Classe classe= classeDAOImp.create(new Classe(LocalTime.now(),LocalTime.now(),"new Class"));
-        if (classe != null)
-            assertTrue(true );
-        else
-            assertTrue(false );
+        assertNotNull(classe);
     }
 
     @Test
@@ -52,17 +49,12 @@ class ClasseDAOImpTest {
 
     @Test
     void update() {
-        ClasseDAOImp classeDAOImp = new ClasseDAOImp();
         Classe expectedClasse =classeDAOImp.update(new Classe(11,LocalTime.now(),LocalTime.now(),"newjj Class"));
-        if (expectedClasse != null)
-            assertTrue(true );
-        else
-            assertTrue(false );
+        assertNotNull(expectedClasse);
     }
 
     @Test
     void delete() {
-        ClasseDAOImp classeDAOImp = new ClasseDAOImp();
         Boolean actualStatusClasseDIo = classeDAOImp.delete(1);
         assertTrue(actualStatusClasseDIo);
     }
