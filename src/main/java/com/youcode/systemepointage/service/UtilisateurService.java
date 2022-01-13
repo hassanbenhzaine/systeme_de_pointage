@@ -9,9 +9,10 @@ import java.util.Collection;
 
 public class UtilisateurService {
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
+    private final UtilisateurDAOImp utilisateurDAOImp= new UtilisateurDAOImp();
 
     public boolean seConnecter(Utilisateur utilisateur) {
-       return utilisateurDAO.findAll().parallelStream()
+       return utilisateurDAO.findAll().stream().parallel()
         .filter(u -> u.getEmail().equals(utilisateur.getEmail())
                 && u.getMotDePasse().equals(utilisateur.getMotDePasse()))
                .anyMatch( x -> true);
@@ -22,14 +23,14 @@ public class UtilisateurService {
     }
 
     public Utilisateur trouverParEmail(Utilisateur utilisateur) {
-        return utilisateurDAO.findAll().parallelStream()
+        return utilisateurDAO.findAll().stream().parallel()
                 .filter(u -> u.getEmail().equals(utilisateur.getEmail()))
                 .findFirst().orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     }
 
     public boolean desactiver(Utilisateur utilisateur) {
         utilisateur.setStatut(false);
-        return utilisateurDAO.update(utilisateur) != null;
+        return utilisateurDAO.update(utilisateur).getStatut() == false;
     }
 
     public Collection trouverTous() {
