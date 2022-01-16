@@ -9,31 +9,30 @@ import java.util.Collection;
 
 public class UtilisateurService {
     private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
-    private final UtilisateurDAOImp utilisateurDAOImp= new UtilisateurDAOImp();
 
-    public boolean seConnecter(Utilisateur utilisateur) {
-       return utilisateurDAO.findAll().stream().parallel()
-        .filter(u -> u.getEmail().equals(utilisateur.getEmail())
-                && u.getMotDePasse().equals(utilisateur.getMotDePasse()))
-               .anyMatch( x -> true);
-    }
-
-    public boolean seEnregistrer(Utilisateur utilisateur) {
-        return utilisateurDAO.create(utilisateur) != null;
-    }
-
-    public Utilisateur trouverParEmail(Utilisateur utilisateur) {
+    public Utilisateur seConnecter(Utilisateur utilisateur) {
         return utilisateurDAO.findAll().stream().parallel()
-                .filter(u -> u.getEmail().equals(utilisateur.getEmail()))
-                .findFirst().orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .filter(u -> u.getEmail().equals(utilisateur.getEmail())
+                        && u.getMotDePasse().equals(utilisateur.getMotDePasse()))
+                .findAny().orElse(null);
+    }
+
+    public Utilisateur seEnregistrer(Utilisateur utilisateur) {
+        return utilisateurDAO.create(utilisateur);
+    }
+
+    public Utilisateur trouverParEmail(String email) {
+        return utilisateurDAO.findAll().stream().parallel()
+                .filter(u -> u.getEmail().equals(email))
+                .findFirst().orElse(null);
     }
 
     public boolean desactiver(Utilisateur utilisateur) {
         utilisateur.setStatut(false);
-        return utilisateurDAO.update(utilisateur).getStatut() == false;
+        return utilisateurDAO.update(utilisateur) != null;
     }
 
-    public Collection trouverTous() {
+    public Collection<? extends Utilisateur> trouverTous() {
         return utilisateurDAO.findAll();
     }
 
@@ -51,6 +50,6 @@ public class UtilisateurService {
     }
 
     public Utilisateur trouverParId(int id) {
-        return utilisateurDAO.find(id).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        return utilisateurDAO.find(id).orElse(null);
     }
 }

@@ -2,7 +2,6 @@ package com.youcode.systemepointage.dao;
 
 
 import com.youcode.systemepointage.model.ChefFabrique;
-import com.youcode.systemepointage.model.Role;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
     private final String TABLE_NAME = "ChefFabrique";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
 
     @Override
     public ChefFabrique create(ChefFabrique chefFabrique) {
@@ -23,7 +21,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\"," +
                 " \"entreeFabrique\") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, chefFabrique.getEmail());
@@ -32,7 +30,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
             preparedStatement.setString(4, chefFabrique.getPrenom());
             preparedStatement.setString(5, chefFabrique.getTelephone());
             preparedStatement.setBoolean(6, chefFabrique.getStatut());
-            preparedStatement.setInt(7, chefFabrique.getRole().getId());
+            preparedStatement.setInt(7, chefFabrique.getRoleId());
             preparedStatement.setDate(8, Date.valueOf(chefFabrique.getEntreeFabrique()));
 
             preparedStatement.executeUpdate();
@@ -52,7 +50,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
     public Optional<ChefFabrique> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -60,14 +58,15 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     ChefFabrique chefFabrique = new ChefFabrique();
+                    chefFabrique.setId(resultSet.getInt("id"));
                     chefFabrique.setEmail(resultSet.getString("email"));
                     chefFabrique.setMotDePasse(resultSet.getString("motDePasse"));
                     chefFabrique.setNom(resultSet.getString("nom"));
                     chefFabrique.setPrenom(resultSet.getString("prenom"));
                     chefFabrique.setTelephone(resultSet.getString("telephone"));
-                    chefFabrique.setId(resultSet.getInt("id"));
                     chefFabrique.setStatut(resultSet.getBoolean("statut"));
-                    chefFabrique.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
+                    chefFabrique.setRoleId(resultSet.getInt("roleId"));
+                    chefFabrique.setEntreeFabrique(resultSet.getDate("entreeFabrique").toLocalDate());
 
                     return Optional.of(chefFabrique);
                 }
@@ -83,20 +82,21 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<ChefFabrique> chefFabriques = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 ChefFabrique chefFabrique = new ChefFabrique();
+                chefFabrique.setId(resultSet.getInt("id"));
                 chefFabrique.setEmail(resultSet.getString("email"));
                 chefFabrique.setMotDePasse(resultSet.getString("motDePasse"));
                 chefFabrique.setNom(resultSet.getString("nom"));
                 chefFabrique.setPrenom(resultSet.getString("prenom"));
                 chefFabrique.setTelephone(resultSet.getString("telephone"));
                 chefFabrique.setStatut(resultSet.getBoolean("statut"));
-                chefFabrique.setId(resultSet.getInt("id"));
+                chefFabrique.setEntreeFabrique(resultSet.getDate("entreeFabrique").toLocalDate());
 
                 chefFabriques.add(chefFabrique);
             }
@@ -109,10 +109,10 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
 
     @Override
     public ChefFabrique update(ChefFabrique chefFabrique) {
-        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, roleId = ?, active = ? WHERE id = ?";
+        String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, \"motDePasse\" = ?" +
+                ", telephone = ?, \"roleId\" = ?, statut = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, chefFabrique.getNom());
@@ -120,7 +120,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
             preparedStatement.setString(3, chefFabrique.getEmail());
             preparedStatement.setString(4, chefFabrique.getMotDePasse());
             preparedStatement.setString(5, chefFabrique.getTelephone());
-            preparedStatement.setInt(6, chefFabrique.getRole().getId());
+            preparedStatement.setInt(6, chefFabrique.getRoleId());
             preparedStatement.setBoolean(7, chefFabrique.getStatut());
             preparedStatement.setInt(8, chefFabrique.getId());
 
@@ -135,7 +135,7 @@ public class ChefFabriqueDAOImpl implements GenericDAO<ChefFabrique, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

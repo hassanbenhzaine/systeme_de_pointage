@@ -17,22 +17,22 @@ public class RoleService {
 
     public Role trouverParNom(Roles role) {
         return roleDAO.findAll()
-                .parallelStream()
+                .stream().parallel()
                 .filter(r -> r.getNom().equals(role))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Role introuvable"));
+                .orElse(null);
     }
 
     public Role trouverParId(int id) {
-        return roleDAO.find(id).orElseThrow(() -> new RuntimeException("Role introuvable"));
+        return roleDAO.find(id).orElse(null);
     }
 
     public Role modifier(Role role) {
         return roleDAO.update(role);
     }
 
-    public boolean supprimer(int id) {
-        return roleDAO.delete(id);
+    public boolean supprimer(Role role) {
+        return roleDAO.delete(role.getId());
     }
 
     public Collection<Role> trouverTous() {

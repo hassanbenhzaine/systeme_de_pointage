@@ -3,7 +3,6 @@ package com.youcode.systemepointage.service;
 import com.youcode.systemepointage.dao.AdresseDAOImp;
 import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.model.Adresse;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
@@ -24,7 +23,7 @@ public class AdresseService {
     }
 
     public Adresse trouverParId(Integer id) {
-        return adresseDAO.find(id).orElseThrow(() -> new RuntimeException("Adresse introuvable"));
+        return adresseDAO.find(id).orElse(null);
     }
 
     public Collection<Adresse> trouverTous(){

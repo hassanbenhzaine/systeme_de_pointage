@@ -5,6 +5,8 @@ import com.youcode.systemepointage.model.Roles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoleServiceTest {
@@ -14,71 +16,70 @@ class RoleServiceTest {
 
     @BeforeEach
     void setUp() {
-        role = new Role();
         roleService = new RoleService();
+        role = new Role();
+
+        Roles randomRoleEnum = Roles.values()[new Random().nextInt(Roles.values().length)];
+        role.setNom(randomRoleEnum);
     }
 
     @Test
     void ajouter() {
         // given
-        role.setNom(Roles.CHEFFABRIQUE);
         // when
         Role addedRole = roleService.ajouter(role);
         // then
-        assertEquals(role.getNom(), addedRole.getNom());
+        assertEquals(role, addedRole);
     }
 
     @Test
     void trouverParNom() {
         // given
-        role.setNom(Roles.ADMINISTATEUR);
         // when
         Role createdRole = roleService.ajouter(role);
+        Role foundRoleByNom = roleService.trouverParNom(createdRole.getNom());
         // then
-        assertEquals(role.getNom(), createdRole.getNom());
+        assertEquals(createdRole.getNom(), foundRoleByNom.getNom());
     }
 
     @Test
     void trouverParId() {
         // given
-        role.setNom(Roles.ETUDIANT);
         // when
         Role createdRole = roleService.ajouter(role);
         Role foundRoleById = roleService.trouverParId(createdRole.getId());
         // then
-        assertEquals(role.getId(), foundRoleById.getId());
+        assertEquals(createdRole.getId(), foundRoleById.getId());
     }
 
     @Test
     void modifier() {
         // given
-        role.setNom(Roles.FORMATTEUR);
         // when
         Role createdRole = roleService.ajouter(role);
-        Role modifiedCreatedRole = Role.builder().nom(Roles.SECRETAIRE).id(createdRole.getId()).build();
-        Role modifiedRole = roleService.modifier(modifiedCreatedRole);
+        createdRole.setNom(Roles.values()[new Random().nextInt(Roles.values().length)]);
+        Role modifiedRole = roleService.modifier(createdRole);
         // then
-        assertNotEquals(createdRole.getNom(), modifiedRole.getNom());
+        assertEquals(createdRole, modifiedRole);
     }
 
     @Test
     void supprimer() {
         // given
-        role.setNom(Roles.ETUDIANT);
         // when
         Role createdRole = roleService.ajouter(role);
-        Boolean isDeleted = roleService.supprimer(createdRole.getId());
+        roleService.supprimer(createdRole);
         // then
-        assertEquals(true, isDeleted);
+        assertNull(roleService.trouverParId(createdRole.getId()));
     }
 
     @Test
     void trouverTous() {
         // given
-        role.setNom(Roles.ADMINISTATEUR);
         // when
-        Role createdRole = roleService.ajouter(role);
+        roleService.ajouter(role);
+        int roleCount = roleService.trouverTous().size();
         // then
-        assertTrue(roleService.trouverTous().size() >= 1);
+        assertTrue(roleCount > 0);
     }
 }

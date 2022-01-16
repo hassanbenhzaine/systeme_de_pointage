@@ -7,11 +7,10 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 public class Etudiant extends Utilisateur implements Serializable {
-    private Promotion promotion;
-    private Classe classe;
-    private Specialite specialite;
-    private Formateur formateur;
+    private Integer specialiteId, formateurId, classeId, promotionId;
 }

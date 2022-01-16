@@ -4,32 +4,30 @@ import com.youcode.systemepointage.dao.GenericDAO;
 import com.youcode.systemepointage.dao.SecretaireDAOImp;
 import com.youcode.systemepointage.model.Secretaire;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
+public class SecretaireService extends UtilisateurService {
+    private final GenericDAO<Secretaire, Integer> secretaireDAOImp = new SecretaireDAOImp();
 
-public class SecretaireService extends UtilisateurService{
-//    private final GenericDAO<Secretaire, Integer> secretaireDAO = new SecretaireDAOImp();
-//
-//    @Override
-//    public Collection<Secretaire> trouverTous() {
-//        return secretaireDAO.findAll();
-//    }
-//
-//    @Override
-//    public void ajouter(Utilisateur secretaire) {
-//        secretaireDAO.create((Secretaire) secretaire);
-//    }
-//
-//    @Override
-//    public void modifier(Utilisateur secretaire) {
-//        secretaireDAO.update((Secretaire) secretaire);
-//    }
-//
-//    @Override
-//    public Utilisateur trouverParId(int id) {
-//        return secretaireDAO.find(id)
-//                .orElseThrow(() -> new RuntimeException("Secretaire non trouvé"));
-//    }
+    @Override
+    public Secretaire ajouter(Utilisateur secretaire) {
+        return secretaireDAOImp.create((Secretaire) secretaire);
+    }
+
+    @Override
+    public Secretaire modifier(Utilisateur secretaire) {
+        return secretaireDAOImp.update((Secretaire) secretaire);
+    }
+
+    @Override
+    public Collection<Secretaire> trouverTous() {
+        return secretaireDAOImp.findAll();
+    }
+
+    @Override
+    public Secretaire trouverParId(int id) {
+        return secretaireDAOImp.find(id).orElse(null);
+    }
+
 }

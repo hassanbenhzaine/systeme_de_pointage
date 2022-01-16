@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class Evenement implements Serializable {
     private Integer id;
-    private LocalDateTime debut;
-    private LocalDateTime fin;
-    private String nom;
-    private String description;
+    private LocalDateTime debut, fin;
+    private String nom, description;
     private Boolean proposer;
 }

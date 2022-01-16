@@ -6,7 +6,6 @@ import com.youcode.systemepointage.model.Classe;
 import com.youcode.systemepointage.model.Etudiant;
 import com.youcode.systemepointage.model.Promotion;
 import com.youcode.systemepointage.model.Utilisateur;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
@@ -29,34 +28,34 @@ public class EtudiantService extends UtilisateurService{
     }
 
     @Override
-    public Utilisateur trouverParId(int id) {
+    public Etudiant trouverParId(int id) {
         return etudiantDAO.find(id)
-                .orElseThrow(() -> new RuntimeException("Etudiant non trouvé"));
+                .orElse(null);
     }
 
     public Long effectifParPromotion(Promotion promotion) {
-        return etudiantDAO.findAll().parallelStream()
-                .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId()))
+        return etudiantDAO.findAll().stream().parallel()
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId()))
                 .count();
     }
 
     public Long nbrGarconsParPromotion(Promotion promotion) {
-        return etudiantDAO.findAll().parallelStream()
-                .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId())
-                && etudiant.getSexe().equals("GARCON"))
+        return etudiantDAO.findAll().stream().parallel()
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId())
+                        && etudiant.getSexe().equals('M'))
                 .count();
     }
 
     public Long nbrFillesParPromotion(Promotion promotion) {
-        return etudiantDAO.findAll().parallelStream()
-                .filter(etudiant -> etudiant.getPromotion().getId().equals(promotion.getId())
-                && etudiant.getSexe().equals("FILLE"))
+        return etudiantDAO.findAll().stream().parallel()
+                .filter(etudiant -> etudiant.getPromotionId().equals(promotion.getId())
+                        && etudiant.getSexe().equals('F'))
                 .count();
     }
 
     public Long effectifParClasse(Classe classe) {
-        return etudiantDAO.findAll().parallelStream()
-                .filter(etudiant -> etudiant.getClasse().getId().equals(classe.getId()))
+        return etudiantDAO.findAll().stream().parallel()
+                .filter(etudiant -> etudiant.getClasseId().equals(classe.getId()))
                 .count();
     }
 }

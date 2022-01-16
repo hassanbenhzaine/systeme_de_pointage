@@ -1,6 +1,5 @@
 package com.youcode.systemepointage.dao;
 
-import com.youcode.systemepointage.model.*;
 import com.youcode.systemepointage.model.Formateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
@@ -13,9 +12,6 @@ import java.util.Optional;
 
 public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     private final String TABLE_NAME = "Formateur";
-    private final GenericDAO<Role, Integer> roleDAO = new RoleDAOImp();
-    private final GenericDAO<Specialite, Integer> specialiteDAO = new SpecialiteDAOImp();
-    private final GenericDAO<Classe, Integer> classeDAO = new ClasseDAOImp();
 
     @Override
     public Formateur create(Formateur formateur) {
@@ -23,7 +19,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
                 "\" (\"email\", \"motDePasse\", \"nom\", \"prenom\", \"telephone\", \"statut\", \"roleId\"" +
                 ", \"specialiteId\", \"classeId\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, formateur.getEmail());
@@ -32,9 +28,9 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
             preparedStatement.setString(4, formateur.getPrenom());
             preparedStatement.setString(5, formateur.getTelephone());
             preparedStatement.setBoolean(6, formateur.getStatut());
-            preparedStatement.setInt(7, formateur.getRole().getId());
-            preparedStatement.setInt(8, formateur.getSpecialite().getId());
-            preparedStatement.setInt(9, formateur.getClasse().getId());
+            preparedStatement.setInt(7, formateur.getRoleId());
+            preparedStatement.setInt(8, formateur.getSpecialiteId());
+            preparedStatement.setInt(9, formateur.getClasseId());
 
             preparedStatement.executeUpdate();
 
@@ -53,7 +49,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     public Optional<Formateur> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -68,9 +64,9 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
                     formateur.setTelephone(resultSet.getString("telephone"));
                     formateur.setStatut(resultSet.getBoolean("statut"));
                     formateur.setId(resultSet.getInt("id"));
-                    formateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
-                    formateur.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).get());
-                    formateur.setClasse(classeDAO.find(resultSet.getInt("classeId")).get());
+                    formateur.setRoleId(resultSet.getInt("roleId"));
+                    formateur.setSpecialiteId(resultSet.getInt("specialiteId"));
+                    formateur.setClasseId(resultSet.getInt("classeId"));
 
                     return Optional.of(formateur);
                 }
@@ -83,10 +79,10 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
 
     @Override
     public List<Formateur> findAll() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Formateur> chefFabriques = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -100,9 +96,9 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
                 formateur.setTelephone(resultSet.getString("telephone"));
                 formateur.setStatut(resultSet.getBoolean("statut"));
                 formateur.setId(resultSet.getInt("id"));
-                formateur.setRole(roleDAO.find(resultSet.getInt("roleId")).get());
-                formateur.setSpecialite(specialiteDAO.find(resultSet.getInt("specialiteId")).get());
-                formateur.setClasse(classeDAO.find(resultSet.getInt("classeId")).get());
+                formateur.setRoleId(resultSet.getInt("roleId"));
+                formateur.setSpecialiteId(resultSet.getInt("specialiteId"));
+                formateur.setClasseId(resultSet.getInt("classeId"));
 
                 chefFabriques.add(formateur);
             }
@@ -116,9 +112,9 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     @Override
     public Formateur update(Formateur formateur) {
         String sql = "UPDATE \"" + TABLE_NAME + "\" SET nom = ?, prenom = ?, email = ?, motDePasse = ?" +
-                ", telephone = ?, status = ?, roleId = ?, specialiteId = ?, classeId = ? WHERE id = ?";
+                ", telephone = ?, statut = ?, roleId = ?, specialiteId = ?, classeId = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, formateur.getNom());
@@ -126,11 +122,11 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
             preparedStatement.setString(3, formateur.getEmail());
             preparedStatement.setString(4, formateur.getMotDePasse());
             preparedStatement.setString(5, formateur.getTelephone());
-            preparedStatement.setInt(6, formateur.getRole().getId());
-            preparedStatement.setBoolean(7, formateur.getStatut());
-            preparedStatement.setInt(8, formateur.getRole().getId());
-            preparedStatement.setInt(9, formateur.getSpecialite().getId());
-            preparedStatement.setInt(10, formateur.getClasse().getId());
+            preparedStatement.setBoolean(6, formateur.getStatut());
+            preparedStatement.setInt(7, formateur.getRoleId());
+            preparedStatement.setInt(8, formateur.getSpecialiteId());
+            preparedStatement.setInt(9, formateur.getClasseId());
+            preparedStatement.setInt(10, formateur.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -143,7 +139,7 @@ public class FormateurDAOImp implements GenericDAO<Formateur, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);

@@ -1,8 +1,6 @@
 package com.youcode.systemepointage.dao;
 
 import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Adresse;
-import com.youcode.systemepointage.model.Utilisateur;
 import com.youcode.systemepointage.shared.ConnectionFactory;
 
 import java.sql.Connection;
@@ -14,7 +12,6 @@ import java.util.Optional;
 
 public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     private final String TABLE_NAME = "Adresse";
-    private final GenericDAO<Utilisateur, Integer> utilisateurDAO = new UtilisateurDAOImp();
 
     @Override
     public Adresse create(Adresse adresse) {
@@ -22,7 +19,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
                 "\" (\"adresse1\", \"adresse2\", \"pays\", \"region\", \"ville\", \"codePostal\", \"utilisateurId\")"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, adresse.getAdresse1());
@@ -31,7 +28,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             preparedStatement.setString(4, adresse.getRegion());
             preparedStatement.setString(5, adresse.getVille());
             preparedStatement.setInt(6, adresse.getCodePostal());
-            preparedStatement.setInt(7, adresse.getUtilisateur().getId());
+            preparedStatement.setInt(7, adresse.getUtilisateurId());
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -49,7 +46,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     public Optional<Adresse> find(Integer id) {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\" WHERE \"id\" = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
@@ -57,13 +54,14 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Adresse adresse = new Adresse();
+                    adresse.setId(resultSet.getInt("id"));
                     adresse.setAdresse1(resultSet.getString("adresse1"));
                     adresse.setAdresse2(resultSet.getString("adresse2"));
                     adresse.setPays(resultSet.getString("pays"));
                     adresse.setRegion(resultSet.getString("region"));
                     adresse.setVille(resultSet.getString("ville"));
                     adresse.setCodePostal(resultSet.getInt("codePostal"));
-                    adresse.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                    adresse.setUtilisateurId(resultSet.getInt("utilisateurId"));
 
                     return Optional.of(adresse);
                 }
@@ -79,7 +77,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
         String sql = "SELECT * FROM \"" + TABLE_NAME + "\"";
         List<Adresse> chefFabriques = new ArrayList<>();
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,7 +90,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
                 adresse.setRegion(resultSet.getString("region"));
                 adresse.setVille(resultSet.getString("ville"));
                 adresse.setCodePostal(resultSet.getInt("codePostal"));
-                adresse.setUtilisateur(utilisateurDAO.find(resultSet.getInt("utilisateurId")).get());
+                adresse.setUtilisateurId(resultSet.getInt("utilisateurId"));
 
                 chefFabriques.add(adresse);
             }
@@ -106,10 +104,9 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     @Override
     public Adresse update(Adresse adresse) {
         String sql = "UPDATE \"" + TABLE_NAME +
-                "\" SET adresse1 = ?, adresse2 = ?, pays = ?, region = ?, ville = ?, codePostal = ?" +
-                ", utilisateurId = ? WHERE id = ?";
+                "\" SET adresse1 = ?, adresse2 = ?, pays = ?, region = ?, ville = ?, \"codePostal\" = ?, \"utilisateurId\" = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, adresse.getAdresse1());
@@ -118,7 +115,8 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
             preparedStatement.setString(4, adresse.getRegion());
             preparedStatement.setString(5, adresse.getVille());
             preparedStatement.setInt(6, adresse.getCodePostal());
-            preparedStatement.setInt(7, adresse.getUtilisateur().getId());
+            preparedStatement.setInt(7, adresse.getUtilisateurId());
+            preparedStatement.setInt(8, adresse.getId());
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -131,7 +129,7 @@ public class AdresseDAOImp implements GenericDAO<Adresse, Integer> {
     public boolean delete(Integer id) {
         String sql = "DELETE FROM \"" + TABLE_NAME + "\" WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getInstance().getConnection();
+        try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
