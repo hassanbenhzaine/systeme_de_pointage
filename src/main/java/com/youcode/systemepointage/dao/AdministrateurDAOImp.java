@@ -20,7 +20,8 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, administrateur.getEmail());
             preparedStatement.setString(2, administrateur.getMotDePasse());
@@ -33,9 +34,12 @@ public class AdministrateurDAOImp implements GenericDAO<Administrateur, Integer>
 
             preparedStatement.executeUpdate();
 
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                administrateur.setId(generatedKeys.getInt("id"));
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    administrateur.setId(generatedKeys.getInt(1));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
         } catch (Exception e) {
